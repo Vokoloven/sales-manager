@@ -1,3 +1,5 @@
+'use server';
+
 import { cookies } from 'next/headers';
 import { TOKENS } from '../constants/tokens.constant';
 import type { TToken } from '../models/tokenService.model';
