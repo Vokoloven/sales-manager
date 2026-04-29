@@ -39,6 +39,7 @@ const HTTP_RESPONSE_STATUS = {
   created: 201,
   badRequest: 400,
   unauthorized: 401,
+  forbidden: 403,
   notFound: 404,
   expectationFailed: 417,
   tooManyRequests: 429,

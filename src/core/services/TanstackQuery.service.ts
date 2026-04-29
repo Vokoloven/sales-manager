@@ -7,6 +7,7 @@ import {
 } from '@tanstack/query-core';
 import { identity, Observable } from 'rxjs';
 import { Singleton } from '@/core/decorators/Singleton.decorator';
+import type { TResponseError } from '../models/response.model';
 import type {
   TInferQueryObserverResult,
   TQueryPipeFn
@@ -89,7 +90,7 @@ class TanstackQueryService {
 
   public query = <
     TQueryFnData = unknown,
-    TError = AxiosError,
+    TError = AxiosError<TResponseError>,
     TData = TQueryFnData,
     TQueryData = TQueryFnData,
     TQueryKey extends QueryKey = QueryKey
@@ -130,7 +131,7 @@ class TanstackQueryService {
 
   public queries = <
     TQueryFnData = unknown,
-    TError = AxiosError,
+    TError = AxiosError<TResponseError>,
     TData = TQueryFnData,
     TQueryData = TQueryFnData,
     TQueryKey extends QueryKey = QueryKey
@@ -172,7 +173,7 @@ class TanstackQueryService {
 
   public infiniteQuery = <
     TQueryFnData = unknown,
-    TError = AxiosError,
+    TError = AxiosError<TResponseError>,
     TData = InfiniteData<TQueryFnData>,
     TQueryKey extends QueryKey = QueryKey,
     TPageParam = unknown
@@ -211,7 +212,12 @@ class TanstackQueryService {
     } as const;
   };
 
-  public mutation = <TData = unknown, TError = AxiosError, TVariables = void, TContext = unknown>(
+  public mutation = <
+    TData = unknown,
+    TError = AxiosError<TResponseError>,
+    TVariables = void,
+    TContext = unknown
+  >(
     options: MutationObserverOptions<TData, TError, TVariables, TContext>
   ) => {
     const mutationObserver = new MutationObserver(this.queryClientInstance, options);

@@ -58,8 +58,7 @@ class ApiService {
         const originalRequest = error.config;
 
         if (
-          error.response &&
-          error.response.status >= HTTP_RESPONSE_STATUS.badRequest &&
+          error.response?.status === HTTP_RESPONSE_STATUS.forbidden &&
           originalRequest?.url === URL.tokenRefresh
         ) {
           await setTokens(TOKENS_INITIAL_STATE).finally(() => {

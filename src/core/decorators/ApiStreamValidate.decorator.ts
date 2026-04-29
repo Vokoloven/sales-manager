@@ -23,6 +23,8 @@ function ApiStreamValidate<Options extends readonly SomeType[]>(
             return parsed.data;
           }
 
+          console.error(errorService.handleZodError(parsed.error));
+
           throw new AxiosError(
             errorService.handleZodError(parsed.error),
             AXIOS_VALIDATION_ERROR,

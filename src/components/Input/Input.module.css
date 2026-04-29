@@ -1,0 +1,83 @@
+.inputWrap {
+  width: 100%;
+  position: relative;
+
+  .label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--text-secondary);
+
+    &.labelDisabled {
+      color: var(--text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .inputWrapper {
+    width: 100%;
+    position: relative;
+  }
+
+  .input {
+    display: block;
+    height: 48px;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: var(--text-placeholder);
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    &.errorInput {
+      border-color: var(--error);
+
+      &:focus {
+        border-color: var(--error);
+        box-shadow: 0 0 0 3px var(--error-soft);
+      }
+    }
+
+    &:disabled {
+      background: var(--surface-disabled);
+      border-color: var(--border-disabled);
+      color: var(--text-disabled);
+      cursor: not-allowed;
+
+      &::placeholder {
+        color: var(--text-disabled);
+      }
+    }
+  }
+
+  .postfix {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .error {
+    display: block;
+    font-size: 12px;
+    color: var(--error);
+    margin-top: 3px;
+  }
+}
