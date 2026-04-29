@@ -60,6 +60,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+th,
+td {
+  font-family: var(--font-inter);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

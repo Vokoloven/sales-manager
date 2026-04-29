@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getTokens } from './core/actions/tokens.action';
 
-const publicRoutes = ['/login', '/version'];
+const publicRoutes = ['/login'];
 const protectedRoutes = ['/dashboard'];
 
 export const proxy = async (req: NextRequest) => {

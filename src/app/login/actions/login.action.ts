@@ -4,7 +4,7 @@ import { tanstackQueryService } from '@/core/services/TanstackQuery.service';
 import { loginService } from '../services/Login.service';
 import type { TLogin } from '../models/login.model';
 
-const login = ({
+const loginAction = ({
   dto,
   onSuccess,
   onSettled
@@ -26,4 +26,4 @@ const login = ({
       .pipe(concatMap(({ mutate }) => from(mutate(dto)))).observer$
   );
 
-export { login };
+export { loginAction };
