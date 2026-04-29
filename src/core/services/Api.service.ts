@@ -78,7 +78,7 @@ class ApiService {
                 refreshTokenMutation.refreshToken().pipe(
                   tap({
                     next: (value) => {
-                      this.cachedTokens = value.data;
+                      if (value.success) this.cachedTokens = value.data.access;
                       this.isRefreshingToken = false;
                     }
                   })

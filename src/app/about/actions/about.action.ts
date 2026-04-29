@@ -7,13 +7,11 @@ const aboutAction = async () =>
     tanstackQueryService
       .query({
         queryKey: ['about'],
-        queryFn: () => aboutService.about()
+        queryFn: () => aboutService.about().then(({ data }) => data)
       })
       .pipe(
         first((value) => value.status !== 'pending'),
-        map(({ data }) => {
-          return { data: data?.data };
-        })
+        map(({ data, ...rest }) => ({ data: data?.data, ...rest }))
       ).observer$
   );
 

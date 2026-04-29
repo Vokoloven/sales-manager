@@ -1,3 +1,4 @@
+import { recoverUser } from '@/shared/recoverUser/actions/recoverUser.action';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -5,7 +6,11 @@ export const metadata: Metadata = {
   description: 'Dasboard with active sales information'
 };
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const result = await recoverUser();
+
+  console.log(result);
+
   return <h1>DashboardPage is created</h1>;
 };
 

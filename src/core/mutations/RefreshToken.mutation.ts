@@ -3,12 +3,13 @@ import { apiService } from '@/core/services/Api.service';
 import { tanstackQueryService } from '@/core/services/TanstackQuery.service';
 import { tokenService } from '@/core/services/Token.service';
 import { setTokens } from '../actions/tokens.action';
+import { TOKENS_INITIAL_STATE } from '../constants/tokens.constant';
 
 class RefreshTokenMutation {
   public refreshToken() {
     return tanstackQueryService
       .mutation({
-        mutationFn: () => tokenService.refreshToken()
+        mutationFn: () => tokenService.refreshToken().then(({ data }) => data)
       })
       .pipe(
         concatMap(({ mutate }) => from(mutate())),
@@ -17,11 +18,13 @@ class RefreshTokenMutation {
           refCount: true
         }),
         take(1),
-        switchMap((value) => from(setTokens(value.data)).pipe(map(() => value))),
+        switchMap((data) =>
+          from(setTokens(data.data ? data.data.access : TOKENS_INITIAL_STATE)).pipe(map(() => data))
+        ),
         tap({
-          next: ({ data: tokens }) => {
-            if (tokens.accessToken)
-              apiService.api.defaults.headers.common.Authorization = `Bearer ${tokens.accessToken}`;
+          next: ({ data }) => {
+            if (data?.access.accessToken)
+              apiService.api.defaults.headers.common.Authorization = `Bearer ${data.access.accessToken}`;
           }
         })
       );

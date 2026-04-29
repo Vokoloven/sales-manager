@@ -16,9 +16,9 @@ const loginAction = ({
   firstValueFrom(
     tanstackQueryService
       .mutation({
-        mutationFn: (variables: TLogin) => loginService.login(variables),
-        onSuccess: async ({ data: { data, success } }) => {
-          if (success) await setTokens(data.access);
+        mutationFn: (variables: TLogin) => loginService.login(variables).then(({ data }) => data),
+        onSuccess: async ({ data }) => {
+          if (data?.access) await setTokens(data.access);
           onSuccess();
         },
         onSettled

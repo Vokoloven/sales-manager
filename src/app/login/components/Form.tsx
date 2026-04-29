@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import Input from '@/components/Input/Input';
-import { Icons } from '@/shared/Icons/Icons';
+import { Icons } from '@/shared/icons/Icons';
 import { loginAction } from '../actions/login.action';
 import { LOGIN_FORM_FIELD } from '../constants/login.constant';
 import { useForm } from '../hooks/useForm';
