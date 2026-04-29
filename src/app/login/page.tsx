@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Sign in — Sales Manager',
+  title: 'Sign in | Sales Manager',
   description: 'Authentication in application'
 };
 
