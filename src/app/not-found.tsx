@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Icons } from '@/shared/components/Icons/Icons';
+import { Icons } from '@/shared/Icons/Icons';
 import styles from './not-found.module.css';
 
 const NotFoundPage = () => {

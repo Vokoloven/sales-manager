@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import Theme from '@/shared/components/Theme/Theme';
+import Theme from '@/shared/Theme/Theme';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import '@/css/globals.css';

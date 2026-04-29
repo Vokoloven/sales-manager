@@ -1,8 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm as useReactHookForm } from 'react-hook-form';
-import { useTanstackQuery } from '@/core/hooks/useTanstackQuery';
-import { loginMutation } from '../mutations/Login.mutation';
 import { loginSchema } from '../schemas/login.schema';
 
 const useForm = () => {
@@ -17,11 +15,7 @@ const useForm = () => {
     resolver: zodResolver(loginSchema)
   });
 
-  const { mutate } = useTanstackQuery({
-    instance: loginMutation.login
-  });
-
-  return { form, showPassword, setShowPassword, mutate } as const;
+  return { form, showPassword, setShowPassword } as const;
 };
 
 export { useForm };

@@ -49,6 +49,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "typescript": "^6"
+    "typescript": "^6",
+    "typescript-plugin-css-modules": "^5.2.0"
   }
 }

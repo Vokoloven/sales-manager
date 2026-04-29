@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import Input from '@/components/Input/Input';
-import { Icons } from '@/shared/components/Icons/Icons';
+import { Icons } from '@/shared/Icons/Icons';
+import { login } from '../actions/login.action';
 import { LOGIN_FORM_FIELD } from '../constants/login.constant';
 import { useForm } from '../hooks/useForm';
 import styles from '../page.module.css';
@@ -14,7 +15,6 @@ const Form = () => {
   const {
     showPassword,
     setShowPassword,
-    mutate,
     form: {
       register,
       handleSubmit,
@@ -33,13 +33,12 @@ const Form = () => {
 
         void handleSubmit(async (data) => {
           try {
-            await mutate(data, {
+            await login({
+              dto: data,
               onSuccess: () => {
                 router.push('/dashboard');
               },
-              onSettled: () => {
-                reset();
-              }
+              onSettled: reset
             });
           } catch (_error) {
             //
