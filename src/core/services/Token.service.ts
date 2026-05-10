@@ -16,7 +16,7 @@ class TokenService {
         httpOnly: true,
         secure: envService.isProdEnv,
         sameSite: 'strict',
-        maxAge: 60 * 15
+        maxAge: 60 * 5
       });
     }
 
@@ -25,7 +25,7 @@ class TokenService {
         httpOnly: true,
         secure: envService.isProdEnv,
         sameSite: 'strict',
-        maxAge: 60 * 30
+        maxAge: 60 * 15
       });
     }
   };
