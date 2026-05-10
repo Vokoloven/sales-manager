@@ -1,42 +1,43 @@
 import classNames from 'classnames';
-import { forwardRef, memo } from 'react';
+import { Activity, memo } from 'react';
 import type { TInput } from './models/input.model';
 import styles from './Input.module.css';
 
-const Input = memo(
-  forwardRef<HTMLInputElement, TInput>(({ label, error, postfix, ...rest }, ref) => {
-    return (
-      <div className={classNames('inputWrapper', styles.inputWrap)}>
-        {label && (
-          <label
-            className={classNames('inputLabel', styles.label, {
-              labelDisabled: rest.disabled,
-              [styles.labelDisabled]: rest.disabled
-            })}
-            htmlFor={rest.id}
-          >
-            {label}
-          </label>
-        )}
+const Input = ({ label, error, postfix, ref, ...rest }: TInput) => {
+  return (
+    <div className={classNames('inputWrapper', styles.inputWrap)}>
+      <Activity mode={label ? 'visible' : 'hidden'}>
+        <label
+          className={classNames('inputLabel', styles.label, {
+            labelDisabled: rest.disabled,
+            [styles.labelDisabled]: rest.disabled
+          })}
+          htmlFor={rest.id}
+        >
+          {label}
+        </label>
+      </Activity>
 
-        <div className={classNames('inputWrapperRow', styles.inputWrapper)}>
-          <input
-            ref={ref}
-            className={classNames('input', styles.input, {
-              [styles.errorInput]: error,
-              inputError: error
-            })}
-            {...rest}
-          />
-          {postfix && <div className={classNames('inputPostfix', styles.postfix)}>{postfix}</div>}
-        </div>
+      <div className={classNames('inputWrapperRow', styles.inputWrapper)}>
+        <input
+          ref={ref}
+          className={classNames('input', styles.input, {
+            [styles.errorInput]: error,
+            inputError: error
+          })}
+          {...rest}
+        />
 
-        {error && <span className={classNames('errorLabel', styles.error)}>{error}</span>}
+        <Activity mode={postfix ? 'visible' : 'hidden'}>
+          <div className={classNames('inputPostfix', styles.postfix)}>{postfix}</div>
+        </Activity>
       </div>
-    );
-  })
-);
 
-Input.displayName = 'Input';
+      <Activity mode={error ? 'visible' : 'hidden'}>
+        <span className={classNames('errorLabel', styles.error)}>{error}</span>
+      </Activity>
+    </div>
+  );
+};
 
-export default Input;
+export default memo(Input);

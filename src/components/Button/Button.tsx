@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { memo } from 'react';
+import { Activity, memo } from 'react';
 import { BUTTON_TYPE, BUTTON_SIZE } from './constants/button.constant';
 import type { TButton } from './models/button.model';
 import styles from './button.module.css';
@@ -18,9 +18,17 @@ const Button = ({
       className={classNames('button', styles.btn, styles[buttonType], styles[size])}
       {...{ type, ...rest }}
     >
-      {icon && <span className={styles.iconWrap}>{icon}</span>}
-      {children}
-      {iconRight && <span className={styles.iconWrap}>{iconRight}</span>}
+      <Activity mode={icon ? 'visible' : 'hidden'}>
+        <span className={styles.iconWrap}>{icon}</span>
+      </Activity>
+
+      <Activity mode={children ? 'visible' : 'hidden'}>
+        <span className={styles.text}>{children}</span>
+      </Activity>
+
+      <Activity mode={iconRight ? 'visible' : 'hidden'}>
+        <span className={styles.iconWrap}>{iconRight}</span>
+      </Activity>
     </button>
   );
 };

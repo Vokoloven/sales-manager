@@ -1,0 +1,130 @@
+.root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--background);
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo svg {
+  width: 20px;
+  height: 20px;
+}
+
+.brandName {
+  font-size: 20px;
+  color: var(--foreground);
+  letter-spacing: -0.3px;
+}
+
+.heading {
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--foreground);
+  margin: 0 0 0.375rem;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.sub {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  margin: 0 0 1.75rem;
+}
+
+.errorBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--error-soft);
+  border: 1px solid var(--error);
+  color: var(--error);
+  font-size: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  .buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      width: 100%;
+
+      font-size: 14px;
+      line-height: 1;
+      white-space: nowrap;
+
+      &::before,
+      &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      + button {
+        span {
+          &:nth-child(1) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.fieldWrap {
+  display: flex;
+  align-items: center;
+
+  :global(.button) {
+    &:nth-child(1) {
+      span {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

@@ -54,6 +54,7 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/require-await': 'warn',
       '@typescript-eslint/no-unnecessary-type-parameters': 'warn',
       '@typescript-eslint/no-extraneous-class': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
 
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',

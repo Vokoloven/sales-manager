@@ -1,37 +1,49 @@
 import z from 'zod';
+import type { ZodType } from 'zod';
 
-const responseErrorSchema = z.object({
+const errorSchema = z.object({
   error: z.object({
     errorCode: z.string(),
     filedsValidationErrors: z
-      .object({
-        name: z.string(),
-        errorMessage: z.string()
-      })
-      .nullable(),
-    paramsErrors: z
-      .object({
-        name: z.string(),
-        value: z.string()
-      })
+      .array(
+        z.object({
+          name: z.string(),
+          errorMessage: z.string()
+        })
+      )
       .nullable()
+      .optional(),
+    paramsErrors: z
+      .array(
+        z.object({
+          name: z.string(),
+          value: z.string()
+        })
+      )
+      .nullable()
+      .optional()
   })
 });
 
-const responseSchema = <T>(data: z.ZodType<T>) =>
+const successResponseSchema = z.object({
+  success: z.literal(true),
+  statusCode: z.number(),
+  error: z.null()
+});
+
+const errorResponseSchema = z.object({
+  success: z.literal(false),
+  statusCode: z.number(),
+  data: z.null(),
+  error: errorSchema.shape.error
+});
+
+const responseSchema = <T>(data: ZodType<T>) =>
   z.discriminatedUnion('success', [
-    z.object({
-      success: z.literal(true),
-      statusCode: z.number(),
-      data,
-      error: z.null()
+    successResponseSchema.extend({
+      data
     }),
-    z.object({
-      success: z.literal(false),
-      statusCode: z.number(),
-      data: z.null(),
-      error: responseErrorSchema.shape.error
-    })
+    errorResponseSchema
   ]);
 
-export { responseSchema, responseErrorSchema };
+export { errorResponseSchema, responseSchema };
