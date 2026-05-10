@@ -1,16 +1,15 @@
-import { URL } from '@/core/constants/url.constant';
-import { ApiValidate } from '@/core/decorators/ApiValidate.decorator';
-import { apiService } from '@/core/services/Api.service';
+import { API_URL } from '@/core/constants/apiURL.constant';
+import { ApiValidator } from '@/core/decorators/ApiValidator.decorator';
+import { CacheReact } from '@/core/decorators/CacheReact.decorator';
+import { apiService } from '@/core/services/ApiService.service';
 import { recoverUserResponseSchema } from '../schemas/recoverUser.schema';
 import type { TZodInfer } from '@/core/models/utility.model';
 
 class RecoverUserService {
-  @ApiValidate(recoverUserResponseSchema)
-  public recoverUser() {
-    return apiService.get<TZodInfer<typeof recoverUserResponseSchema>>({
-      url: URL.recoverUser
-    });
-  }
+  @CacheReact
+  @ApiValidator(recoverUserResponseSchema)
+  public recoverUser = async () =>
+    apiService().api<TZodInfer<typeof recoverUserResponseSchema>>(API_URL.recoverUser);
 }
 
 const recoverUserService = new RecoverUserService();

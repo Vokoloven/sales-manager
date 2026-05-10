@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
-import Theme from '@/shared/theme/Theme';
+import GoogleProvider from '@/shared/providers/Google.provider';
 import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import '@/css/globals.css';
 
 const inter = Inter({
@@ -14,14 +14,12 @@ export const metadata: Metadata = {
   description: 'The page you are looking for does not exist.'
 };
 
-const RootLayout = ({
-  children
-}: Readonly<{
-  children: ReactNode;
-}>) => {
+const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
   return (
-    <html lang='en' suppressHydrationWarning>
-      <body className={inter.variable}>{<Theme>{children}</Theme>}</body>
+    <html lang='en'>
+      <body className={inter.variable}>
+        <GoogleProvider>{children}</GoogleProvider>
+      </body>
     </html>
   );
 };

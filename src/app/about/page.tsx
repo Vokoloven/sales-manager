@@ -1,4 +1,4 @@
-import { aboutAction } from './actions/about.action';
+import { aboutService } from './services/About.service';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
 
@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'Application version'
 };
 
-const About = async () => {
-  const { data } = await aboutAction();
+const AboutPage = async () => {
+  const { data } = await aboutService.about();
 
   return (
     <main className={styles.root}>
@@ -25,9 +25,9 @@ const About = async () => {
             </thead>
             <tbody>
               <tr>
-                <td>{data?.data?.majorBuildVersion}</td>
-                <td>{data?.data?.minorBuildVersion}</td>
-                <td>{data?.data?.date}</td>
+                <td>{data?.majorBuildVersion}</td>
+                <td>{data?.minorBuildVersion}</td>
+                <td>{data?.date}</td>
               </tr>
             </tbody>
           </table>
@@ -37,4 +37,4 @@ const About = async () => {
   );
 };
 
-export default About;
+export default AboutPage;

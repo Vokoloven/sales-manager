@@ -21,15 +21,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@microsoft/fetch-event-source": "^2.0.1",
-    "axios": "^1.15.2",
+    "@react-oauth/google": "^0.13.5",
     "classnames": "^2.5.1",
     "next": "16.2.4",
-    "next-themes": "^0.4.6",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "react-hook-form": "^7.74.0",
-    "rxjs": "^7.8.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {

@@ -1,25 +1,58 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getTokens } from './core/actions/tokens.action';
+import { APP_PATH, APP_PROTECTED_PATH, APP_PUBLIC_PATH } from './core/constants/appPath.constant';
+import { TOKEN } from './core/constants/token.constant';
+import { apiService } from './core/services/ApiService.service';
+import { envService } from './core/services/Env.service';
 
-const publicRoutes = ['/login'];
-const protectedRoutes = ['/dashboard'];
+const publicRoutes = Object.values(APP_PUBLIC_PATH) as string[];
+const protectedRoutes = Object.values(APP_PROTECTED_PATH) as string[];
 
 export const proxy = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
-  const isAuth = Boolean((await getTokens()).accessToken);
 
-  if (path === '/') {
-    return NextResponse.redirect(new URL(isAuth ? '/dashboard' : '/login', req.nextUrl));
+  const accessToken = req.cookies.get(TOKEN.accessToken)?.value ?? null;
+  const refreshToken = req.cookies.get(TOKEN.refreshToken)?.value ?? null;
+
+  const isAuth = Boolean(accessToken);
+  const isRefresh = Boolean(refreshToken);
+
+  if (path === APP_PATH.base) {
+    return NextResponse.redirect(
+      new URL(isAuth ? APP_PATH.dashboard : APP_PATH.login, req.nextUrl)
+    );
   }
 
   if (isProtectedRoute && !isAuth) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl));
+    if (isRefresh) {
+      let response: NextResponse;
+      const result = await apiService().refreshAccessToken(refreshToken);
+
+      if (result.success) {
+        response = NextResponse.next();
+
+        response.cookies.set(TOKEN.accessToken, result.data.access.accessToken, {
+          httpOnly: true,
+          secure: envService.isProdEnv,
+          sameSite: 'strict',
+          maxAge: 60 * 5
+        });
+
+        return response;
+      }
+
+      response = NextResponse.redirect(new URL(APP_PATH.login, req.nextUrl));
+      response.cookies.delete(TOKEN.accessToken);
+      response.cookies.delete(TOKEN.refreshToken);
+      return response;
+    }
+
+    return NextResponse.redirect(new URL(APP_PATH.login, req.nextUrl));
   }
 
   if (isPublicRoute && isAuth) {
-    return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+    return NextResponse.redirect(new URL(APP_PATH.dashboard, req.nextUrl));
   }
 
   return NextResponse.next();

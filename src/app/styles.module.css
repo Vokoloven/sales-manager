@@ -1,0 +1,59 @@
+.root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.code {
+  font-size: 96px;
+  font-weight: 500;
+  color: var(--foreground);
+  line-height: 1;
+  letter-spacing: -4px;
+  margin-bottom: 16px;
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--border);
+  margin: 0 auto 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 320px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  span {
+    width: 16px;
+    height: 16px;
+  }
+}

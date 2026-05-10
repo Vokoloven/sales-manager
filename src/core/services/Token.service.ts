@@ -1,24 +1,36 @@
-import { URL } from '@/core/constants/url.constant';
-import { ApiValidate } from '@/core/decorators/ApiValidate.decorator';
-import { Singleton } from '@/core/decorators/Singleton.decorator';
-import { tokenResponseSchema } from '@/core/schemas/tokenService.schema';
-import { getTokens } from '../actions/tokens.action';
-import { apiService } from './Api.service';
-import type { TZodInfer } from '../models/utility.model';
+import { cookies } from 'next/headers';
+import { TOKEN } from '../constants/token.constant';
+import { envService } from './Env.service';
+import type { TToken } from '../models/token.model';
 
-@Singleton
 class TokenService {
-  @ApiValidate(tokenResponseSchema)
-  public async refreshToken() {
-    const tokens = await getTokens();
+  public getTokens = async () => {
+    const accessToken = (await cookies()).get(TOKEN.accessToken)?.value ?? null;
+    const refreshToken = (await cookies()).get(TOKEN.refreshToken)?.value ?? null;
+    return { accessToken, refreshToken };
+  };
 
-    return apiService.put<TZodInfer<typeof tokenResponseSchema>>({
-      url: URL.tokenRefresh,
-      dto: { token: tokens.refreshToken }
-    });
-  }
+  public setTokens = async ({ accessToken, refreshToken }: TToken) => {
+    if (accessToken) {
+      (await cookies()).set(TOKEN.accessToken, accessToken, {
+        httpOnly: true,
+        secure: envService.isProdEnv,
+        sameSite: 'strict',
+        maxAge: 60 * 15
+      });
+    }
+
+    if (refreshToken) {
+      (await cookies()).set(TOKEN.refreshToken, refreshToken, {
+        httpOnly: true,
+        secure: envService.isProdEnv,
+        sameSite: 'strict',
+        maxAge: 60 * 30
+      });
+    }
+  };
 }
 
-const tokenService = new TokenService();
+const tokenService = () => new TokenService();
 
 export { tokenService };
