@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { APP_PATH, APP_PROTECTED_PATH, APP_PUBLIC_PATH } from './core/constants/appPath.constant';
 import { TOKEN } from './core/constants/token.constant';
 import { apiService } from './core/services/ApiService.service';
-import { envService } from './core/services/Env.service';
+import { envServerService } from './core/services/EnvServer.service';
 
 const publicRoutes = Object.values(APP_PUBLIC_PATH) as string[];
 const protectedRoutes = Object.values(APP_PROTECTED_PATH) as string[];
@@ -34,7 +34,7 @@ export const proxy = async (req: NextRequest) => {
 
         response.cookies.set(TOKEN.accessToken, result.data.access.accessToken, {
           httpOnly: true,
-          secure: envService.isProdEnv,
+          secure: envServerService.isProdEnv,
           sameSite: 'strict',
           maxAge: 60 * 5
         });
