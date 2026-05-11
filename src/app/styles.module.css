@@ -52,8 +52,12 @@
   gap: 10px;
   align-items: center;
 
-  span {
-    width: 16px;
-    height: 16px;
+  :global(.button) {
+    :nth-child(1) {
+      span {
+        width: 16px;
+        height: 16px;
+      }
+    }
   }
 }
