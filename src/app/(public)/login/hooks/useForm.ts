@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useActionState, useState, startTransition, useEffect } from 'react';
 import { useForm as useReactHookForm } from 'react-hook-form';
 import { APP_PATH } from '@/core/constants/appPath.constant';
-import { envService } from '@/core/services/Env.service';
+import { envClientService } from '@/core/services/EnvClient.service';
 import { loginAction } from '../actions/login.action';
 import { loginSchema } from '../schemas/login.schema';
 import type { TLogin } from '../models/login.model';
@@ -33,8 +33,8 @@ const useForm = () => {
     }
 
     actionPayload ??= {
-      email: envService.envClient.NEXT_PUBLIC_LOGIN,
-      password: envService.envClient.NEXT_PUBLIC_PASSWORD
+      email: envClientService.env.NEXT_PUBLIC_LOGIN,
+      password: envClientService.env.NEXT_PUBLIC_PASSWORD
     };
 
     const result = await loginAction(actionPayload);

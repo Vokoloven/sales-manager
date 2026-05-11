@@ -5,7 +5,7 @@ import { APP_PATH } from '../constants/appPath.constant';
 import { CONTENT_TYPE, HTTP_HEADER, HTTP_METHOD } from '../constants/fetchService.constant';
 import { ApiValidator } from '../decorators/ApiValidator.decorator';
 import { CatchApiError } from '../decorators/CatchApiError.decorator';
-import { envService } from './Env.service';
+import { envServerService } from './EnvServer.service';
 import { tokenService } from './Token.service';
 import type { TRequestInit } from '../models/fetchService.model';
 import type { TToken } from '../models/token.model';
@@ -29,7 +29,7 @@ class ApiService {
       this.accessToken = accessToken;
     }
 
-    const response = await fetch(`${envService.envServer.API_URL}${url}`, {
+    const response = await fetch(`${envServerService.env.API_URL}${url}`, {
       ...init,
       headers: {
         [HTTP_HEADER.ContentType]: CONTENT_TYPE.JSON,

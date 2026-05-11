@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { TOKEN } from '../constants/token.constant';
-import { envService } from './Env.service';
+import { envServerService } from './EnvServer.service';
 import type { TToken } from '../models/token.model';
 
 class TokenService {
@@ -14,7 +14,7 @@ class TokenService {
     if (accessToken) {
       (await cookies()).set(TOKEN.accessToken, accessToken, {
         httpOnly: true,
-        secure: envService.isProdEnv,
+        secure: envServerService.isProdEnv,
         sameSite: 'strict',
         maxAge: 60 * 5
       });
@@ -23,7 +23,7 @@ class TokenService {
     if (refreshToken) {
       (await cookies()).set(TOKEN.refreshToken, refreshToken, {
         httpOnly: true,
-        secure: envService.isProdEnv,
+        secure: envServerService.isProdEnv,
         sameSite: 'strict',
         maxAge: 60 * 15
       });
