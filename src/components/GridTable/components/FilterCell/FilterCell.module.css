@@ -1,0 +1,23 @@
+.box {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 32px;
+  padding: 5px 8px;
+  border: 1px solid var(--neutral-300);
+  border-radius: 4px;
+  color: var(--neutral-600);
+  background-color: transparent;
+  outline: none;
+}
+
+.input::placeholder {
+  color: transparent;
+}
+
+.input:not(:placeholder-shown) + .clearIcon {
+  display: block;
+}

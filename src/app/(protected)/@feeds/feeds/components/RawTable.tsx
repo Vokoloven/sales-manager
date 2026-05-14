@@ -1,12 +1,15 @@
 'use client';
 
 import { use } from 'react';
+import GridTable from '@/components/GridTable/GridTable';
+import { useRawTable } from './hooks/useRawTable';
 import type { TFeedsReponseSchema } from '../models/feeds.schema';
 
 const RawTable = ({ promise }: { promise: Promise<TFeedsReponseSchema> }) => {
-  const _result = use(promise);
+  const result = use(promise);
+  const { table } = useRawTable(result);
 
-  return null;
+  return <GridTable table={table} />;
 };
 
 export default RawTable;

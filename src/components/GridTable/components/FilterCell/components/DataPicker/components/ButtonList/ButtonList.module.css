@@ -1,0 +1,63 @@
+.buttonList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  margin: 0;
+  padding: 6px;
+
+  > div {
+    flex: 0 1 auto;
+    align-self: auto;
+    width: auto;
+    max-width: 100%;
+
+    .button {
+      display: block;
+      width: 100%;
+      border: 0 none;
+      outline: none;
+      padding: 6px 9px;
+      text-align: initial;
+      background: var(--neutral-200);
+      border-radius: 13.35px;
+      box-shadow: none;
+      opacity: 1;
+
+      font-family: var(--font-body);
+      font-weight: var(--font-weight-normal);
+      font-size: calc(var(--font-size-body) * 0.75);
+      line-height: calc(var(--line-height-body) * 0.75);
+      color: var(--neutral-600);
+      text-transform: none;
+
+      &:focus,
+      &:hover {
+        color: var(--cta-blue-600);
+      }
+
+      &:focus-visible {
+        outline: 1px solid var(--cta-blue-600);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        color: var(--neutral-400);
+      }
+
+      > span {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

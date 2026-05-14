@@ -1,0 +1,325 @@
+.table-grid {
+  position: relative;
+  height: 100%;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead {
+    background: var(--neutral-100);
+  }
+
+  .tr {
+    display: flex;
+  }
+
+  tr,
+  .tr {
+    width: 100%;
+    min-height: 36px;
+
+    &.filter-row {
+      height: calc(36px * 2);
+    }
+  }
+
+  th,
+  .th {
+    padding: 8px 16px;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-normal);
+
+    span.title {
+      font-size: var(--font-size-caption);
+      line-height: var(--line-height-caption);
+      font-weight: var(--font-weight-caption);
+      display: block;
+      flex: 0 1 auto;
+      min-width: 0;
+      color: var(--neutral-500);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover span.title {
+      color: var(--neutral-600);
+    }
+
+    &:hover [class^='icon-sortable'] {
+      color: var(--neutral-500);
+    }
+
+    [class^='icon'] {
+      color: var(--neutral-500);
+    }
+  }
+
+  th input,
+  .th input {
+    background-color: var(--neutral-100);
+    border-color: var(--neutral-300);
+  }
+
+  td,
+  .td {
+    padding: 8px 16px;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-normal);
+    height: 36px;
+    background-color: var(--neutral-100);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  th,
+  .th {
+    position: relative;
+    text-align: left;
+    display: flex;
+    flex-shrink: 2;
+
+    background-color: var(--neutral-100);
+
+    &:hover {
+      background-color: var(--neutral-200);
+    }
+
+    &:active {
+      background-color: var(--neutral-250);
+    }
+  }
+
+  /* ---- */
+
+  thead tr {
+    &:last-child {
+      border-bottom: 2px solid var(--neutral-250);
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--neutral-250);
+    height: auto;
+
+    &.expanded,
+    &.sub-row {
+      border-bottom: none;
+    }
+
+    &.sub-row + tr:not(.sub-row) {
+      border-top: 1px solid var(--neutral-250);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--neutral-200);
+
+      td {
+        background-color: var(--neutral-200);
+      }
+    }
+  }
+
+  /* ---- */
+
+  .spinner-wrapper,
+  .spinner-wrapper-full {
+    position: absolute;
+    bottom: 0;
+    padding: 12px 0;
+    width: 100%;
+    left: 0;
+    min-height: 36px;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .spinner-wrapper-full {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sorting {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+
+    [class$='-icon'] {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+    }
+
+    [class^='icon-sortable'] {
+      color: var(--neutral-500);
+    }
+  }
+
+  .filter-wrapper {
+    margin-top: 4px;
+  }
+
+  .no-result {
+    margin-top: 12px;
+    font-family: var(--font-title), sans-serif;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-title-3);
+  }
+}
+
+.grid-table-column-toggler {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 5px;
+}
+
+.filter-wrapper {
+  .clear-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--neutral-500);
+  }
+}
+
+[data-pinned-right='true']::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0, transparent 100%);
+}
+
+[data-pinned-left='true']::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0, transparent 100%);
+}
+
+.checkboxWrapper {
+  width: 100%;
+  height: 14px;
+  margin: 3px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :global(.labeledCheckbox) {
+    display: block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      width: 0;
+      height: 0;
+      opacity: 0 !important;
+      z-index: -1;
+      max-width: 0;
+      max-height: 0;
+    }
+
+    :global(.labelText) {
+      position: relative;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      padding: 0;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        border: 1px solid var(--border-color);
+        margin: 0;
+        padding: 0;
+        background: var(--neutral-100);
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      &::after {
+        content: none;
+        display: none;
+        position: absolute;
+        z-index: 2;
+        left: 5.5px;
+        width: 4px;
+        border-style: solid;
+        height: 8px;
+        border-color: var(--neutral-100);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        top: 2px;
+        margin: 0;
+      }
+    }
+
+    input:checked + :global(.labelText) {
+      &::before {
+        border-color: var(--color-selected);
+        background: var(--color-selected);
+      }
+
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
+
+    input:indeterminate + :global(.labelText) {
+      &::before {
+        border-color: var(--color-selected);
+        background: var(--color-selected);
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        background: var(--neutral-100);
+        border-radius: 2px;
+        transform: none;
+        border: 0 none;
+        width: 7px;
+        height: 2px;
+        top: 6px;
+        left: 3.5px;
+      }
+    }
+  }
+}
