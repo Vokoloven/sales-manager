@@ -20,13 +20,12 @@ const RootNotFound = () => {
         </p>
         <div className={styles.actions}>
           <Button
+            text='Home'
             icon={<Icons.Home />}
             onClick={() => {
               router.push(APP_PATH.base);
             }}
-          >
-            Home
-          </Button>
+          />
         </div>
       </section>
     </main>

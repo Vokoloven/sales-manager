@@ -42,7 +42,7 @@ const useForm = () => {
     form.reset();
 
     if (result.success) {
-      router.push(APP_PATH.dashboard);
+      router.push(APP_PATH.feeds);
       return null;
     }
 

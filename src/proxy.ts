@@ -19,9 +19,7 @@ export const proxy = async (req: NextRequest) => {
   const isRefresh = Boolean(refreshToken);
 
   if (path === APP_PATH.base) {
-    return NextResponse.redirect(
-      new URL(isAuth ? APP_PATH.dashboard : APP_PATH.login, req.nextUrl)
-    );
+    return NextResponse.redirect(new URL(isAuth ? APP_PATH.feeds : APP_PATH.login, req.nextUrl));
   }
 
   if (isProtectedRoute && !isAuth) {
@@ -52,7 +50,7 @@ export const proxy = async (req: NextRequest) => {
   }
 
   if (isPublicRoute && isAuth) {
-    return NextResponse.redirect(new URL(APP_PATH.dashboard, req.nextUrl));
+    return NextResponse.redirect(new URL(APP_PATH.feeds, req.nextUrl));
   }
 
   return NextResponse.next();

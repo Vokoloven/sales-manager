@@ -1,3 +1,3 @@
-import RootLoading from '@/components/Loading/Loading';
+import RootLoading from '@/components/Progress/Progress';
 
 export default RootLoading;

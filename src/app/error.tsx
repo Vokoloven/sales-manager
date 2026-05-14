@@ -23,21 +23,20 @@ const GlobalError = ({
       <p className={styles.sub}>Unexpected error occurred.</p>
       <div className={styles.actions}>
         <Button
+          text='Retry'
           buttonType={BUTTON_TYPE.outline}
           onClick={() => {
             unstable_retry();
           }}
-        >
-          Retry
-        </Button>
+        />
+
         <Button
+          text='Home'
           icon={<Icons.Home />}
           onClick={() => {
             router.push(APP_PATH.base);
           }}
-        >
-          Home
-        </Button>
+        />
       </div>
     </main>
   );

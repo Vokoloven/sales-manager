@@ -8,7 +8,7 @@ import type { TZodInfer } from '@/core/models/utility.model';
 
 class LoginService {
   @ApiValidator(loginResponseSchema)
-  public login = async (dto: TLogin) =>
+  public login = (dto: TLogin) =>
     apiService().api<TZodInfer<typeof loginResponseSchema>>(API_URL.login, {
       method: HTTP_METHOD.POST,
       body: JSON.stringify(dto)

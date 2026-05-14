@@ -6,7 +6,7 @@ import type { TZodInfer } from '@/core/models/utility.model';
 
 class AboutService {
   @ApiValidator(aboutResponseSchema)
-  public about = async () => apiService().api<TZodInfer<typeof aboutResponseSchema>>(API_URL.about);
+  public about = () => apiService().api<TZodInfer<typeof aboutResponseSchema>>(API_URL.about);
 }
 
 const aboutService = new AboutService();
