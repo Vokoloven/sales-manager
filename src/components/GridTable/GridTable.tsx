@@ -28,13 +28,14 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
   const mouseCoords = useRef({ x: 0, y: 0 });
 
   return (
-    <>
+    <div className={styles['table-wrapper']}>
       <div className={styles['table-grid']}>
         <div
           ref={tableContainerRef}
           style={{
             position: 'relative',
-            height: '100%',
+            flex: 1,
+            minHeight: 0,
             overflow: 'auto'
           }}
         >
@@ -236,7 +237,8 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
           )}
         </div>
       </div>
-    </>
+      <div className={styles.pagination} />
+    </div>
   );
 };
 
