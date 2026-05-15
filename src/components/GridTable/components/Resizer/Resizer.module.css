@@ -18,7 +18,7 @@
   padding-top: 8px;
   padding-bottom: 8px;
   z-index: 1;
-  --dots-color: var(--neutral-250);
+  --dots-color: var(--border);
 }
 
 .resizer-drag-handler::before {
@@ -42,22 +42,22 @@
 }
 
 .resizer.isResizing {
-  background: var(--color-selected);
+  background: var(--accent);
   opacity: 0.5;
 
   .resizer-drag-handler {
-    --dots-color: var(--neutral-100);
+    --dots-color: var(--background);
   }
 }
 
 th:hover .resizer .resizer-drag-handler,
 .th:hover .resizer .resizer-drag-handler {
-  --dots-color: var(--neutral-400);
+  --dots-color: var(--text-secondary);
 }
 
 th:active .resizer .resizer-drag-handler,
 .th:active .resizer .resizer-drag-handler {
-  --dots-color: var(--neutral-400);
+  --dots-color: var(--text-secondary);
 }
 
 @media (hover: hover) {
@@ -67,15 +67,15 @@ th:active .resizer .resizer-drag-handler,
 
   .resizer:active {
     opacity: 0.5;
-    background: var(--color-selected);
+    background: var(--accent);
 
     .resizer-drag-handler {
-      --dots-color: var(--neutral-100) !important;
+      --dots-color: var(--background) !important;
     }
   }
 }
 
 th:has(.resizer:active),
 .th:has(.resizer:active) {
-  background-color: var(--neutral-200) !important;
+  background-color: var(--surface-hover) !important;
 }

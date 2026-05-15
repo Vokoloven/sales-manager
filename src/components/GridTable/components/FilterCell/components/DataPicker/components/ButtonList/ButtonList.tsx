@@ -1,4 +1,6 @@
 import classnames from 'classnames';
+import Button from '@/components/Button/Button';
+import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import type { TButtonList } from './models/buttonList.model';
 import styles from './ButtonList.module.css';
 
@@ -24,36 +26,30 @@ const ButtonList = ({ setRange, setFilterValue, setIsOpen }: TButtonList) => {
 
   return (
     <div className={classnames(styles.buttonList, 'day_picker_button_list')}>
-      <div>
-        <button
-          className={styles.button}
-          onClick={() => {
-            applyRange(now, now);
-          }}
-        >
-          <span>Today</span>
-        </button>
-      </div>
-      <div>
-        <button
-          className={styles.button}
-          onClick={() => {
-            applyRange(yesterday, yesterday);
-          }}
-        >
-          <span>Yesterday</span>
-        </button>
-      </div>
-      <div>
-        <button
-          className={styles.button}
-          onClick={() => {
-            applyRange(last7days, now);
-          }}
-        >
-          <span>Last 7 days</span>
-        </button>
-      </div>
+      <Button
+        buttonType={BUTTON_TYPE.ghost}
+        size={BUTTON_SIZE.xs}
+        text='Today'
+        onClick={() => {
+          applyRange(now, now);
+        }}
+      />
+      <Button
+        buttonType={BUTTON_TYPE.ghost}
+        size={BUTTON_SIZE.xs}
+        text='Yesterday'
+        onClick={() => {
+          applyRange(yesterday, yesterday);
+        }}
+      />
+      <Button
+        buttonType={BUTTON_TYPE.ghost}
+        size={BUTTON_SIZE.xs}
+        text='Last 7 days'
+        onClick={() => {
+          applyRange(last7days, now);
+        }}
+      />
     </div>
   );
 };
