@@ -22,10 +22,10 @@ import { Icons } from '@/components/Icons/Icons';
 import ButtonList from './components/ButtonList/ButtonList';
 import { mixedDayPickerClassNames, PORTAL } from './constants/dataPicker.constant';
 import { formatDisplayRange } from './utils/formatRange';
-import type { TDatePicker } from './models/dataPicker.model';
+import type { TDatePicker } from './models/DataPicker.model';
 import styles from './DataPicker.module.css';
 
-const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue }) => {
+const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -113,6 +113,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue }) => {
           readOnly={true}
           className={classNames('tableDataPickerInput', styles.input, { focus: isOpen })}
           value={formatDisplayRange(filterValue)}
+          aria-label={label ? `Filter ${label} by date range` : 'Filter date range'}
         />
         {filterValue ? (
           <Button

@@ -31,7 +31,11 @@ const AsideDefault = async () => {
           <LogOutButton />
         </nav>
 
-        <Button buttonType={BUTTON_TYPE.ghost} popoverTarget='user-popover' aria-label='User Menu'>
+        <Button
+          buttonType={BUTTON_TYPE.ghost}
+          popoverTarget='user-popover'
+          aria-label={`User menu – ${String(recoverUser.data?.account.firstName)} (${String(recoverUser.data?.account.email)})`}
+        >
           <div className={styles.userAvatar}>{recoverUser.data?.account.firstName.slice(0, 1)}</div>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{recoverUser.data?.account.firstName}</span>

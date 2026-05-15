@@ -97,18 +97,21 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                                       <Button
                                         icon={<Icons.ArrowUp />}
                                         buttonType={BUTTON_TYPE.iconGhost}
+                                        aria-label='Sort ascending'
                                       />
                                     ),
                                     desc: (
                                       <Button
                                         icon={<Icons.ArrowDown />}
                                         buttonType={BUTTON_TYPE.iconGhost}
+                                        aria-label='Sort descending'
                                       />
                                     )
                                   }[header.column.getIsSorted() as string]) ?? (
                                   <Button
                                     icon={<Icons.Sortable />}
                                     buttonType={BUTTON_TYPE.iconGhost}
+                                    aria-label='Toggle sort'
                                   />
                                 )}
                               </div>

@@ -13,11 +13,12 @@ const Filter = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
   const debounceSetFilterValue = useCallback(debounceFn(setFilterValue), []);
 
   const meta = column.columnDef.meta;
+  const label = typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id;
 
   return useMemo(
     () =>
       ({
-        [FILTER_TYPE.text]: <InputFilter setFilterValue={debounceSetFilterValue} />,
+        [FILTER_TYPE.text]: <InputFilter setFilterValue={debounceSetFilterValue} label={label} />,
         [FILTER_TYPE.select]: (
           <SelectFilter
             filterValue={filterValue}
@@ -29,6 +30,7 @@ const Filter = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
           <DataPicker
             setFilterValue={setFilterValue}
             filterValue={typeof filterValue === 'string' ? filterValue : ''}
+            label={label}
           />
         )
       })[meta?.filterType ?? FILTER_TYPE.text],

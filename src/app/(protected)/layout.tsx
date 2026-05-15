@@ -8,7 +8,7 @@ const ProtectedLayout = async ({
   return (
     <div className={styles.root}>
       {aside}
-      {feeds}
+      <main>{feeds}</main>
     </div>
   );
 };
