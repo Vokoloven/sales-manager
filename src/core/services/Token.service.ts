@@ -18,6 +18,8 @@ class TokenService {
         sameSite: 'strict',
         maxAge: 60 * 5
       });
+    } else {
+      (await cookies()).delete(TOKEN.accessToken);
     }
 
     if (refreshToken) {
@@ -27,6 +29,8 @@ class TokenService {
         sameSite: 'strict',
         maxAge: 60 * 15
       });
+    } else {
+      (await cookies()).delete(TOKEN.refreshToken);
     }
   };
 }

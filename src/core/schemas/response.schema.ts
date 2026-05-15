@@ -1,6 +1,13 @@
 import z from 'zod';
 import type { ZodType } from 'zod';
 
+const paginationSchema = z.object({
+  totalCount: z.number(),
+  totalPages: z.number(),
+  pageNumber: z.number(),
+  pageSize: z.number()
+});
+
 const errorSchema = z.object({
   error: z.object({
     errorCode: z.string(),
@@ -46,4 +53,4 @@ const responseSchema = <T>(data: ZodType<T>) =>
     errorResponseSchema
   ]);
 
-export { errorResponseSchema, responseSchema };
+export { errorResponseSchema, paginationSchema, responseSchema };

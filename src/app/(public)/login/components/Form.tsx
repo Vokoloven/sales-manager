@@ -81,19 +81,16 @@ const Form = () => {
           </div>
         </div>
         <div className={styles.buttonWrapper}>
-          <Button type='submit' form='login' disabled={isSubmitting}>
-            Sign in
-          </Button>
+          <Button text='Sign in' type='submit' form='login' disabled={isSubmitting} />
           <span className={styles.divider}>or</span>
           <Button
+            text='Sign in with Google'
             icon={<Icons.Google />}
             buttonType='outline'
             onClick={() => {
               googleLogin();
             }}
-          >
-            Sign in with Google
-          </Button>
+          />
         </div>
       </form>
     </>

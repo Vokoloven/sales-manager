@@ -1,0 +1,58 @@
+.gridTable {
+  thead {
+    tr {
+      th {
+        flex: 1 1 auto;
+
+        .tableInputBox,
+        .tableDataPicker {
+          input {
+            height: 34px;
+            padding: 6px 8px;
+            border: 1px solid var(--border) !important;
+
+            &.focus,
+            &:focus {
+              border: 1px solid var(--border-focus) !important;
+              box-shadow: 0 0 0 2px var(--accent-soft) !important;
+            }
+          }
+        }
+
+        .tableDataPicker input ~ span:last-of-type {
+          top: 7px !important;
+        }
+
+        [class^='icon-sortable'],
+        [class^='icon'],
+        span {
+          color: var(--text-secondary) !important;
+        }
+
+        &:hover {
+          background: transparent !important;
+        }
+
+        &[data-pinned-right='true']:hover,
+        &[data-pinned-right='true']:hover,
+        &:has(.resizer:active) {
+          background: var(--background) !important;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        flex: 1 1 auto;
+
+        &:has(> div[class^='findingsButton']),
+        &:has(> div[class^='taskDetailsButton']) {
+          padding-top: 4px;
+          padding-bottom: 4px;
+        }
+      }
+    }
+  }
+}

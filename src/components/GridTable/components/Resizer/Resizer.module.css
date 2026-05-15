@@ -1,0 +1,81 @@
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 5px;
+  padding: 2px 0 2px 3px;
+  background: transparent;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.resizer-drag-handler {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  z-index: 1;
+  --dots-color: var(--border);
+}
+
+.resizer-drag-handler::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  bottom: 5px;
+  right: 0;
+  width: 2px;
+
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--dots-color) 0,
+    var(--dots-color) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+
+  background-position: right 0 top 0;
+  background-repeat: repeat-y;
+}
+
+.resizer.isResizing {
+  background: var(--accent);
+  opacity: 0.5;
+
+  .resizer-drag-handler {
+    --dots-color: var(--background);
+  }
+}
+
+th:hover .resizer .resizer-drag-handler,
+.th:hover .resizer .resizer-drag-handler {
+  --dots-color: var(--text-secondary);
+}
+
+th:active .resizer .resizer-drag-handler,
+.th:active .resizer .resizer-drag-handler {
+  --dots-color: var(--text-secondary);
+}
+
+@media (hover: hover) {
+  .resizer {
+    opacity: 1;
+  }
+
+  .resizer:active {
+    opacity: 0.5;
+    background: var(--accent);
+
+    .resizer-drag-handler {
+      --dots-color: var(--background) !important;
+    }
+  }
+}
+
+th:has(.resizer:active),
+.th:has(.resizer:active) {
+  background-color: var(--surface-hover) !important;
+}

@@ -1,0 +1,352 @@
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.pagination {
+  flex: 0 0 auto;
+  height: 52px;
+  padding: 0 16px;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.table-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead {
+    background: var(--background);
+  }
+
+  .tr {
+    display: flex;
+  }
+
+  tr,
+  .tr {
+    width: 100%;
+    min-height: 36px;
+
+    &.filter-row {
+      height: calc(36px * 2);
+    }
+  }
+
+  th,
+  .th {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 400;
+
+    span.title {
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 500;
+      display: block;
+      flex: 0 1 auto;
+      min-width: 0;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      + :global(.button) {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:hover span.title {
+      color: var(--text-primary);
+    }
+
+    &:hover [class^='icon-sortable'] {
+      color: var(--text-secondary);
+    }
+
+    [class^='icon'] {
+      color: var(--text-secondary);
+    }
+  }
+
+  th input,
+  .th input {
+    background-color: var(--background);
+    border-color: var(--border);
+  }
+
+  td,
+  .td {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 400;
+    height: 36px;
+    background-color: var(--background);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  th,
+  .th {
+    position: relative;
+    text-align: left;
+    display: flex;
+    flex-shrink: 2;
+
+    background-color: var(--background);
+
+    &:hover {
+      background-color: var(--surface-hover);
+    }
+
+    &:active {
+      background-color: var(--surface);
+    }
+  }
+
+  /* ---- */
+
+  thead tr {
+    &:last-child {
+      border-bottom: 2px solid var(--border);
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    height: auto;
+
+    &.expanded,
+    &.sub-row {
+      border-bottom: none;
+    }
+
+    &.sub-row + tr:not(.sub-row) {
+      border-top: 1px solid var(--border);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--surface-hover);
+
+      td {
+        background-color: var(--surface-hover);
+      }
+    }
+  }
+
+  /* ---- */
+
+  .spinner-wrapper,
+  .spinner-wrapper-full {
+    position: absolute;
+    bottom: 0;
+    padding: 12px 0;
+    width: 100%;
+    left: 0;
+    min-height: 36px;
+    z-index: 2;
+    background: color-mix(in srgb, var(--background) 80%, transparent);
+  }
+
+  .spinner-wrapper-full {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sorting {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+
+    [class$='-icon'] {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+    }
+
+    [class^='icon-sortable'] {
+      color: var(--text-secondary);
+    }
+  }
+
+  .filter-wrapper {
+    margin-top: 4px;
+  }
+
+  .no-result {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+}
+
+.grid-table-column-toggler {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 5px;
+}
+
+.filter-wrapper {
+  .clear-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-secondary);
+  }
+}
+
+[data-pinned-right='true']::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0, transparent 100%);
+}
+
+[data-pinned-left='true']::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0, transparent 100%);
+}
+
+.checkboxWrapper {
+  width: 100%;
+  height: 14px;
+  margin: 3px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :global(.labeledCheckbox) {
+    display: block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      width: 0;
+      height: 0;
+      opacity: 0 !important;
+      z-index: -1;
+      max-width: 0;
+      max-height: 0;
+    }
+
+    :global(.labelText) {
+      position: relative;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      padding: 0;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        border: 1px solid var(--border);
+        margin: 0;
+        padding: 0;
+        background: var(--background);
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      &::after {
+        content: none;
+        display: none;
+        position: absolute;
+        z-index: 2;
+        left: 5.5px;
+        width: 4px;
+        border-style: solid;
+        height: 8px;
+        border-color: var(--background);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        top: 2px;
+        margin: 0;
+      }
+    }
+
+    input:checked + :global(.labelText) {
+      &::before {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
+
+    input:indeterminate + :global(.labelText) {
+      &::before {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        background: var(--background);
+        border-radius: 2px;
+        transform: none;
+        border: 0 none;
+        width: 7px;
+        height: 2px;
+        top: 6px;
+        left: 3.5px;
+      }
+    }
+  }
+}

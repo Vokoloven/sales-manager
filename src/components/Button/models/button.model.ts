@@ -7,7 +7,9 @@ type TButton = Readonly<
     Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'style'> & {
       buttonType?: TValueOf<typeof BUTTON_TYPE>;
       size?: TValueOf<typeof BUTTON_SIZE>;
+      isActive?: boolean;
       icon?: ReactNode;
+      text?: string;
       iconRight?: ReactNode;
     }
 >;
