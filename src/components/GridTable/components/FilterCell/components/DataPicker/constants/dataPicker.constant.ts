@@ -3,7 +3,9 @@ import dayPickerStyles from 'react-day-picker/src/style.module.css';
 import styles from '../DataPicker.module.css';
 
 const PORTAL = {
-  root: document.querySelector('body'),
+  get root() {
+    return typeof document !== 'undefined' ? document.querySelector('body') : null;
+  },
   datePicker: 'date-picker'
 } as const;
 
