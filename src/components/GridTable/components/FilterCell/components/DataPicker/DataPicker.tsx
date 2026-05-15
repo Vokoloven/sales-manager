@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-hooks/refs */
 import {
   FloatingFocusManager,
   FloatingPortal,
@@ -100,6 +98,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
   useEffect(() => {
     if (!isOpen) {
       if (range?.from && !range.to) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setRange(undefined);
       }
     }
@@ -109,6 +108,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
     <>
       <div className={classNames('tableDataPickerInput', 'tableDataPicker', styles.box)}>
         <Input
+          name={label}
           ref={refs.setReference}
           {...getReferenceProps()}
           readOnly={true}
@@ -133,6 +133,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
         <FloatingPortal root={PORTAL.root} id={PORTAL.datePicker}>
           <FloatingFocusManager context={context} modal>
             <div
+              // eslint-disable-next-line react-hooks/refs
               ref={refs.setFloating}
               style={{ ...floatingStyles }}
               className={styles.dataPickContainer}
