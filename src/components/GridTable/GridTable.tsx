@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import { useRef } from 'react';
 import { useScrollPinnedBoundaries } from '@/components/GridTable/hooks/useScrollPinnedBoundaries';
 import { pinnedColumnMeta } from '@/components/GridTable/utils/pinnedColumnMeta';
+import Button from '../Button/Button';
+import { BUTTON_TYPE } from '../Button/constants/button.constant';
 import { Icons } from '../Icons/Icons';
 import Filter from './components/FilterCell/FilterCell';
 import Resizer from './components/Resizer/Resizer';
@@ -91,9 +93,24 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                                 </span>
                                 {(header.column.getCanSort() &&
                                   {
-                                    asc: <Icons.ArrowUp />,
-                                    desc: <Icons.ArrowDown />
-                                  }[header.column.getIsSorted() as string]) ?? <Icons.Sortable />}
+                                    asc: (
+                                      <Button
+                                        icon={<Icons.ArrowUp />}
+                                        buttonType={BUTTON_TYPE.iconGhost}
+                                      />
+                                    ),
+                                    desc: (
+                                      <Button
+                                        icon={<Icons.ArrowDown />}
+                                        buttonType={BUTTON_TYPE.iconGhost}
+                                      />
+                                    )
+                                  }[header.column.getIsSorted() as string]) ?? (
+                                  <Button
+                                    icon={<Icons.Sortable />}
+                                    buttonType={BUTTON_TYPE.iconGhost}
+                                  />
+                                )}
                               </div>
                             ) : (
                               <span className={styles.title}>
