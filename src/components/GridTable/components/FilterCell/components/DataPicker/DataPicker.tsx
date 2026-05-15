@@ -16,11 +16,13 @@ import {
 import classNames from 'classnames';
 import { type FC, useEffect, useState } from 'react';
 import { type DateRange, DayPicker } from 'react-day-picker';
+import Button from '@/components/Button/Button';
+import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
 import ButtonList from './components/ButtonList/ButtonList';
 import { mixedDayPickerClassNames, PORTAL } from './constants/dataPicker.constant';
 import { formatDisplayRange } from './utils/formatRange';
-import type { TDatePicker } from './models/DataPicker.model';
+import type { TDatePicker } from './models/dataPicker.model';
 import styles from './DataPicker.module.css';
 
 const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue }) => {
@@ -113,9 +115,12 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue }) => {
           value={formatDisplayRange(filterValue)}
         />
         {filterValue ? (
-          <button type='button' onClick={onClear} className={styles.clearButton}>
-            <Icons.FilterClear />
-          </button>
+          <Button
+            buttonType={BUTTON_TYPE.iconGhost}
+            icon={<Icons.FilterClear />}
+            type='button'
+            onClick={onClear}
+          />
         ) : (
           <span className={styles.calendarIcon}>
             <Icons.CalendarDate />
