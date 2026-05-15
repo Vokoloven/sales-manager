@@ -19,6 +19,7 @@ import { type DateRange, DayPicker } from 'react-day-picker';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
+import Input from '@/components/Input/Input';
 import ButtonList from './components/ButtonList/ButtonList';
 import { mixedDayPickerClassNames, PORTAL } from './constants/dataPicker.constant';
 import { formatDisplayRange } from './utils/formatRange';
@@ -106,12 +107,11 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
 
   return (
     <>
-      <div className={classNames('tableDataPicker', styles.box, styles.dataPicker)}>
-        <input
+      <div className={classNames('tableDataPickerInput', 'tableDataPicker', styles.box)}>
+        <Input
           ref={refs.setReference}
           {...getReferenceProps()}
           readOnly={true}
-          className={classNames('tableDataPickerInput', styles.input, { focus: isOpen })}
           value={formatDisplayRange(filterValue)}
           aria-label={label ? `Filter ${label} by date range` : 'Filter date range'}
         />
