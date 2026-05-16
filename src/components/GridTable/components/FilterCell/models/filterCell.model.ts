@@ -4,6 +4,7 @@ import type { Options } from 'react-select';
 
 type TInputFilter = {
   setFilterValue: (updater: Updater<string>) => void;
+  filterValue: unknown;
   label?: string;
 };
 

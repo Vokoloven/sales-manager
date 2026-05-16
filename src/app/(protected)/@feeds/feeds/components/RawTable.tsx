@@ -3,11 +3,12 @@
 import { use } from 'react';
 import GridTable from '@/components/GridTable/GridTable';
 import { useRawTable } from './hooks/useRawTable';
-import type { TFeedsReponseSchema } from '../models/feeds.schema';
+import type { TFeedsPageProps } from '../models/feeds.model';
 
-const RawTable = ({ promise }: { promise: Promise<TFeedsReponseSchema> }) => {
-  const result = use(promise);
-  const { table } = useRawTable(result);
+const RawTable = ({ promise, parsedSearchParams }: TFeedsPageProps) => {
+  const data = use(promise);
+
+  const { table } = useRawTable({ data, parsedSearchParams });
 
   return <GridTable table={table} />;
 };

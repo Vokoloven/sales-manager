@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
-import type { TItem } from '../../models/feeds.schema';
+import type { TFeedItem } from '../../models/feeds.model';
 
 const generateColumns = () => {
-  const columnHelper = createColumnHelper<TItem>();
+  const columnHelper = createColumnHelper<TFeedItem>();
 
   return [
     columnHelper.accessor('title', {
