@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import qs from 'qs';
 import { Suspense } from 'react';
-import Loading from '@/components/Loading/Loading';
+import TableSkeleton from '@/components/GridTable/components/TableSkeleton/TableSkeleton';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import RawTable from './components/RawTable';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
@@ -38,7 +38,7 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
 
   return (
     <div className={styles.root}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<TableSkeleton />}>
         <RawTable promise={promise} parsedSearchParams={parsedSearchParams.data} />
       </Suspense>
     </div>

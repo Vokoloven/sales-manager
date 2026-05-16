@@ -12,9 +12,10 @@ declare module '@tanstack/react-table' {
     options?: Options<TOption>;
   }
 
-  interface TableMeta {
+  interface TableMeta<TData extends RowData> {
+    isPending?: boolean;
     onRowClick?: (
-      rowData: T,
+      rowData: TData,
       virtualIndex: number,
       e: React.MouseEvent<HTMLTableRowElement>
     ) => void;

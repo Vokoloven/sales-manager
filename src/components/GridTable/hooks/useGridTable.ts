@@ -9,6 +9,9 @@ const useGridTable = <T>(table: Table<T>) => {
 
   const isFiltered = (tableState.globalFilter ??
     Object.keys(tableState.columnFilters).length > 0) as boolean;
+
+  const isPending = table.options.meta?.isPending ?? false;
+
   const tableContainerRef = useRef<TNullable<ComponentRef<'div'>>>(null);
 
   const { rows } = table.getRowModel();
@@ -21,7 +24,7 @@ const useGridTable = <T>(table: Table<T>) => {
     getScrollElement: () => tableContainerRef.current,
     measureElement:
       typeof window !== 'undefined' && !navigator.userAgent.includes('Firefox')
-        ? (element): number => Math.round(element?.getBoundingClientRect().height)
+        ? (element): number => Math.round(element.getBoundingClientRect().height)
         : undefined,
     overscan: 5
   });
@@ -38,6 +41,7 @@ const useGridTable = <T>(table: Table<T>) => {
     rowVirtualizer,
     tableContainerRef,
     isFiltered,
+    isPending,
     rows,
     virtualItems,
     paddingTop,
