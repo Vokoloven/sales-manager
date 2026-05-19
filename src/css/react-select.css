@@ -11,6 +11,16 @@
 
 .react-select__control {
   border: 1px solid var(--border) !important;
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+.react-select__single-value {
+  color: var(--text-primary) !important;
+}
+
+.react-select__input-container {
+  color: var(--text-primary) !important;
 }
 
 .react-select__indicators {
@@ -28,7 +38,13 @@
 
 .react-select__option {
   cursor: pointer !important;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+}
+
+.react-select__option--is-focused:not(.react-select__option--is-selected) {
+  background-color: var(--surface-hover) !important;
+  color: var(--text-primary) !important;
 }
 
 .react-select__option--is-selected,
@@ -41,11 +57,6 @@
 .react-select__placeholder,
 .react-select__single-value {
   margin-left: 0 !important;
-}
-
-.react-select__option--is-focused {
-  background: var(--accent-soft) !important;
-  color: var(--text-primary);
 }
 
 .react-select__control input {

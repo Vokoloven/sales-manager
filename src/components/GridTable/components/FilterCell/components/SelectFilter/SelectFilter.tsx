@@ -1,10 +1,8 @@
 import { getOverflowAncestors } from '@floating-ui/react'; // используем ту же утилиту
 import { type FC, useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
-import {
-  selectComponents,
-  selectStyles
-} from '@/components/GridTable/components/FilterCell/components/SelectFilter/constants/selectFilter.constant';
+import { selectStyles } from '@/components/GridTable/components/FilterCell/components/SelectFilter/constants/selectFilter.constant';
+import selectComponentMap from '@/components/SelectComponents/selectComponentMap';
 import type { TSelectFilter } from '@/components/GridTable/components/FilterCell/models/filterCell.model';
 import type { TOption } from '@/core/models/option.model';
 
@@ -74,7 +72,11 @@ const SelectFilter: FC<TSelectFilter> = ({ filterValue, setFilterValue, options 
       <Select<TOption>
         className='wrapper_react-select'
         classNamePrefix='react-select'
-        components={selectComponents}
+        components={{
+          MenuList: (props) => <selectComponentMap.menuListMap.Checkbox {...props} />,
+          ValueContainer: selectComponentMap.ValueContainer,
+          ClearIndicator: selectComponentMap.ClearIndicator
+        }}
         styles={selectStyles}
         isClearable={!!filterValue}
         options={options}

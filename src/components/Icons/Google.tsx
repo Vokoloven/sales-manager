@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const Google = () => (
   <span className='google-icon'>
     <svg
@@ -31,4 +29,4 @@ const Google = () => (
   </span>
 );
 
-export default memo(Google);
+export default Google;
