@@ -9,6 +9,8 @@ import type { TOption } from '@/core/models/option.model';
 const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pendingSelected, setPendingSelected] = useState<TOption[]>([]);
+  const [optimisticValues, setOptimisticValues] = useState<string[] | null>(null);
+
   const pendingSelectedRef = useRef(pendingSelected);
   const parsedValueRef = useRef(parsedValue);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +28,16 @@ const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue 
     [options, parsedValue]
   );
 
-  const displayValue = isOpen ? pendingSelected : selectedFromParsed;
+  const displayValue = useMemo(() => {
+    if (isOpen) return pendingSelected;
+    if (optimisticValues !== null) {
+      const isSynced =
+        parsedValue.length === optimisticValues.length &&
+        optimisticValues.every((v) => parsedValue.includes(v));
+      if (!isSynced) return options.filter((opt) => optimisticValues.includes(opt.value));
+    }
+    return selectedFromParsed;
+  }, [isOpen, pendingSelected, optimisticValues, parsedValue, options, selectedFromParsed]);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -39,7 +50,12 @@ const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue 
   }, [setFilterValue]);
 
   const handleOpen = () => {
-    setPendingSelected(selectedFromParsed);
+    const base =
+      optimisticValues !== null
+        ? options.filter((opt) => optimisticValues.includes(opt.value))
+        : selectedFromParsed;
+    setPendingSelected(base);
+    setOptimisticValues(null);
     setIsOpen(true);
   };
 
@@ -111,7 +127,7 @@ const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue 
         }}
         styles={selectStyles}
         value={displayValue}
-        isClearable={selectedFromParsed.length > 0}
+        isClearable={displayValue.length > 0}
         options={options}
         isSearchable={false}
         menuIsOpen={isOpen}
@@ -119,9 +135,16 @@ const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue 
         onMenuClose={handleClose}
         onChange={(value, actionMeta) => {
           if (actionMeta.action === 'clear') {
+            setOptimisticValues(null);
             setPendingSelected([]);
             setIsOpen(false);
             setFilterValue([]);
+            return;
+          }
+          if (actionMeta.action === 'remove-value' && !isOpen) {
+            const newValues = [...value].map((opt) => opt.value);
+            setOptimisticValues(newValues);
+            setFilterValue(newValues);
             return;
           }
           setPendingSelected([...value]);
