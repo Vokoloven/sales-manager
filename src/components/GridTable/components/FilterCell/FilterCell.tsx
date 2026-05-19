@@ -6,7 +6,7 @@ import { debounceFn } from '@/components/GridTable/utils/debounceFn.util';
 import DataPicker from './components/DataPicker/DataPicker';
 import type { Column, Table, Updater } from '@tanstack/react-table';
 
-const Filter = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
+const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
   const { setFilterValue, getFilterValue } = column;
   const filterValue = getFilterValue();
   const [inputFilterValue, setInputFilterValue] = useState(filterValue ?? '');
@@ -61,4 +61,4 @@ const Filter = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
   );
 };
 
-export default Filter;
+export default FilterCell;

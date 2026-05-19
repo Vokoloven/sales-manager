@@ -6,7 +6,7 @@ import { pinnedColumnMeta } from '@/components/GridTable/utils/pinnedColumnMeta'
 import Button from '../Button/Button';
 import { BUTTON_TYPE } from '../Button/constants/button.constant';
 import { Icons } from '../Icons/Icons';
-import Filter from './components/FilterCell/FilterCell';
+import FilterCell from './components/FilterCell/FilterCell';
 import Resizer from './components/Resizer/Resizer';
 import TableSkeleton from './components/TableSkeleton/TableSkeleton';
 import { useGridTable } from './hooks/useGridTable';
@@ -137,7 +137,7 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                                   styles['filter-wrapper']
                                 )}
                               >
-                                <Filter column={header.column} table={table} />
+                                <FilterCell column={header.column} table={table} />
                               </div>
                             )}
                           </div>
