@@ -9,7 +9,9 @@ import SelectAllCheckbox from './components/SelectAllCheckbox/SelectAllCheckbox'
 import type { TMenuListProps } from '../../models/menuList.model';
 import type { TNullable } from '@/core/models/utility.model';
 
-const MenuListCheckbox = <T,>(props: TMenuListProps<T>) => {
+const MenuListCheckbox = <T, IsMulti extends boolean = false>(
+  props: TMenuListProps<T, IsMulti>
+) => {
   const { children, innerProps, getValue, menuClassname, selectProps, ...rest } = props;
 
   const menuRef = useRef<TNullable<HTMLDivElement>>(null);

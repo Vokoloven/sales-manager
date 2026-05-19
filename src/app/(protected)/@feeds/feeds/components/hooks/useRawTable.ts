@@ -14,19 +14,29 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
   const [isPending, startTransition] = useTransition();
   const isFirstRender = useRef(true);
 
-  const columns = useMemo(() => generateColumns(data), [data]);
+  const columns = useMemo(
+    () => generateColumns({ data, parsedSearchParams }),
+    [data, parsedSearchParams]
+  );
 
   const [sorting, setSorting] = useState<SortingState>(() => {
     if (!sortBy) return [];
     return [{ id: sortBy, desc: sortDirection === 'desc' }];
   });
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(() =>
-    searchParameters.map(({ searchBy, searchQuery }) => ({
-      id: searchBy,
-      value: searchQuery
-    }))
-  );
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(() => {
+    const grouped = searchParameters.reduce<Record<string, string[]>>(
+      (acc, { searchBy, searchQuery }) => {
+        (acc[searchBy] ??= []).push(searchQuery);
+        return acc;
+      },
+      {}
+    );
+    return Object.entries(grouped).map(([id, values]) => ({
+      id,
+      value: values.length === 1 ? values[0] : values
+    }));
+  });
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -35,8 +45,12 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
     }
 
     const filters = columnFilters
-      .filter(({ value }) => Boolean(value))
-      .map(({ id, value }) => ({ searchBy: id, searchQuery: value as string }));
+      .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
+      .flatMap(({ id, value }) =>
+        Array.isArray(value)
+          ? (value as string[]).map((v) => ({ searchBy: id, searchQuery: v }))
+          : [{ searchBy: id, searchQuery: value as string }]
+      );
 
     const newSortBy = sorting[0]?.id;
     const newSortDirection = sorting[0] ? (sorting[0].desc ? 'desc' : 'asc') : undefined;

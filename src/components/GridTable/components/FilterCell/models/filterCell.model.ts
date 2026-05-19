@@ -12,6 +12,7 @@ type TSelectFilter = {
   options: Options<TOption>;
   filterValue: unknown;
   setFilterValue: (updater: Updater<unknown>) => void;
+  parsedValue?: string[];
 };
 
 export type { TInputFilter, TSelectFilter };

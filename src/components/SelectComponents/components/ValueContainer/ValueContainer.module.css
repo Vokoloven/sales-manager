@@ -14,8 +14,8 @@
   .hiddenCount {
     flex-shrink: 0;
     min-width: max-content;
-    background: var(--surface-disabled);
-    color: var(--text-secondary);
+    background: var(--surface);
+    color: var(--text-primary);
     border-radius: 2px;
     padding: 1px 5px;
     height: 22px;

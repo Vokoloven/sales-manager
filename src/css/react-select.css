@@ -9,9 +9,22 @@
   padding: 4px 8px !important;
 }
 
+.react-select__multi-value {
+  background-color: var(--surface) !important;
+}
+
+.react-select__multi-value__label {
+  color: var(--text-primary) !important;
+}
+
+.react-select__multi-value__remove:hover {
+  background-color: var(--surface-hover) !important;
+  color: var(--text-primary) !important;
+}
+
 .react-select__control {
   border: 1px solid var(--border) !important;
-  background-color: var(--surface) !important;
+  background-color: var(--background) !important;
   color: var(--text-primary) !important;
 }
 

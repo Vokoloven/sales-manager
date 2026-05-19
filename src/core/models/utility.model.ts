@@ -14,4 +14,8 @@ type TPrettify<T> = {
   [K in TKey<T>]: T[K];
 } & {};
 
-export type { TNullable, TKey, TValueOf, TZodInfer, TOptional, TPrettify };
+type TDeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? TDeepPartial<T[K]> : T[K];
+};
+
+export type { TNullable, TKey, TValueOf, TZodInfer, TOptional, TPrettify, TDeepPartial };

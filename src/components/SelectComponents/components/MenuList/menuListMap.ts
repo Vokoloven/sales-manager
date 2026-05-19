@@ -1,9 +1,9 @@
 import MenuListCheckbox from './components/MenuListCheckbox/MenuListCheckbox';
 import MenuListVirtual from './components/MenuListVirtual/MenuListVirtual';
 
-const menuListMap = {
+const MENU_LIST_MAP = {
   Virtual: MenuListVirtual,
   Checkbox: MenuListCheckbox
 } as const;
 
-export default menuListMap;
+export { MENU_LIST_MAP };

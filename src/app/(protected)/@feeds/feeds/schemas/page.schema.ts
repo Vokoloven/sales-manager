@@ -1,7 +1,7 @@
 import z from 'zod';
 import { searchParamValueSchema } from '@/core/schemas/searchParamsValue.schema';
 
-const searchBySchema = z.enum(['title', 'published']);
+const searchBySchema = z.enum(['title', 'published', 'score']);
 
 const searchFilterSchema = z.object({
   searchQuery: z.string(),

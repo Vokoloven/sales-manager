@@ -39,6 +39,7 @@ const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) =>
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             options={meta?.options ?? []}
+            parsedValue={meta?.parsedValue}
           />
         ),
         [FILTER_TYPE.date]: (
@@ -56,7 +57,8 @@ const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) =>
       handleFilterChange,
       label,
       setFilterValue,
-      meta?.options
+      meta?.options,
+      meta?.parsedValue
     ]
   );
 };

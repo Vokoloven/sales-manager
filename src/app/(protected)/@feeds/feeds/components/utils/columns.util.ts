@@ -3,7 +3,7 @@ import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constn
 import type { TFeedItem } from '../../models/feeds.model';
 import type { TUseRawTable } from '../hooks/models/useRawTable.model';
 
-const generateColumns = (data: TUseRawTable['data']) => {
+const generateColumns = ({ data, parsedSearchParams }: TUseRawTable) => {
   const columnHelper = createColumnHelper<TFeedItem>();
 
   return [
@@ -33,6 +33,10 @@ const generateColumns = (data: TUseRawTable['data']) => {
       minSize: 175,
       size: 175,
       meta: {
+        parsedValue:
+          parsedSearchParams.searchParameters
+            ?.filter(({ searchBy }) => searchBy === 'score')
+            .map(({ searchQuery }) => searchQuery) ?? [],
         options: data.data?.scoreOptions,
         filterType: FILTER_TYPE.select
       }
