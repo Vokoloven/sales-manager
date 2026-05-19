@@ -8,9 +8,8 @@ import type { TZodInfer } from '@/core/models/utility.model';
 
 class FeedsService {
   @ApiValidator(feedsResponseSchema)
-  public getFeeds = ({ pageSize, pageNumber, ...rest }: TFeedsPageParsedSearchParams) => {
-    console.log(rest);
-    return apiService().api<TZodInfer<typeof feedsResponseSchema>>(API_URL.feeds, {
+  public getFeeds = ({ pageSize, pageNumber, ...rest }: TFeedsPageParsedSearchParams) =>
+    apiService().api<TZodInfer<typeof feedsResponseSchema>>(API_URL.feeds, {
       method: HTTP_METHOD.POST,
       body: JSON.stringify({
         pageSize: Number(pageSize),
@@ -18,7 +17,6 @@ class FeedsService {
         ...rest
       })
     });
-  };
 }
 
 const feedsService = new FeedsService();

@@ -1,8 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
 import type { TFeedItem } from '../../models/feeds.model';
+import type { TUseRawTable } from '../hooks/models/useRawTable.model';
 
-const generateColumns = () => {
+const generateColumns = (data: TUseRawTable['data']) => {
   const columnHelper = createColumnHelper<TFeedItem>();
 
   return [
@@ -21,6 +22,19 @@ const generateColumns = () => {
       size: 175,
       meta: {
         filterType: FILTER_TYPE.date
+      }
+    }),
+    columnHelper.accessor('score', {
+      id: 'score',
+      header: 'Score',
+      cell: (info) => {
+        return info.getValue();
+      },
+      minSize: 175,
+      size: 175,
+      meta: {
+        options: data.data?.scoreOptions,
+        filterType: FILTER_TYPE.select
       }
     }),
     columnHelper.accessor('matchedCases', {

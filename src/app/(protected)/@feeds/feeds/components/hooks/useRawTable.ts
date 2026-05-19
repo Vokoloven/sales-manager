@@ -14,7 +14,7 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
   const [isPending, startTransition] = useTransition();
   const isFirstRender = useRef(true);
 
-  const columns = useMemo(() => generateColumns(), []);
+  const columns = useMemo(() => generateColumns(data), [data]);
 
   const [sorting, setSorting] = useState<SortingState>(() => {
     if (!sortBy) return [];
@@ -59,7 +59,7 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
 
   const table = useReactTable({
     columns,
-    data: data.data?.items.items ?? [],
+    data: data.success ? data.data.items.items : [],
     getCoreRowModel: getCoreRowModel(),
     state: {
       columnFilters,

@@ -40,13 +40,17 @@ export const proxy = async (req: NextRequest) => {
         return response;
       }
 
-      response = NextResponse.redirect(new URL(APP_PATH.login, req.nextUrl));
+      const loginUrlOnFailure = new URL(APP_PATH.login, req.nextUrl);
+      loginUrlOnFailure.searchParams.set('callbackUrl', req.nextUrl.pathname + req.nextUrl.search);
+      response = NextResponse.redirect(loginUrlOnFailure);
       response.cookies.delete(TOKEN.accessToken);
       response.cookies.delete(TOKEN.refreshToken);
       return response;
     }
 
-    return NextResponse.redirect(new URL(APP_PATH.login, req.nextUrl));
+    const loginUrl = new URL(APP_PATH.login, req.nextUrl);
+    loginUrl.searchParams.set('callbackUrl', req.nextUrl.pathname + req.nextUrl.search);
+    return NextResponse.redirect(loginUrl);
   }
 
   if (isPublicRoute && isAuth) {
