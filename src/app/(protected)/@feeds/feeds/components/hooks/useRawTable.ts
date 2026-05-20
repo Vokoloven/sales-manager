@@ -4,10 +4,10 @@ import qs from 'qs';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import { generateColumns } from '../utils/columns.util';
-import type { TUseRawTable } from './models/useRawTable.model';
+import type { TFeedsPageProps } from '../../models/feeds.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
 
-const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
+const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
   const { searchParameters = [], sortBy, sortDirection } = parsedSearchParams;
 
   const router = useRouter();

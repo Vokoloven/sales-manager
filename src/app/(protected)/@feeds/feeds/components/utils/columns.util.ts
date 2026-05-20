@@ -1,12 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
-import type { TFeedItem } from '../../models/feeds.model';
-import type { TUseRawTable } from '../hooks/models/useRawTable.model';
+import type { TFeedItem, TFeedsPageProps } from '../../models/feeds.model';
 
 const generateColumns = ({
   data,
   scoreParsedValue
-}: Pick<TUseRawTable, 'data'> & { scoreParsedValue: string[] }) => {
+}: Pick<TFeedsPageProps, 'data'> & { scoreParsedValue: string[] }) => {
   const columnHelper = createColumnHelper<TFeedItem>();
 
   return [

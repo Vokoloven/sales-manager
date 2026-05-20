@@ -34,12 +34,12 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
     redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 10, pageNumber: 1 })}`);
   }
 
-  const promise = feedsService.getFeeds(parsedSearchParams.data);
+  const data = await feedsService.getFeeds(parsedSearchParams.data);
 
   return (
     <div className={styles.root}>
       <Suspense fallback={<TableSkeleton />}>
-        <RawTable promise={promise} parsedSearchParams={parsedSearchParams.data} />
+        <RawTable data={data} parsedSearchParams={parsedSearchParams.data} />
       </Suspense>
     </div>
   );
