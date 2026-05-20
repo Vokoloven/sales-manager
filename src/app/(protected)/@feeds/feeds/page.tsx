@@ -31,7 +31,7 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
     !parsedSearchParams.data.pageSize ||
     !parsedSearchParams.data.pageNumber
   ) {
-    redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 50, pageNumber: 1 })}`);
+    redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 10, pageNumber: 1 })}`);
   }
 
   const promise = feedsService.getFeeds(parsedSearchParams.data);

@@ -8,15 +8,23 @@ import type { TUseRawTable } from './models/useRawTable.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
 
 const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
-  const { searchParameters = [], sortBy, sortDirection, pageSize, pageNumber } = parsedSearchParams;
+  const { searchParameters = [], sortBy, sortDirection } = parsedSearchParams;
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const isFirstRender = useRef(true);
 
+  const scoreParsedValue = useMemo(
+    () =>
+      searchParameters
+        .filter(({ searchBy }) => searchBy === 'score')
+        .map(({ searchQuery }) => searchQuery),
+    [JSON.stringify(searchParameters)]
+  );
+
   const columns = useMemo(
-    () => generateColumns({ data, parsedSearchParams }),
-    [data, parsedSearchParams]
+    () => generateColumns({ data, scoreParsedValue }),
+    [data, scoreParsedValue]
   );
 
   const [sorting, setSorting] = useState<SortingState>(() => {
@@ -59,7 +67,7 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
       router.push(
         `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
           {
-            pageSize: 50,
+            pageSize: 10,
             pageNumber: 1,
             sortBy: newSortBy,
             sortDirection: newSortDirection,
@@ -69,7 +77,7 @@ const useRawTable = ({ data, parsedSearchParams }: TUseRawTable) => {
         )}`
       );
     });
-  }, [columnFilters, sorting, router, pageSize, pageNumber]);
+  }, [JSON.stringify(columnFilters), JSON.stringify(sorting)]);
 
   const table = useReactTable({
     columns,

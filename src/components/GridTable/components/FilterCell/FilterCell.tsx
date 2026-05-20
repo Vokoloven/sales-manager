@@ -51,14 +51,14 @@ const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) =>
         )
       })[meta?.filterType ?? FILTER_TYPE.text],
     [
-      meta?.filterType,
-      filterValue,
       inputFilterValue,
-      handleFilterChange,
       label,
+      filterValue,
+      handleFilterChange,
       setFilterValue,
       meta?.options,
-      meta?.parsedValue
+      meta?.parsedValue,
+      meta?.filterType
     ]
   );
 };

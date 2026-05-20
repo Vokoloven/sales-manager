@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import React, { type ChangeEvent, type FC } from 'react';
 import Input from '@/components/Input/Input';
 import type { TInputFilter } from '@/components/GridTable/components/FilterCell/models/filterCell.model';
+import type { ChangeEvent } from 'react';
 import styles from '@/components/GridTable/components/FilterCell/FilterCell.module.css';
 
-const InputFilter: FC<TInputFilter> = ({ setFilterValue, label, filterValue }) => {
+const InputFilter = ({ setFilterValue, label, filterValue }: TInputFilter) => {
   return (
     <div className={classNames('tableInputBox', styles.box)}>
       <Input

@@ -1,12 +1,12 @@
-import { getOverflowAncestors } from '@floating-ui/react'; // используем ту же утилиту
-import { type FC, useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { getOverflowAncestors } from '@floating-ui/react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Select from 'react-select';
 import { selectStyles } from '@/components/GridTable/components/FilterCell/components/SelectFilter/constants/selectFilter.constant';
 import { SELECT_COMPONENT_MAP } from '@/components/SelectComponents/selectComponentMap';
 import type { TSelectFilter } from '@/components/GridTable/components/FilterCell/models/filterCell.model';
 import type { TOption } from '@/core/models/option.model';
 
-const SelectFilter: FC<TSelectFilter> = ({ setFilterValue, options, parsedValue = [] }) => {
+const SelectFilter = ({ setFilterValue, options, parsedValue = [] }: TSelectFilter) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pendingSelected, setPendingSelected] = useState<TOption[]>([]);
   const [optimisticValues, setOptimisticValues] = useState<string[] | null>(null);
