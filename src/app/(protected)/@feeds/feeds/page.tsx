@@ -1,11 +1,14 @@
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import qs from 'qs';
 import { Suspense } from 'react';
 import TableSkeleton from '@/components/GridTable/components/TableSkeleton/TableSkeleton';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import RawTable from './components/RawTable';
+import { FEEDS_FILTER_COOKIE } from './constants/filter.constant';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
 import { feedsService } from './service/Feeds.service';
+import { filterStore } from './store/filterStore';
 import type { TPageProps } from './models/page.model';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
@@ -34,12 +37,18 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
     redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 10, pageNumber: 1 })}`);
   }
 
-  const data = await feedsService.getFeeds(parsedSearchParams.data);
+  const cookieStore = await cookies();
+  const filterId = parsedSearchParams.data.filterId ?? cookieStore.get(FEEDS_FILTER_COOKIE)?.value;
+  const searchParameters = filterId ? filterStore.get(filterId) : undefined;
+
+  const finalParams = { ...parsedSearchParams.data, searchParameters };
+
+  const data = await feedsService.getFeeds(finalParams);
 
   return (
     <div className={styles.root}>
       <Suspense fallback={<TableSkeleton />}>
-        <RawTable data={data} parsedSearchParams={parsedSearchParams.data} />
+        <RawTable data={data} parsedSearchParams={finalParams} />
       </Suspense>
     </div>
   );
