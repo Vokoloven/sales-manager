@@ -16,13 +16,13 @@ const itemsSchema = z.object({
       url: z.string(),
       title: z.string(),
       published: z.iso.datetime(),
-      keywords: z.array(z.string()),
-      score: z.number(),
-      matchedCases: z.number(),
-      matchedBlogs: z.number(),
       accountId: z.number(),
       presetId: z.string(),
-      review: z.object().nullable()
+      review: z.object().nullable(),
+      keywords: z.array(z.string()).optional(),
+      score: z.number().optional(),
+      matchedCases: z.number().optional(),
+      matchedBlogs: z.number().optional()
     })
   )
 });

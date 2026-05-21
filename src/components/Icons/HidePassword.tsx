@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const HidePassword = () => {
   return (
     <span className='hide-password-icon'>
@@ -19,4 +17,4 @@ const HidePassword = () => {
   );
 };
 
-export default memo(HidePassword);
+export default HidePassword;

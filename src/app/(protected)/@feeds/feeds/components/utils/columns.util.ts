@@ -1,9 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
-import type { TItem } from '../../models/feeds.schema';
+import type { TFeedItem, TFeedsPageProps } from '../../models/feeds.model';
 
-const generateColumns = () => {
-  const columnHelper = createColumnHelper<TItem>();
+const generateColumns = ({
+  data,
+  keywordsParsedValue,
+  scoreParsedValue
+}: Pick<TFeedsPageProps, 'data'> & {
+  scoreParsedValue: string[];
+  keywordsParsedValue: string[];
+}) => {
+  const columnHelper = createColumnHelper<TFeedItem>();
 
   return [
     columnHelper.accessor('title', {
@@ -21,6 +28,34 @@ const generateColumns = () => {
       size: 175,
       meta: {
         filterType: FILTER_TYPE.date
+      }
+    }),
+    columnHelper.accessor('keywords', {
+      id: 'keywords',
+      header: 'Keywords',
+      cell: (info) => {
+        return info.getValue();
+      },
+      minSize: 175,
+      size: 175,
+      meta: {
+        parsedValue: keywordsParsedValue,
+        options: data.data?.keywordsOptions,
+        filterType: FILTER_TYPE.select
+      }
+    }),
+    columnHelper.accessor('score', {
+      id: 'score',
+      header: 'Score',
+      cell: (info) => {
+        return info.getValue();
+      },
+      minSize: 175,
+      size: 175,
+      meta: {
+        parsedValue: scoreParsedValue,
+        options: data.data?.scoreOptions,
+        filterType: FILTER_TYPE.select
       }
     }),
     columnHelper.accessor('matchedCases', {

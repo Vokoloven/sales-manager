@@ -10,7 +10,14 @@ import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import('eslint').Linter.Config[]} */
 const eslintConfig = defineConfig([
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', './env.d.ts']),
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    './env.d.ts',
+    './src/components/GridTable/models/tanstack-table.model.d.ts'
+  ]),
   [...nextVitals, ...nextTs],
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,

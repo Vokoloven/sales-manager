@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const Home = () => {
   return (
     <span className='home-icon'>
@@ -21,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default memo(Home);
+export default Home;

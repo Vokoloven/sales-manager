@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-hooks/refs */
 import {
   FloatingFocusManager,
   FloatingPortal,
@@ -14,7 +12,7 @@ import {
   getOverflowAncestors
 } from '@floating-ui/react';
 import classNames from 'classnames';
-import { type FC, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { type DateRange, DayPicker } from 'react-day-picker';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
@@ -26,22 +24,26 @@ import { formatDisplayRange } from './utils/formatRange';
 import type { TDatePicker } from './models/DataPicker.model';
 import styles from './DataPicker.module.css';
 
-const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => {
+const DataPicker = ({ setFilterValue, filterValue, label }: TDatePicker) => {
   const [isOpen, setIsOpen] = useState(false);
+  const middleware = useMemo(() => [offset(8), flip(), shift({ padding: 8 })], []);
+  const today = useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
+  const minDate = useMemo(() => new Date(0), []);
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
     placement: 'bottom',
-    middleware: [offset(8), flip(), shift({ padding: 8 })],
+    middleware,
     whileElementsMounted: autoUpdate
   });
   const [range, setRange] = useState<DateRange | undefined>();
   const click = useClick(context);
   const dismiss = useDismiss(context);
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss]);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const minDate = new Date(0);
 
   const handleSelect = (newRange: DateRange | undefined, selectedDay: Date) => {
     if (range?.from && range?.to) {
@@ -100,6 +102,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
   useEffect(() => {
     if (!isOpen) {
       if (range?.from && !range.to) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setRange(undefined);
       }
     }
@@ -109,6 +112,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
     <>
       <div className={classNames('tableDataPickerInput', 'tableDataPicker', styles.box)}>
         <Input
+          name={label}
           ref={refs.setReference}
           {...getReferenceProps()}
           readOnly={true}
@@ -133,6 +137,7 @@ const DataPicker: FC<TDatePicker> = ({ setFilterValue, filterValue, label }) => 
         <FloatingPortal root={PORTAL.root} id={PORTAL.datePicker}>
           <FloatingFocusManager context={context} modal>
             <div
+              // eslint-disable-next-line react-hooks/refs
               ref={refs.setFloating}
               style={{ ...floatingStyles }}
               className={styles.dataPickContainer}

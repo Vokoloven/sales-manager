@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const LogOut = () => {
   return (
     <span className='log-out-icon'>
@@ -21,4 +19,4 @@ const LogOut = () => {
   );
 };
 
-export default memo(LogOut);
+export default LogOut;

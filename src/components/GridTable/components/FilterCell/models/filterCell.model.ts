@@ -4,13 +4,15 @@ import type { Options } from 'react-select';
 
 type TInputFilter = {
   setFilterValue: (updater: Updater<string>) => void;
+  filterValue: unknown;
   label?: string;
 };
 
 type TSelectFilter = {
-  options: Options<TOption>;
   filterValue: unknown;
   setFilterValue: (updater: Updater<unknown>) => void;
+  options?: Options<TOption>;
+  parsedValue?: string[];
 };
 
 export type { TInputFilter, TSelectFilter };

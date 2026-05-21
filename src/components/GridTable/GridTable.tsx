@@ -6,8 +6,9 @@ import { pinnedColumnMeta } from '@/components/GridTable/utils/pinnedColumnMeta'
 import Button from '../Button/Button';
 import { BUTTON_TYPE } from '../Button/constants/button.constant';
 import { Icons } from '../Icons/Icons';
-import Filter from './components/FilterCell/FilterCell';
+import FilterCell from './components/FilterCell/FilterCell';
 import Resizer from './components/Resizer/Resizer';
+import TableSkeleton from './components/TableSkeleton/TableSkeleton';
 import { useGridTable } from './hooks/useGridTable';
 import type { Table } from '@tanstack/react-table';
 import styles from './GridTable.module.css';
@@ -21,6 +22,7 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
     paddingBottom,
     rowVirtualizer,
     isFiltered,
+    isPending,
     rows
   } = useGridTable(table);
 
@@ -135,7 +137,7 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                                   styles['filter-wrapper']
                                 )}
                               >
-                                <Filter column={header.column} table={table} />
+                                <FilterCell column={header.column} table={table} />
                               </div>
                             )}
                           </div>
@@ -185,7 +187,7 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                         const target = e.target as Element;
 
                         if (
-                          target?.closest(
+                          target.closest(
                             'button, a, input, select, div#portal-modal, div[data-floating-ui-portal]'
                           )
                         ) {
@@ -234,6 +236,11 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
             <p className={styles['no-result']}>
               {isFiltered ? 'No results found for your search query' : 'No items'}
             </p>
+          )}
+          {isPending && (
+            <div className={styles['skeleton-overlay']}>
+              <TableSkeleton columns={table.getAllColumns().length} />
+            </div>
           )}
         </div>
       </div>

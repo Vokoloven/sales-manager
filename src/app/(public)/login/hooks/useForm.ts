@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useGoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useActionState, useState, startTransition, useEffect } from 'react';
 import { useForm as useReactHookForm } from 'react-hook-form';
 import { APP_PATH } from '@/core/constants/appPath.constant';
@@ -13,6 +13,7 @@ import type { TNullable, TOptional, TZodInfer } from '@/core/models/utility.mode
 
 const useForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useReactHookForm({
@@ -42,7 +43,8 @@ const useForm = () => {
     form.reset();
 
     if (result.success) {
-      router.push(APP_PATH.feeds);
+      const callbackUrl = searchParams.get('callbackUrl');
+      router.push(callbackUrl ?? APP_PATH.feeds);
       return null;
     }
 

@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const ShowPassword = () => {
   return (
     <span className='show-password-icon'>
@@ -21,4 +19,4 @@ const ShowPassword = () => {
   );
 };
 
-export default memo(ShowPassword);
+export default ShowPassword;

@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 const Feeds = () => (
   <span className='feeds-icon'>
     <svg
@@ -19,4 +17,4 @@ const Feeds = () => (
   </span>
 );
 
-export default memo(Feeds);
+export default Feeds;
