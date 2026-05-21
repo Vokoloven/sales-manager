@@ -13,7 +13,6 @@ const feedsPageSearchParamsSchema = z.object({
   pageNumber: searchParamValueSchema,
   sortDirection: searchParamValueSchema,
   sortBy: searchParamValueSchema,
-  filterId: searchParamValueSchema,
   searchParameters: z.array(searchFilterSchema).optional()
 });
 

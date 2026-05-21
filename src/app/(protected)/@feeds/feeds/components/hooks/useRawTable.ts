@@ -3,11 +3,8 @@ import { useRouter } from 'next/navigation';
 import qs from 'qs';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
-import { saveSearchParamsAction } from '../../actions/saveSearchParams.action';
 import { generateColumns } from '../utils/columns.util';
 import type { TFeedsPageProps } from '../../models/feeds.model';
-import type { searchBySchema } from '../../schemas/page.schema';
-import type { TZodInfer } from '@/core/models/utility.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
 
 const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
@@ -70,18 +67,14 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
         .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
         .flatMap(({ id, value }) =>
           Array.isArray(value)
-            ? (value as string[]).map((v) => ({
-                searchBy: id as TZodInfer<typeof searchBySchema>,
-                searchQuery: v
-              }))
-            : [{ searchBy: id as TZodInfer<typeof searchBySchema>, searchQuery: value as string }]
+            ? (value as string[]).map((v) => ({ searchBy: id, searchQuery: v }))
+            : [{ searchBy: id, searchQuery: value as string }]
         );
 
       const newSortBy = sorting[0]?.id;
       const newSortDirection = sorting[0] ? (sorting[0].desc ? 'desc' : 'asc') : undefined;
 
-      startTransition(async () => {
-        const filterId = await saveSearchParamsAction(filters);
+      startTransition(() => {
         router.push(
           `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
             {
@@ -89,9 +82,9 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
               pageNumber: 1,
               sortBy: newSortBy,
               sortDirection: newSortDirection,
-              filterId
+              searchParameters: filters
             },
-            { skipNulls: true }
+            { arrayFormat: 'indices', skipNulls: true }
           )}`
         );
       });
