@@ -9,9 +9,9 @@ type TInputFilter = {
 };
 
 type TSelectFilter = {
-  options: Options<TOption>;
   filterValue: unknown;
   setFilterValue: (updater: Updater<unknown>) => void;
+  options?: Options<TOption>;
   parsedValue?: string[];
 };
 

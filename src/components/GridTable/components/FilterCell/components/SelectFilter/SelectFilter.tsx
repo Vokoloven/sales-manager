@@ -6,7 +6,7 @@ import { SELECT_COMPONENT_MAP } from '@/components/SelectComponents/selectCompon
 import type { TSelectFilter } from '@/components/GridTable/components/FilterCell/models/filterCell.model';
 import type { TOption } from '@/core/models/option.model';
 
-const SelectFilter = ({ setFilterValue, options, parsedValue = [] }: TSelectFilter) => {
+const SelectFilter = ({ setFilterValue, options = [], parsedValue = [] }: TSelectFilter) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pendingSelected, setPendingSelected] = useState<TOption[]>([]);
   const [optimisticValues, setOptimisticValues] = useState<string[] | null>(null);

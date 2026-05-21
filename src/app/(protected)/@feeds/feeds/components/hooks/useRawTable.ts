@@ -19,13 +19,23 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
       searchParameters
         .filter(({ searchBy }) => searchBy === 'score')
         .map(({ searchQuery }) => searchQuery),
-    [JSON.stringify(searchParameters)]
+    [searchParameters]
   );
 
-  const columns = useMemo(
-    () => generateColumns({ data, scoreParsedValue }),
-    [data, scoreParsedValue]
+  const keywordsParsedValue = useMemo(
+    () =>
+      searchParameters
+        .filter(({ searchBy }) => searchBy === 'keywords')
+        .map(({ searchQuery }) => searchQuery),
+    [searchParameters]
   );
+
+  const memoColumns = useMemo(
+    () => generateColumns({ data, scoreParsedValue, keywordsParsedValue }),
+    [data, scoreParsedValue, keywordsParsedValue]
+  );
+
+  const memoData = useMemo(() => data.data?.items.items ?? [], [data]);
 
   const [sorting, setSorting] = useState<SortingState>(() => {
     if (!sortBy) return [];
@@ -46,42 +56,45 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
     }));
   });
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
+  useEffect(
+    function handleSortAndFilters() {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
 
-    const filters = columnFilters
-      .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
-      .flatMap(({ id, value }) =>
-        Array.isArray(value)
-          ? (value as string[]).map((v) => ({ searchBy: id, searchQuery: v }))
-          : [{ searchBy: id, searchQuery: value as string }]
-      );
+      const filters = columnFilters
+        .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
+        .flatMap(({ id, value }) =>
+          Array.isArray(value)
+            ? (value as string[]).map((v) => ({ searchBy: id, searchQuery: v }))
+            : [{ searchBy: id, searchQuery: value as string }]
+        );
 
-    const newSortBy = sorting[0]?.id;
-    const newSortDirection = sorting[0] ? (sorting[0].desc ? 'desc' : 'asc') : undefined;
+      const newSortBy = sorting[0]?.id;
+      const newSortDirection = sorting[0] ? (sorting[0].desc ? 'desc' : 'asc') : undefined;
 
-    startTransition(() => {
-      router.push(
-        `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
-          {
-            pageSize: 10,
-            pageNumber: 1,
-            sortBy: newSortBy,
-            sortDirection: newSortDirection,
-            searchParameters: filters
-          },
-          { arrayFormat: 'indices', skipNulls: true }
-        )}`
-      );
-    });
-  }, [JSON.stringify(columnFilters), JSON.stringify(sorting)]);
+      startTransition(() => {
+        router.push(
+          `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
+            {
+              pageSize: 10,
+              pageNumber: 1,
+              sortBy: newSortBy,
+              sortDirection: newSortDirection,
+              searchParameters: filters
+            },
+            { arrayFormat: 'indices', skipNulls: true }
+          )}`
+        );
+      });
+    },
+    [columnFilters, sorting, router]
+  );
 
   const table = useReactTable({
-    columns,
-    data: data.success ? data.data.items.items : [],
+    columns: memoColumns,
+    data: memoData,
     getCoreRowModel: getCoreRowModel(),
     state: {
       columnFilters,
