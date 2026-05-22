@@ -47,7 +47,8 @@ const Pagination = ({
     <nav className={styles.pagination}>
       <div className={styles.info}>
         <span className={styles.infoText}>
-          Items shown: <b>1-{parsedSearchParams.pageSize}</b> out of <b>{totalPages}</b>
+          Items shown: <b>1-{parsedSearchParams.pageSize}</b> out of{' '}
+          <b title={totalPages.toString()}>{totalPages}</b>
         </span>
         <div className={styles.pageSizeSelector}>
           <span className={styles.pageSizeLabel}>Items per page:</span>
