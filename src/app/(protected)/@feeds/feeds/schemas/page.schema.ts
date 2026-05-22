@@ -1,7 +1,9 @@
 import z from 'zod';
-import { searchParamValueSchema } from '@/core/schemas/searchParamsValue.schema';
+import { PAGE_SIZE } from '../components/Pagination/constants/pagination.constant';
 
 const searchBySchema = z.enum(['title', 'published', 'keywords', 'score']);
+
+const pageSizeSchema = z.enum(PAGE_SIZE);
 
 const searchFilterSchema = z.object({
   searchQuery: z.string(),
@@ -9,11 +11,11 @@ const searchFilterSchema = z.object({
 });
 
 const feedsPageSearchParamsSchema = z.object({
-  pageSize: searchParamValueSchema,
-  pageNumber: searchParamValueSchema,
-  sortDirection: searchParamValueSchema,
-  sortBy: searchParamValueSchema,
-  sp: searchParamValueSchema
+  pageSize: pageSizeSchema,
+  pageNumber: z.string(),
+  sortDirection: z.string().optional(),
+  sortBy: z.string().optional(),
+  sp: z.string().optional()
 });
 
 export { feedsPageSearchParamsSchema, searchBySchema, searchFilterSchema };

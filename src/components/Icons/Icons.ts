@@ -3,8 +3,10 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowUp from './ArrowUp';
 import CalendarDate from './CalendarDate';
+import ChevronLeft from './ChevronLeft';
 import Feeds from './Feeds';
 import FilterClear from './FilterClear';
+import First from './First';
 import Google from './Google';
 import HidePassword from './HidePassword';
 import Home from './Home';
@@ -24,7 +26,9 @@ const Icons = {
   ArrowUp: memo(ArrowUp),
   Sortable: memo(Sortable),
   FilterClear: memo(FilterClear),
-  CalendarDate: memo(CalendarDate)
+  CalendarDate: memo(CalendarDate),
+  First: memo(First),
+  ChevronLeft: memo(ChevronLeft)
 } as const;
 
 export { Icons };

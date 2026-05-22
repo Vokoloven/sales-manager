@@ -4,6 +4,7 @@ import qs from 'qs';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import { compressFilters, type TSearchFilter } from '../../utils/compressFilters.util';
+import { INIT_PAGINATION } from '../Pagination/constants/pagination.constant';
 import { generateColumns } from '../utils/columns.util';
 import type { TFeedsPageProps } from '../../models/feeds.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
@@ -82,8 +83,7 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
         router.push(
           `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
             {
-              pageSize: 10,
-              pageNumber: 1,
+              ...INIT_PAGINATION,
               sortBy: newSortBy,
               sortDirection: newSortDirection,
               sp: compressFilters(filters)
