@@ -3,9 +3,15 @@ import qs from 'qs';
 import { Suspense } from 'react';
 import TableSkeleton from '@/components/GridTable/components/TableSkeleton/TableSkeleton';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
+import {
+  INIT_PAGINATION,
+  PAGE_SIZE_OPTION
+} from './components/Pagination/constants/pagination.constant';
+import Pagination from './components/Pagination/Pagination';
 import RawTable from './components/RawTable';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
 import { feedsService } from './service/Feeds.service';
+import { decompressFilters } from './utils/compressFilters.util';
 import type { TPageProps } from './models/page.model';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
@@ -26,20 +32,28 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
 
   const parsedSearchParams = feedsPageSearchParamsSchema.safeParse(qs.parse(queryStr));
 
-  if (
-    !parsedSearchParams.success ||
-    !parsedSearchParams.data.pageSize ||
-    !parsedSearchParams.data.pageNumber
-  ) {
-    redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 10, pageNumber: 1 })}`);
+  if (!parsedSearchParams.success) {
+    redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify(INIT_PAGINATION)}`);
   }
 
-  const data = await feedsService.getFeeds(parsedSearchParams.data);
+  const { sp, ...urlParams } = parsedSearchParams.data;
+  const searchParameters = sp ? decompressFilters(sp) : undefined;
+
+  const finalParams = { ...urlParams, searchParameters };
+
+  const data = await feedsService.getFeeds(finalParams);
+  const totalPages = data.success ? data.data.items.totalPages : 1;
 
   return (
     <div className={styles.root}>
       <Suspense fallback={<TableSkeleton />}>
-        <RawTable data={data} parsedSearchParams={parsedSearchParams.data} />
+        <RawTable data={data} parsedSearchParams={finalParams} />
+        <Pagination
+          options={PAGE_SIZE_OPTION}
+          parsedSearchParams={finalParams}
+          sp={sp}
+          totalPages={totalPages}
+        />
       </Suspense>
     </div>
   );
