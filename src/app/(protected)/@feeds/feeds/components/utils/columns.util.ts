@@ -40,7 +40,7 @@ const generateColumns = ({
       size: 175,
       meta: {
         parsedValue: keywordsParsedValue,
-        options: data.data?.keywordsOptions,
+        options: data.data?.keywordsOptions.slice(0, 100),
         filterType: FILTER_TYPE.select
       }
     }),

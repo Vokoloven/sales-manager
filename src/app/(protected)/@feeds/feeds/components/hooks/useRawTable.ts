@@ -1,8 +1,9 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import qs from 'qs';
-import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
+import { useFeedsTransition } from '../../context/hooks/useFeedsTransitions';
 import { compressFilters, type TSearchFilter } from '../../utils/compressFilters.util';
 import { INIT_PAGINATION } from '../Pagination/constants/pagination.constant';
 import { generateColumns } from '../utils/columns.util';
@@ -10,10 +11,10 @@ import type { TFeedsPageProps } from '../../models/feeds.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
 
 const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
-  const { searchParameters = [], sortBy, sortDirection } = parsedSearchParams;
+  const { searchParameters = [], sortBy, sortDirection, pageSize } = parsedSearchParams;
 
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const { isPending, startTransition } = useFeedsTransition();
   const isFirstRender = useRef(true);
 
   const scoreParsedValue = useMemo(
@@ -84,6 +85,7 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
           `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
             {
               ...INIT_PAGINATION,
+              pageSize,
               sortBy: newSortBy,
               sortDirection: newSortDirection,
               sp: compressFilters(filters)
@@ -93,7 +95,7 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
         );
       });
     },
-    [columnFilters, sorting, router]
+    [columnFilters, sorting, router, startTransition, pageSize]
   );
 
   const table = useReactTable({
