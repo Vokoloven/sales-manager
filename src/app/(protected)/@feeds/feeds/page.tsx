@@ -6,6 +6,7 @@ import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import RawTable from './components/RawTable';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
 import { feedsService } from './service/Feeds.service';
+import { decompressFilters } from './utils/compressFilters.util';
 import type { TPageProps } from './models/page.model';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
@@ -34,12 +35,17 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
     redirect(`${APP_PROTECTED_PATH.feeds}?${qs.stringify({ pageSize: 10, pageNumber: 1 })}`);
   }
 
-  const data = await feedsService.getFeeds(parsedSearchParams.data);
+  const { sp, ...urlParams } = parsedSearchParams.data;
+  const searchParameters = sp ? decompressFilters(sp) : undefined;
+
+  const finalParams = { ...urlParams, searchParameters };
+
+  const data = await feedsService.getFeeds(finalParams);
 
   return (
     <div className={styles.root}>
       <Suspense fallback={<TableSkeleton />}>
-        <RawTable data={data} parsedSearchParams={parsedSearchParams.data} />
+        <RawTable data={data} parsedSearchParams={finalParams} />
       </Suspense>
     </div>
   );

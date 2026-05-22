@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import qs from 'qs';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
+import { compressFilters, type TSearchFilter } from '../../utils/compressFilters.util';
 import { generateColumns } from '../utils/columns.util';
 import type { TFeedsPageProps } from '../../models/feeds.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
@@ -67,8 +68,11 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
         .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
         .flatMap(({ id, value }) =>
           Array.isArray(value)
-            ? (value as string[]).map((v) => ({ searchBy: id, searchQuery: v }))
-            : [{ searchBy: id, searchQuery: value as string }]
+            ? (value as string[]).map((v) => ({
+                searchBy: id as TSearchFilter['searchBy'],
+                searchQuery: v
+              }))
+            : [{ searchBy: id as TSearchFilter['searchBy'], searchQuery: value as string }]
         );
 
       const newSortBy = sorting[0]?.id;
@@ -82,9 +86,9 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
               pageNumber: 1,
               sortBy: newSortBy,
               sortDirection: newSortDirection,
-              searchParameters: filters
+              sp: compressFilters(filters)
             },
-            { arrayFormat: 'indices', skipNulls: true }
+            { skipNulls: true }
           )}`
         );
       });
