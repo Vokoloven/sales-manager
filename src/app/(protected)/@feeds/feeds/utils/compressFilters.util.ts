@@ -1,9 +1,7 @@
 import LZString from 'lz-string';
 import z from 'zod';
 import { searchFilterSchema } from '../schemas/page.schema';
-import type { TZodInfer } from '@/core/models/utility.model';
-
-type TSearchFilter = TZodInfer<typeof searchFilterSchema>;
+import type { TSearchFilter } from '../models/compressFilters.model';
 
 const compressFilters = (filters: TSearchFilter[]): string | null => {
   if (filters.length === 0) return null;
@@ -21,4 +19,4 @@ const decompressFilters = (compressed: string): TSearchFilter[] | undefined => {
   }
 };
 
-export { compressFilters, decompressFilters, type TSearchFilter };
+export { compressFilters, decompressFilters };

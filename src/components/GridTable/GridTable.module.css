@@ -83,6 +83,15 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    &.wrap-cell {
+      height: auto;
+      min-height: 36px;
+      overflow: visible;
+      white-space: normal;
+      text-overflow: unset;
+      padding-block: 6px;
+    }
   }
 
   th,

@@ -1,6 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
-import type { TFeedItem, TFeedsPageProps } from '../../models/feeds.model';
+import { KeywordBadges } from '../../Badges/KeywordBadge';
+import { ScoreBadge } from '../../Badges/ScoreBadge';
+import type { TFeedItem, TFeedsPageProps } from '@/app/(protected)/@feeds/feeds/models/feeds.model';
 
 const generateColumns = ({
   data,
@@ -24,7 +26,14 @@ const generateColumns = ({
     columnHelper.accessor('published', {
       id: 'published',
       header: 'Published',
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        new Date(info.getValue()).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
       minSize: 175,
       size: 175,
       meta: {
@@ -35,20 +44,21 @@ const generateColumns = ({
     columnHelper.accessor('keywords', {
       id: 'keywords',
       header: 'Keywords',
-      cell: (info) => info.getValue(),
+      cell: (info) => <KeywordBadges keywords={info.getValue()} />,
       minSize: 175,
       size: 175,
       meta: {
         parsedValue: keywordsParsedValue,
         options: data.data?.keywordsOptions.slice(0, 100),
-        filterType: FILTER_TYPE.select
+        filterType: FILTER_TYPE.select,
+        wrap: true
       }
     }),
 
     columnHelper.accessor('score', {
       id: 'score',
       header: 'Score',
-      cell: (info) => info.getValue(),
+      cell: (info) => <ScoreBadge score={info.getValue()} />,
       minSize: 175,
       size: 175,
       meta: {

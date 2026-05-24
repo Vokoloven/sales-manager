@@ -2,12 +2,13 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import qs from 'qs';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { generateColumns } from '@/app/(protected)/@feeds/feeds/components/RawTable/utils/columns.util';
+import { useFeedsTransition } from '@/app/(protected)/@feeds/feeds/context/hooks/useFeedsTransitions';
+import { compressFilters } from '@/app/(protected)/@feeds/feeds/utils/compressFilters.util';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
-import { useFeedsTransition } from '../../context/hooks/useFeedsTransitions';
-import { compressFilters, type TSearchFilter } from '../../utils/compressFilters.util';
-import { INIT_PAGINATION } from '../Pagination/constants/pagination.constant';
-import { generateColumns } from '../utils/columns.util';
-import type { TFeedsPageProps } from '../../models/feeds.model';
+import { INIT_PAGINATION } from '../../Pagination/constants/pagination.constant';
+import type { TSearchFilter } from '@/app/(protected)/@feeds/feeds/models/compressFilters.model';
+import type { TFeedsPageProps } from '@/app/(protected)/@feeds/feeds/models/feeds.model';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
 
 const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {

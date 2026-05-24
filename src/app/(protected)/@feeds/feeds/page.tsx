@@ -8,7 +8,7 @@ import {
   PAGE_SIZE_OPTION
 } from './components/Pagination/constants/pagination.constant';
 import Pagination from './components/Pagination/Pagination';
-import RawTable from './components/RawTable';
+import RawTable from './components/RawTable/RawTable';
 import { FeedsTransitionProvider } from './context/FeedsTransition.context';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
 import { feedsService } from './service/Feeds.service';
