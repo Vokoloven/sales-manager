@@ -1,9 +1,9 @@
 import { useMemo, useCallback, useState } from 'react';
 import InputFilter from '@/components/GridTable/components/FilterCell/components/InputFilter/InputFilter';
-import SelectFilter from '@/components/GridTable/components/FilterCell/components/SelectFilter/SelectFilter';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
 import { debounceFn } from '@/components/GridTable/utils/debounceFn.util';
 import DataPicker from './components/DataPicker/DataPicker';
+import SelectFilter from './components/SelectFilter/SelectFilter';
 import type { Column, Table, Updater } from '@tanstack/react-table';
 
 const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) => {
@@ -40,6 +40,7 @@ const FilterCell = <C, T>({ column }: { column: Column<C>; table: Table<T> }) =>
             setFilterValue={setFilterValue}
             options={meta?.options ?? []}
             parsedValue={meta?.parsedValue}
+            label={label}
           />
         ),
         [FILTER_TYPE.date]: (

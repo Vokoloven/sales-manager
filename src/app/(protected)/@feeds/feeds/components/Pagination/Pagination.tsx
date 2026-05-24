@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import qs from 'qs';
+import { useSyncExternalStore } from 'react';
 import Select from 'react-select';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
@@ -17,6 +18,8 @@ import type { TFeedsPageProps } from '../../models/feeds.model';
 import type { TOption } from '@/core/models/option.model';
 import styles from './Pagination.module.css';
 
+const subscribe = (_cb: () => void) => () => undefined;
+
 const Pagination = ({
   options,
   parsedSearchParams,
@@ -27,6 +30,11 @@ const Pagination = ({
   sp?: string;
   totalPages: number;
 } & Pick<TFeedsPageProps, 'parsedSearchParams'>) => {
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
   const router = useRouter();
   const { isPending, startTransition } = useFeedsTransition();
   const currentPage = Number(parsedSearchParams.pageNumber);
@@ -61,35 +69,39 @@ const Pagination = ({
         </span>
         <div className={styles.pageSizeSelector}>
           <span className={styles.pageSizeLabel}>Items per page:</span>
-          <Select<TOption>
-            hideSelectedOptions={false}
-            closeMenuOnSelect={true}
-            className='wrapper_react-select'
-            classNamePrefix='react-select'
-            components={{
-              MenuList: (props) => <SELECT_COMPONENT_MAP.MenuListMap.Virtual {...props} />,
-              ValueContainer: SELECT_COMPONENT_MAP.ValueContainer
-            }}
-            styles={selectStyles}
-            menuPlacement='auto'
-            options={options}
-            defaultValue={{
-              label: parsedSearchParams.pageSize,
-              value: parsedSearchParams.pageSize
-            }}
-            isSearchable={false}
-            onChange={(newValue) => {
-              startTransition(() => {
-                router.push(
-                  `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
-                    { ...urlParams, pageNumber: 1, pageSize: newValue?.value, sp },
-                    { skipNulls: true }
-                  )}`
-                );
-              });
-            }}
-            placeholder=''
-          />
+          {mounted && (
+            <Select<TOption>
+              instanceId='pagination-page-size'
+              aria-label='Items per page'
+              hideSelectedOptions={false}
+              closeMenuOnSelect={true}
+              className='wrapper_react-select'
+              classNamePrefix='react-select'
+              components={{
+                MenuList: (props) => <SELECT_COMPONENT_MAP.MenuListMap.Virtual {...props} />,
+                ValueContainer: SELECT_COMPONENT_MAP.ValueContainer
+              }}
+              styles={selectStyles}
+              menuPlacement='auto'
+              options={options}
+              defaultValue={{
+                label: parsedSearchParams.pageSize,
+                value: parsedSearchParams.pageSize
+              }}
+              isSearchable={false}
+              onChange={(newValue) => {
+                startTransition(() => {
+                  router.push(
+                    `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
+                      { ...urlParams, pageNumber: 1, pageSize: newValue?.value, sp },
+                      { skipNulls: true }
+                    )}`
+                  );
+                });
+              }}
+              placeholder=''
+            />
+          )}
         </div>
       </div>
 
