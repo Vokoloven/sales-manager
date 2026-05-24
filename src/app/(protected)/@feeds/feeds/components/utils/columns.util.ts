@@ -20,6 +20,7 @@ const generateColumns = ({
       minSize: 175,
       size: 175
     }),
+
     columnHelper.accessor('published', {
       id: 'published',
       header: 'Published',
@@ -30,12 +31,11 @@ const generateColumns = ({
         filterType: FILTER_TYPE.date
       }
     }),
+
     columnHelper.accessor('keywords', {
       id: 'keywords',
       header: 'Keywords',
-      cell: (info) => {
-        return info.getValue();
-      },
+      cell: (info) => info.getValue(),
       minSize: 175,
       size: 175,
       meta: {
@@ -44,12 +44,11 @@ const generateColumns = ({
         filterType: FILTER_TYPE.select
       }
     }),
+
     columnHelper.accessor('score', {
       id: 'score',
       header: 'Score',
-      cell: (info) => {
-        return info.getValue();
-      },
+      cell: (info) => info.getValue(),
       minSize: 175,
       size: 175,
       meta: {
@@ -58,6 +57,7 @@ const generateColumns = ({
         filterType: FILTER_TYPE.select
       }
     }),
+
     columnHelper.accessor('matchedCases', {
       id: 'matchedCases',
       header: 'Matched cases',
@@ -66,6 +66,7 @@ const generateColumns = ({
       size: 175,
       enableColumnFilter: false
     }),
+
     columnHelper.accessor('matchedBlogs', {
       id: 'matchedBlogs',
       header: 'Matched blogs',
