@@ -18,7 +18,11 @@ const generateColumns = ({
     columnHelper.accessor('title', {
       id: 'title',
       header: 'Title',
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <a href={info.row.original.url} target='_blank' rel='noopener noreferrer'>
+          {info.getValue()}
+        </a>
+      ),
       minSize: 175,
       size: 175
     }),
