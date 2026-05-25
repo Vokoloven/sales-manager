@@ -112,7 +112,9 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
     meta: {
       isPending,
       onRowClick: (rowData) => {
-        router.push(`${APP_PROTECTED_PATH.feeds}/${rowData.id}`);
+        startTransition(() => {
+          router.push(`${APP_PROTECTED_PATH.feeds}/${rowData.id}`);
+        });
       }
     }
   });
