@@ -3,6 +3,7 @@ import { responseSchema } from '@/core/schemas/response.schema';
 import { itemsSchema } from '../../schemas/feeds.schema';
 
 const feedSchema = itemsSchema.shape.items.element.extend({
+  description: z.string().optional(),
   matchedCasesData: z.array(
     z.object({
       docId: z.string(),

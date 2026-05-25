@@ -1,12 +1,69 @@
+import { notFound } from 'next/navigation';
+import { Activity } from 'react';
+import { KeywordBadges } from '../components/Badges/KeywordBadge';
+import { ScoreBadge } from '../components/Badges/ScoreBadge';
+import { MarkdownRenderer } from './components/MarkdownRenderer/MarkdownRenderer';
+import ReturnButton from './components/ReturnButton/ReturnButton';
 import { feedService } from './services/Feed.service';
 import type { TParams } from '@/core/models/params.model';
+import styles from './page.module.css';
+
+export async function generateMetadata({ params }: TParams<'id'>) {
+  const { id } = await params;
+
+  const data = await feedService.getFeed(id);
+
+  return {
+    title: data.data?.title,
+    description: data.data?.description
+  };
+}
 
 const ViewFeed = async ({ params }: TParams<'id'>) => {
   const { id } = await params;
 
-  const _data = await feedService.getFeed(id);
+  const data = await feedService.getFeed(id);
 
-  return <h1>ViewFeed is created on {id}</h1>;
+  if (!data.data) notFound();
+
+  return (
+    <div className={styles.root}>
+      <header>
+        <nav>
+          <ReturnButton />
+        </nav>
+        <h1>{data.data.title}</h1>
+      </header>
+      <main className={styles.main}>
+        <section className={styles.section}>
+          <h2>Project info</h2>
+          <div className={styles.meta}>
+            <ScoreBadge score={data.data.score} />
+            <a href={data.data.url} target='_blank' rel='noreferrer noopener'>
+              {data.data.title}
+            </a>
+            <span className={styles.date}>
+              {new Date(data.data.published).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </span>
+          </div>
+          <Activity mode={data.data.description ? 'visible' : 'hidden'}>
+            <MarkdownRenderer content={data.data.description ?? ''} />
+          </Activity>
+        </section>
+
+        <section className={styles.section}>
+          <h2>Keywords</h2>
+          <KeywordBadges keywords={data.data.keywords} />
+        </section>
+      </main>
+    </div>
+  );
 };
 
 export default ViewFeed;
