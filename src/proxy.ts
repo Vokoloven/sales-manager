@@ -9,7 +9,7 @@ const protectedRoutes = Object.values(APP_PROTECTED_PATH) as string[];
 
 const proxy = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
+  const isProtectedRoute = protectedRoutes.some((route) => path.startsWith(route));
   const isPublicRoute = publicRoutes.includes(path);
 
   const accessToken = req.cookies.get(TOKEN.accessToken)?.value ?? null;
