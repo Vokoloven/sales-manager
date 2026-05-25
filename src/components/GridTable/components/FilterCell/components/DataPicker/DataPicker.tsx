@@ -23,6 +23,7 @@ import { mixedDayPickerClassNames, PORTAL } from './constants/dataPicker.constan
 import { formatDisplayRange } from './utils/formatRange';
 import type { TDatePicker } from './models/DataPicker.model';
 import styles from './DataPicker.module.css';
+import '@/css/piker.css';
 
 const DataPicker = ({ setFilterValue, filterValue, label }: TDatePicker) => {
   const [isOpen, setIsOpen] = useState(false);

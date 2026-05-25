@@ -12,6 +12,7 @@ import TableSkeleton from './components/TableSkeleton/TableSkeleton';
 import { useGridTable } from './hooks/useGridTable';
 import type { Table } from '@tanstack/react-table';
 import styles from './GridTable.module.css';
+import '@/css/table-style.css';
 
 const GridTable = <T,>({ table }: { table: Table<T> }) => {
   const {
