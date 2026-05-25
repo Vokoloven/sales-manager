@@ -5,19 +5,20 @@ import { ScoreBadge } from '../components/Badges/ScoreBadge';
 import { MarkdownRenderer } from './components/MarkdownRenderer/MarkdownRenderer';
 import ReturnButton from './components/ReturnButton/ReturnButton';
 import { feedService } from './services/Feed.service';
+import { toMetaDescription } from './utils/toMetaDescription';
 import type { TParams } from '@/core/models/params.model';
 import styles from './page.module.css';
 
-export async function generateMetadata({ params }: TParams<'id'>) {
+const generateMetadata = async ({ params }: TParams<'id'>) => {
   const { id } = await params;
 
   const data = await feedService.getFeed(id);
 
   return {
     title: data.data?.title,
-    description: data.data?.description
+    description: toMetaDescription(data.data?.description)
   };
-}
+};
 
 const ViewFeed = async ({ params }: TParams<'id'>) => {
   const { id } = await params;
@@ -65,5 +66,7 @@ const ViewFeed = async ({ params }: TParams<'id'>) => {
     </div>
   );
 };
+
+export { generateMetadata };
 
 export default ViewFeed;
