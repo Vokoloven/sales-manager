@@ -7,8 +7,4 @@ type TFeedsServiceParams = Omit<TFeedsPageParsedSearchParams, 'sp'> & {
   searchParameters?: TZodInfer<typeof searchFilterSchema>[];
 };
 
-type TPageProps = {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-};
-
-export type { TFeedsPageParsedSearchParams, TFeedsServiceParams, TPageProps };
+export type { TFeedsPageParsedSearchParams, TFeedsServiceParams };

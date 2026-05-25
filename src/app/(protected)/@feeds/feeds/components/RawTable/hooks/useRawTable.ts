@@ -110,7 +110,10 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     meta: {
-      isPending
+      isPending,
+      onRowClick: (rowData) => {
+        router.push(`${APP_PROTECTED_PATH.feeds}/${rowData.id}`);
+      }
     }
   });
 
