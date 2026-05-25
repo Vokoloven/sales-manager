@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { Activity } from 'react';
 import { KeywordBadges } from '../components/Badges/KeywordBadge';
 import { ScoreBadge } from '../components/Badges/ScoreBadge';
 import { MarkdownRenderer } from './components/MarkdownRenderer/MarkdownRenderer';
+import { MatchedItem } from './components/MatchedItem/MatchedItem';
 import ReturnButton from './components/ReturnButton/ReturnButton';
 import { feedService } from './services/Feed.service';
 import { toMetaDescription } from './utils/toMetaDescription';
@@ -53,15 +53,51 @@ const ViewFeed = async ({ params }: TParams<'id'>) => {
               })}
             </span>
           </div>
-          <Activity mode={data.data.description ? 'visible' : 'hidden'}>
-            <MarkdownRenderer content={data.data.description ?? ''} />
-          </Activity>
+          <MarkdownRenderer content={data.data.description ?? ''} />
         </section>
 
         <section className={styles.section}>
           <h2>Keywords</h2>
           <KeywordBadges keywords={data.data.keywords} />
         </section>
+
+        {data.data.matchedCasesData.length > 0 && (
+          <section className={styles.section}>
+            <h2>Matched cases</h2>
+            {data.data.matchedCasesData.map(
+              ({ docId, link, title, content, score, selected, infoBlock }) => (
+                <MatchedItem
+                  key={docId}
+                  link={link}
+                  title={title}
+                  content={content}
+                  score={score}
+                  selected={selected}
+                  infoBlock={infoBlock}
+                />
+              )
+            )}
+          </section>
+        )}
+
+        {data.data.matchedBlogsData.length > 0 && (
+          <section className={styles.section}>
+            <h2>Matched blogs</h2>
+            {data.data.matchedBlogsData.map(
+              ({ docId, link, title, content, score, selected, infoBlock }) => (
+                <MatchedItem
+                  key={docId}
+                  link={link}
+                  title={title}
+                  content={content}
+                  score={score}
+                  selected={selected}
+                  infoBlock={infoBlock}
+                />
+              )
+            )}
+          </section>
+        )}
       </main>
     </div>
   );

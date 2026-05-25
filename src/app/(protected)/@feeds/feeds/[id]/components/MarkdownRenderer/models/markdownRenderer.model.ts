@@ -1,5 +1,5 @@
-type MarkdownRendererProps = {
+type TMarkdownRendererProps = {
   content: string;
 };
 
-export type { MarkdownRendererProps };
+export type { TMarkdownRendererProps };
