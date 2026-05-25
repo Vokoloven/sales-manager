@@ -42,7 +42,7 @@ class ApiService {
     });
 
     if (response.status === 401) {
-      redirect(APP_PATH.base);
+      redirect(APP_PATH.login);
     }
 
     const json = (await response.json()) as T;

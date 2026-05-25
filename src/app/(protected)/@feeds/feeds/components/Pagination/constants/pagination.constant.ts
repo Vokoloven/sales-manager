@@ -8,7 +8,7 @@ const PAGE_SIZE = {
   '50': '50'
 } as const;
 
-const INIT_PAGINATION = { pageSize: Number(PAGE_SIZE[10]), pageNumber: 1 };
+const INIT_PAGINATION = { pageSize: PAGE_SIZE['10'], pageNumber: 1 };
 
 const PAGE_SIZE_OPTION = Object.values(PAGE_SIZE).map((value) => ({ label: value, value }));
 
