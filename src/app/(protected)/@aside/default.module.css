@@ -1,12 +1,20 @@
 .aside {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100dvh;
-  width: 260px;
-  min-width: 260px;
+  width: var(--aside-width, 260px);
+  min-width: 180px;
+  max-width: 480px;
   background: var(--background);
   border-right: 1px solid var(--border);
   overflow: hidden;
+  transition: width 0.1s ease;
+}
+
+.aside[data-aside-collapsed] {
+  width: 4px;
+  min-width: 4px;
 }
 
 .header {
@@ -49,49 +57,6 @@
   padding: 8px 10px 4px;
 }
 
-/* .item {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 7px 10px;
-  gap: 8px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  cursor: pointer;
-  text-align: left;
-  font-family: var(--font-inter);
-
-  &:hover {
-    background: var(--surface-hover);
-  }
-
-  &.active {
-    background: var(--accent-soft);
-
-    .itemName {
-      color: var(--accent);
-    }
-  }
-}
-
-.itemName {
-  flex: 1;
-  min-width: 0;
-  font-size: 13px;
-  color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1.4;
-}
-
-.itemTime {
-  font-size: 11px;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-} */
-
 .footer {
   padding: 8px;
   border-top: 1px solid var(--border);
@@ -110,7 +75,7 @@
   inset: unset;
   bottom: 64px;
   left: 8px;
-  width: 242px;
+  width: calc(var(--aside-width, 260px) - 16px);
   background: var(--background);
   border: 1px solid var(--border);
   border-radius: 10px;
