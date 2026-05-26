@@ -7,7 +7,13 @@ const MatchedItem = ({ link, title, content, score, selected, infoBlock }: TMatc
   <article className={styles.item}>
     <div className={styles.header}>
       <ScoreBadge score={score} />
-      <a href={link} target='_blank' rel='noreferrer noopener' className={styles.title}>
+      <a
+        href={link}
+        title={title}
+        target='_blank'
+        rel='noreferrer noopener'
+        className={styles.title}
+      >
         {title ?? link}
       </a>
       <span className={styles.checkbox} aria-checked={selected} role='checkbox' />

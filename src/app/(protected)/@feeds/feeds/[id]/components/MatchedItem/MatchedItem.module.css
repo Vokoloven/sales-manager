@@ -15,6 +15,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
+
+  span:nth-child(1) {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 50px;
+  }
 }
 
 .title {

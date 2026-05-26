@@ -10,7 +10,11 @@ const getScoreVariant = (score: number) => {
 
 const ScoreBadge = ({ score }: { score?: number }) => {
   if (score === undefined) return null;
-  return <span className={`${styles.badge} ${getScoreVariant(score)}`}>{score}</span>;
+  return (
+    <span className={`${styles.badge} ${getScoreVariant(score)}`}>
+      {!Number.isInteger(score) ? Math.round(score * 10) / 10 : score}
+    </span>
+  );
 };
 
 export { ScoreBadge };

@@ -40,7 +40,12 @@ const ViewFeed = async ({ params }: TParams<'id'>) => {
           <h2>Project info</h2>
           <div className={styles.meta}>
             <ScoreBadge score={data.data.score} />
-            <a href={data.data.url} target='_blank' rel='noreferrer noopener'>
+            <a
+              href={data.data.url}
+              title={data.data.title}
+              target='_blank'
+              rel='noreferrer noopener'
+            >
               {data.data.title}
             </a>
             <span className={styles.date}>
