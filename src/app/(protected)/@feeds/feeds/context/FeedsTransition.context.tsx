@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useTransition } from 'react';
-import type { TFeedsTransitionContext } from './models/feedsTransitionContext.model';
+import type { TFeedsTransitionContext } from './models/feedsTransition.model';
 import type { ReactNode } from 'react';
 
 const FeedsTransitionContext = createContext<TFeedsTransitionContext>({
