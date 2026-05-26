@@ -13,7 +13,7 @@ const ReturnButton = () => {
       buttonType={BUTTON_TYPE.ghost}
       size={BUTTON_SIZE.xs}
       iconRight={<Icons.ChevronLeft />}
-      text='Upwork feed'
+      text='Back'
       onClick={() => {
         router.back();
       }}
