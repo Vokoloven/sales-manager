@@ -106,67 +106,71 @@ const Pagination = ({
       </div>
 
       <div className={styles.controls}>
-        <Button
-          buttonType={BUTTON_TYPE.icon}
-          size={BUTTON_SIZE.sm}
-          icon={<Icons.First />}
-          disabled={isFirst}
-          onClick={() => {
-            navigate(1);
-          }}
-          aria-label='First page'
-        />
-        <Button
-          buttonType={BUTTON_TYPE.icon}
-          size={BUTTON_SIZE.sm}
-          icon={<Icons.ChevronLeft />}
-          disabled={isFirst}
-          onClick={() => {
-            navigate(currentPage - 1);
-          }}
-          aria-label='Previous page'
-        />
-        {pages.map((page) => (
+        <div className={styles.navButtons}>
           <Button
-            key={page}
-            buttonType={page === currentPage ? BUTTON_TYPE.iconAccent : BUTTON_TYPE.icon}
+            buttonType={BUTTON_TYPE.icon}
             size={BUTTON_SIZE.sm}
-            text={String(page)}
+            icon={<Icons.First />}
+            disabled={isFirst}
             onClick={() => {
-              navigate(page);
+              navigate(1);
             }}
-            aria-label={`Page ${String(page)}`}
-            aria-current={page === currentPage ? 'page' : undefined}
+            aria-label='First page'
           />
-        ))}
-        <Button
-          buttonType={BUTTON_TYPE.icon}
-          size={BUTTON_SIZE.sm}
-          icon={
-            <span className={styles.flipped}>
-              <Icons.ChevronLeft />
-            </span>
-          }
-          disabled={isLast}
-          onClick={() => {
-            navigate(currentPage + 1);
-          }}
-          aria-label='Next page'
-        />
-        <Button
-          buttonType={BUTTON_TYPE.icon}
-          size={BUTTON_SIZE.sm}
-          icon={
-            <span className={styles.flipped}>
-              <Icons.First />
-            </span>
-          }
-          disabled={isLast}
-          onClick={() => {
-            navigate(totalPages);
-          }}
-          aria-label='Last page'
-        />
+          <Button
+            buttonType={BUTTON_TYPE.icon}
+            size={BUTTON_SIZE.sm}
+            icon={<Icons.ChevronLeft />}
+            disabled={isFirst}
+            onClick={() => {
+              navigate(currentPage - 1);
+            }}
+            aria-label='Previous page'
+          />
+          <Button
+            buttonType={BUTTON_TYPE.icon}
+            size={BUTTON_SIZE.sm}
+            icon={
+              <span className={styles.flipped}>
+                <Icons.ChevronLeft />
+              </span>
+            }
+            disabled={isLast}
+            onClick={() => {
+              navigate(currentPage + 1);
+            }}
+            aria-label='Next page'
+          />
+          <Button
+            buttonType={BUTTON_TYPE.icon}
+            size={BUTTON_SIZE.sm}
+            icon={
+              <span className={styles.flipped}>
+                <Icons.First />
+              </span>
+            }
+            disabled={isLast}
+            onClick={() => {
+              navigate(totalPages);
+            }}
+            aria-label='Last page'
+          />
+        </div>
+        <div className={styles.pageButtons}>
+          {pages.map((page) => (
+            <Button
+              key={page}
+              buttonType={page === currentPage ? BUTTON_TYPE.iconAccent : BUTTON_TYPE.icon}
+              size={BUTTON_SIZE.sm}
+              text={String(page)}
+              onClick={() => {
+                navigate(page);
+              }}
+              aria-label={`Page ${String(page)}`}
+              aria-current={page === currentPage ? 'page' : undefined}
+            />
+          ))}
+        </div>
       </div>
     </nav>
   );

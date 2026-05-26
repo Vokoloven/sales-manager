@@ -57,6 +57,18 @@
   gap: 4px;
 }
 
+.navButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .flipped {
   display: inline-flex;
   transform: scaleX(-1);
@@ -71,6 +83,13 @@
 
   .controls {
     align-self: stretch;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .navButtons,
+  .pageButtons {
     justify-content: center;
   }
 }
