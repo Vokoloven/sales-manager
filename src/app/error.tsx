@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
@@ -13,8 +12,6 @@ const GlobalError = ({
   error: Error & { digest?: string };
   unstable_retry: () => void;
 }) => {
-  const router = useRouter();
-
   return (
     <main className={styles.root}>
       <p className={styles.code}>Error</p>
@@ -34,7 +31,7 @@ const GlobalError = ({
           text='Home'
           icon={<Icons.Home />}
           onClick={() => {
-            router.push(APP_PATH.base);
+            location.href = APP_PATH.base;
           }}
         />
       </div>

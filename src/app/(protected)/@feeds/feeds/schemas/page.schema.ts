@@ -12,7 +12,7 @@ const searchFilterSchema = z.object({
 
 const feedsPageSearchParamsSchema = z.object({
   pageSize: pageSizeSchema,
-  pageNumber: z.string(),
+  pageNumber: z.string().regex(/^\d+$/),
   sortDirection: z.string().optional(),
   sortBy: z.string().optional(),
   sp: z.string().optional()

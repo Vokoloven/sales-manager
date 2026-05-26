@@ -1,19 +1,18 @@
-import { chatIdPageParamsSchema } from './schemas/page.schema';
-import type { TZodInfer } from '@/core/models/utility.model';
+import type { TParams } from '@/core/models/params.model';
 
-export async function generateMetadata({ params }: TZodInfer<typeof chatIdPageParamsSchema>) {
-  const { chatId } = await chatIdPageParamsSchema.shape.params.parseAsync(params);
-
+const generateMetadata = async ({ params }: TParams<'chatId'>) => {
+  const { chatId } = await params;
   return {
     title: `${chatId} | Chat`,
     description: 'Chat name'
   };
-}
+};
 
-const ChatPage = async ({ params }: TZodInfer<typeof chatIdPageParamsSchema>) => {
-  const { chatId } = await chatIdPageParamsSchema.shape.params.parseAsync(params);
-
+const ChatPage = async ({ params }: TParams<'chatId'>) => {
+  const { chatId } = await params;
   return <h1>ChatPage {chatId} is created</h1>;
 };
+
+export { generateMetadata };
 
 export default ChatPage;

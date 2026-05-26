@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { startTransition } from 'react';
 import Button from '@/components/Button/Button';
+import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
 import { APP_PATH } from '@/core/constants/appPath.constant';
 import styles from './styles.module.css';
@@ -20,10 +22,20 @@ const RootNotFound = () => {
         </p>
         <div className={styles.actions}>
           <Button
+            buttonType={BUTTON_TYPE.outline}
+            text='Back'
+            icon={<Icons.ArrowLeft />}
+            onClick={() => {
+              router.back();
+            }}
+          />
+          <Button
             text='Home'
             icon={<Icons.Home />}
             onClick={() => {
-              router.push(APP_PATH.base);
+              startTransition(() => {
+                router.push(APP_PATH.base);
+              });
             }}
           />
         </div>

@@ -18,7 +18,12 @@ const itemsSchema = z.object({
       published: z.iso.datetime(),
       accountId: z.number(),
       presetId: z.string(),
-      review: z.object().nullable(),
+      review: z
+        .object({
+          type: z.enum(['Like', 'Dislike']).nullable(),
+          comment: z.string().nullable()
+        })
+        .nullable(),
       keywords: z.array(z.string()).optional(),
       score: z.number().optional(),
       matchedCases: z.number().optional(),

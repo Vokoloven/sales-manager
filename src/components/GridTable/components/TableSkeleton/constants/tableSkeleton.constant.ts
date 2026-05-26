@@ -1,0 +1,18 @@
+const HEADER_WIDTHS = [42, 55, 52, 48];
+
+const BODY_WIDTHS = [
+  [72, 65, 80, 58],
+  [55, 82, 70, 75],
+  [68, 60, 55, 82],
+  [80, 75, 65, 60],
+  [60, 70, 78, 55],
+  [75, 58, 68, 80],
+  [65, 82, 60, 72],
+  [82, 65, 75, 58],
+  [70, 78, 58, 68],
+  [58, 68, 82, 70]
+];
+
+const PAGINATION_BUTTONS = 10;
+
+export { HEADER_WIDTHS, BODY_WIDTHS, PAGINATION_BUTTONS };

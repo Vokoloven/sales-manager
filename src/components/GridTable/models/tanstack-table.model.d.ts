@@ -10,6 +10,7 @@ declare module '@tanstack/react-table' {
     filterType?: TValueOf<typeof FILTER_TYPE>;
     options?: Options<TOption>;
     parsedValue?: string[];
+    wrap?: boolean;
   }
 
   interface TableMeta<TData extends RowData> {

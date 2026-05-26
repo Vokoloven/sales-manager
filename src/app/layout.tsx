@@ -1,5 +1,4 @@
 import { Inter } from 'next/font/google';
-import GoogleProvider from '@/shared/providers/Google.provider';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 import '@/css/globals.css';
@@ -17,9 +16,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
   return (
     <html lang='en'>
-      <body className={inter.variable}>
-        <GoogleProvider>{children}</GoogleProvider>
-      </body>
+      <body className={inter.variable}>{children}</body>
     </html>
   );
 };

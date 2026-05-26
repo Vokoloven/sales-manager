@@ -8,11 +8,12 @@ import {
   PAGE_SIZE_OPTION
 } from './components/Pagination/constants/pagination.constant';
 import Pagination from './components/Pagination/Pagination';
-import RawTable from './components/RawTable';
+import RawTable from './components/RawTable/RawTable';
+import { FeedsTransitionProvider } from './context/FeedsTransition.context';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
 import { feedsService } from './service/Feeds.service';
 import { decompressFilters } from './utils/compressFilters.util';
-import type { TPageProps } from './models/page.model';
+import type { TParams } from '@/core/models/params.model';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
 
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   description: 'Dasboard with active sales information'
 };
 
-const FeedsPage = async ({ searchParams }: TPageProps) => {
+const FeedsPage = async ({ searchParams }: TParams) => {
   const rawSearchParams = await searchParams;
 
   const queryStr = new URLSearchParams(
@@ -45,17 +46,19 @@ const FeedsPage = async ({ searchParams }: TPageProps) => {
   const totalPages = data.success ? data.data.items.totalPages : 1;
 
   return (
-    <div className={styles.root}>
-      <Suspense fallback={<TableSkeleton />}>
-        <RawTable data={data} parsedSearchParams={finalParams} />
-        <Pagination
-          options={PAGE_SIZE_OPTION}
-          parsedSearchParams={finalParams}
-          sp={sp}
-          totalPages={totalPages}
-        />
-      </Suspense>
-    </div>
+    <FeedsTransitionProvider>
+      <div className={styles.root}>
+        <Suspense fallback={<TableSkeleton showPagination />}>
+          <RawTable data={data} parsedSearchParams={finalParams} />
+          <Pagination
+            options={PAGE_SIZE_OPTION}
+            parsedSearchParams={finalParams}
+            sp={sp}
+            totalPages={totalPages}
+          />
+        </Suspense>
+      </div>
+    </FeedsTransitionProvider>
   );
 };
 

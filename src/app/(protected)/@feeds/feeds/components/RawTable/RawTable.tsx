@@ -2,7 +2,7 @@
 
 import GridTable from '@/components/GridTable/GridTable';
 import { useRawTable } from './hooks/useRawTable';
-import type { TFeedsPageProps } from '../models/feeds.model';
+import type { TFeedsPageProps } from '../../models/feeds.model';
 
 const RawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
   const { table } = useRawTable({ data, parsedSearchParams });

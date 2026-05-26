@@ -1,0 +1,63 @@
+@keyframes shimmer {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}
+
+.bone {
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-hover) 50%,
+    var(--surface) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.root {
+  flex-shrink: 0;
+  min-height: 52px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.text {
+  width: 160px;
+  height: 10px;
+  composes: bone;
+}
+
+.select {
+  width: 72px;
+  height: 32px;
+  border-radius: 6px;
+  composes: bone;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.button {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  composes: bone;
+}

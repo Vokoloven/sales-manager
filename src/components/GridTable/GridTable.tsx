@@ -12,6 +12,7 @@ import TableSkeleton from './components/TableSkeleton/TableSkeleton';
 import { useGridTable } from './hooks/useGridTable';
 import type { Table } from '@tanstack/react-table';
 import styles from './GridTable.module.css';
+import '@/css/table-style.css';
 
 const GridTable = <T,>({ table }: { table: Table<T> }) => {
   const {
@@ -208,6 +209,9 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
                           data-pinned-right={isRightPinned && hasContentBehindOfPinned}
                           data-pinned-left={isLeftPinned && hasContentBehindOfPinned}
                           key={cell.id}
+                          className={classnames({
+                            [styles['wrap-cell']]: cell.column.columnDef.meta?.wrap
+                          })}
                           style={{
                             width: cell.column.getSize(),
                             ...(pinnedDirection && {

@@ -1,5 +1,5 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { TNullable } from '@/core/models/utility.model';
 import type { Table } from '@tanstack/react-table';
 import type { ComponentRef } from 'react';
@@ -17,6 +17,12 @@ const useGridTable = <T>(table: Table<T>) => {
   const { rows } = table.getRowModel();
 
   const onRowClick = table.options.meta?.onRowClick;
+
+  useEffect(() => {
+    if (isPending) {
+      tableContainerRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [isPending]);
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,

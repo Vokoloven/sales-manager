@@ -20,3 +20,20 @@
 .progress::-moz-progress-bar {
   background-color: var(--accent);
 }
+
+@keyframes progress-loading {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.progressAnimated::-webkit-progress-value {
+  animation: progress-loading 2s linear infinite;
+}
+
+.progressAnimated::-moz-progress-bar {
+  animation: progress-loading 2s linear infinite;
+}

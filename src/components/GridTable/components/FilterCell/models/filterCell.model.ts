@@ -13,6 +13,7 @@ type TSelectFilter = {
   setFilterValue: (updater: Updater<unknown>) => void;
   options?: Options<TOption>;
   parsedValue?: string[];
+  label?: string;
 };
 
 export type { TInputFilter, TSelectFilter };
