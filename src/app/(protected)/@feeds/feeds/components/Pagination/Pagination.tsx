@@ -106,7 +106,7 @@ const Pagination = ({
       </div>
 
       <div className={styles.controls}>
-        <div className={styles.navButtons}>
+        <div className={styles.prevButtons}>
           <Button
             buttonType={BUTTON_TYPE.icon}
             size={BUTTON_SIZE.sm}
@@ -127,6 +127,23 @@ const Pagination = ({
             }}
             aria-label='Previous page'
           />
+        </div>
+        <div className={styles.pageButtons}>
+          {pages.map((page) => (
+            <Button
+              key={page}
+              buttonType={page === currentPage ? BUTTON_TYPE.iconAccent : BUTTON_TYPE.icon}
+              size={BUTTON_SIZE.sm}
+              text={String(page)}
+              onClick={() => {
+                navigate(page);
+              }}
+              aria-label={`Page ${String(page)}`}
+              aria-current={page === currentPage ? 'page' : undefined}
+            />
+          ))}
+        </div>
+        <div className={styles.nextButtons}>
           <Button
             buttonType={BUTTON_TYPE.icon}
             size={BUTTON_SIZE.sm}
@@ -155,21 +172,6 @@ const Pagination = ({
             }}
             aria-label='Last page'
           />
-        </div>
-        <div className={styles.pageButtons}>
-          {pages.map((page) => (
-            <Button
-              key={page}
-              buttonType={page === currentPage ? BUTTON_TYPE.iconAccent : BUTTON_TYPE.icon}
-              size={BUTTON_SIZE.sm}
-              text={String(page)}
-              onClick={() => {
-                navigate(page);
-              }}
-              aria-label={`Page ${String(page)}`}
-              aria-current={page === currentPage ? 'page' : undefined}
-            />
-          ))}
         </div>
       </div>
     </nav>

@@ -30,7 +30,7 @@
   gap: 8px;
 }
 
-.left {
+.info {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -49,7 +49,15 @@
   composes: bone;
 }
 
-.right {
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.prevButtons,
+.nextButtons,
+.pageButtons {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -60,4 +68,25 @@
   height: 32px;
   border-radius: 8px;
   composes: bone;
+}
+
+@media (max-width: 640px) {
+  .root {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+  }
+
+  .controls {
+    align-self: stretch;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .pageButtons {
+    order: 1;
+    flex-basis: 100%;
+    justify-content: center;
+  }
 }
