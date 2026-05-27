@@ -3,6 +3,7 @@ import qs from 'qs';
 import { Suspense } from 'react';
 import TableSkeleton from '@/components/GridTable/components/TableSkeleton/TableSkeleton';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
+import FeedsHeader from './components/FeedsHeader/FeedsHeader';
 import {
   INIT_PAGINATION,
   PAGE_SIZE_OPTION
@@ -48,6 +49,7 @@ const FeedsPage = async ({ searchParams }: TParams) => {
   return (
     <FeedsTransitionProvider>
       <div className={styles.root}>
+        <FeedsHeader />
         <Suspense fallback={<TableSkeleton showPagination />}>
           <RawTable data={data} parsedSearchParams={finalParams} />
           <Pagination

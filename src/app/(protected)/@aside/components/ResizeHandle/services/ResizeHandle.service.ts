@@ -1,10 +1,10 @@
-import { COOKIE_MAX_AGE, MAX, MIN } from '../constants/resizeHandle.constant';
+import { ASIDE } from '../constants/resizeHandle.constant';
 
 class ResizeHandleService {
-  public clamp = (v: number) => Math.min(Math.max(v, MIN), MAX);
+  public clamp = (v: number) => Math.min(Math.max(v, ASIDE.asideMinWidth), ASIDE.asideMaxWidth);
 
   public setCookie = (name: string, value: string) => {
-    document.cookie = `${name}=${value};path=/;max-age=${COOKIE_MAX_AGE};samesite=strict`;
+    document.cookie = `${name}=${value};path=/;max-age=${ASIDE.cookieMaxAge};samesite=strict`;
   };
 
   public deleteCookie = (name: string) => {

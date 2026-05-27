@@ -1,7 +1,7 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import styles from './layout.module.css';
 
-const ProtectedLayout = async ({
+const ProtectedLayout = ({
   aside,
   feeds
 }: Readonly<PropsWithChildren<{ aside: ReactNode; feeds: ReactNode }>>) => {

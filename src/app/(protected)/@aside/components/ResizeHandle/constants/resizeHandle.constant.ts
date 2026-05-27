@@ -1,7 +1,11 @@
-const MIN = 180;
-const MAX = 480;
-const VAR = '--aside-width';
-const COLLAPSED_ATTR = 'data-aside-collapsed';
-const COOKIE_MAX_AGE = '31536000';
+const ASIDE = {
+  asideMinWidth: 180,
+  asideMaxWidth: 480,
+  asideWidthName: '--aside-width',
+  dataAside: 'data-aside-collapsed',
+  cookieAsideName: 'aside-collapsed',
+  cookieWidthName: 'aside-width',
+  cookieMaxAge: '31536000'
+} as const;
 
-export { COLLAPSED_ATTR, COOKIE_MAX_AGE, MAX, MIN, VAR };
+export { ASIDE };
