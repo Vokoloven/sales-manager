@@ -1,15 +1,13 @@
+import type { TKeywordBadgeProps } from './models/badges.model';
 import styles from './Badge.module.css';
 
-const KeywordBadge = ({ value }: { value: string }) => (
-  <span className={`${styles.badge} ${styles.neutral}`}>{value}</span>
-);
-
-const KeywordBadges = ({ keywords }: { keywords?: string[] }) => {
-  if (!keywords?.length) return null;
+const KeywordBadges = ({ keywords }: TKeywordBadgeProps) => {
   return (
     <div className={styles.keywords}>
       {keywords.map((kw) => (
-        <KeywordBadge key={kw} value={kw} />
+        <span key={kw} className={`${styles.badge} ${styles.neutral}`}>
+          {kw}
+        </span>
       ))}
     </div>
   );

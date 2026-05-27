@@ -1,27 +1,13 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
 import PaginationSkeleton from '../PaginationSkeleton/PaginationSkeleton';
 import { TABLE_SKELETON } from './constants/tableSkeleton.constant';
+import { useTableSkeleton } from './hooks/useTableSkeletion';
 import type { TTableSkeletonProps } from './models/TableSkeleton.model';
 import styles from './TableSkeleton.module.css';
 
-const subscribe = (cb: () => void) => {
-  window.addEventListener('resize', cb);
-  return () => {
-    window.removeEventListener('resize', cb);
-  };
-};
-
-const TableSkeleton = ({ columns = 4, rows, showPagination = false }: TTableSkeletonProps) => {
-  const viewportRows = useSyncExternalStore(
-    subscribe,
-    () => Math.ceil(window.innerHeight / TABLE_SKELETON.rowHeight),
-    () => 10
-  );
-
-  const rowCount = rows ?? viewportRows;
-  const colCount = Math.min(columns, TABLE_SKELETON.headerWidth.length);
+const TableSkeleton = ({ showPagination = false, ...rest }: TTableSkeletonProps) => {
+  const { colCount, rowCount } = useTableSkeleton(rest);
 
   return (
     <div className={styles.root}>

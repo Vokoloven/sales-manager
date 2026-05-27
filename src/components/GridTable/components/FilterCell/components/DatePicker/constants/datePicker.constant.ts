@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import dayPickerStyles from 'react-day-picker/src/style.module.css';
-import styles from '../DataPicker.module.css';
+import styles from '../DatePicker.module.css';
 
 const PORTAL = {
   get root() {

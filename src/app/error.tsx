@@ -3,15 +3,10 @@ import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
 import { APP_PATH } from '@/core/constants/appPath.constant';
+import type { TErrorProps } from './models/error.model';
 import styles from './styles.module.css';
 
-const GlobalError = ({
-  error,
-  unstable_retry
-}: {
-  error: Error & { digest?: string };
-  unstable_retry: () => void;
-}) => {
+const GlobalError = ({ error, unstable_retry }: TErrorProps) => {
   return (
     <main className={styles.root}>
       <p className={styles.code}>Error</p>

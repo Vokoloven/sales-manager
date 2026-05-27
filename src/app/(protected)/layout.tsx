@@ -1,10 +1,7 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { TProtectedLayout } from './models/layout.model';
 import styles from './layout.module.css';
 
-const ProtectedLayout = ({
-  aside,
-  feeds
-}: Readonly<PropsWithChildren<{ aside: ReactNode; feeds: ReactNode }>>) => {
+const ProtectedLayout = ({ aside, feeds }: TProtectedLayout) => {
   return (
     <div className={styles.root}>
       {aside}

@@ -7,14 +7,14 @@ import type { TValueContainer } from './models/valueContainer.models';
 import styles from './ValueContainer.module.css';
 
 const ValueContainer = <T,>(props: TValueContainer<T>) => {
-  const { children, selectProps, ...rest } = props;
-  const { containerRef, badgeRef, hiddenCount, hiddenTooltip, chips, input } =
-    useValueContainer(children);
+  const { containerRef, badgeRef, hiddenCount, hiddenTooltip, chips, input } = useValueContainer(
+    props.children
+  );
 
-  const shouldShowChips = !selectProps.inputValue;
+  const shouldShowChips = !props.selectProps.inputValue;
 
   return (
-    <components.ValueContainer selectProps={selectProps} {...rest}>
+    <components.ValueContainer {...props}>
       <div
         ref={containerRef}
         className={classnames(styles.container, 'react-select__value-sub-container')}

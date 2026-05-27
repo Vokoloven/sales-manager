@@ -1,8 +1,5 @@
+import { PAGINATION_SKELETON_BUTTON } from './constants/paginationSkeleton.constant';
 import styles from './PaginationSkeleton.module.css';
-
-const PREV_BUTTON_COUNT = 2;
-const PAGE_BUTTON_COUNT = 6;
-const NEXT_BUTTON_COUNT = 2;
 
 const PaginationSkeleton = () => {
   return (
@@ -14,17 +11,17 @@ const PaginationSkeleton = () => {
 
       <div className={styles.controls}>
         <div className={styles.prevButtons}>
-          {Array.from({ length: PREV_BUTTON_COUNT }).map((_, i) => (
+          {Array.from({ length: PAGINATION_SKELETON_BUTTON.prevButtonCount }).map((_, i) => (
             <div key={i} className={styles.button} />
           ))}
         </div>
         <div className={styles.pageButtons}>
-          {Array.from({ length: PAGE_BUTTON_COUNT }).map((_, i) => (
+          {Array.from({ length: PAGINATION_SKELETON_BUTTON.pageButtonCount }).map((_, i) => (
             <div key={i} className={styles.button} />
           ))}
         </div>
         <div className={styles.nextButtons}>
-          {Array.from({ length: NEXT_BUTTON_COUNT }).map((_, i) => (
+          {Array.from({ length: PAGINATION_SKELETON_BUTTON.nextButtonCount }).map((_, i) => (
             <div key={i} className={styles.button} />
           ))}
         </div>

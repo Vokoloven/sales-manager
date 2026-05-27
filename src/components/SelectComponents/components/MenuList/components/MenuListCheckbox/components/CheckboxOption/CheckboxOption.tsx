@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { components } from 'react-select';
-import Checkbox from '@/components/Checkbox';
+import Checkbox from '@/components/Checkbox/Checkbox';
 import { typedMemo } from '@/core/utils/typedMemo.util';
 import type { TCheckboxOption } from './models/checkboxOption.model';
 import styles from './CheckboxOption.module.css';
