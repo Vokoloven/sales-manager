@@ -1,4 +1,4 @@
-import FeedsHeader from './components/FeedsHeader/FeedsHeader';
+import FeedsHeader from './feeds/components/FeedsHeader/FeedsHeader';
 import type { PropsWithChildren } from 'react';
 import styles from './layout.module.css';
 

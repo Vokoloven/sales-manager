@@ -13,8 +13,8 @@
 }
 
 .aside[data-aside-collapsed] {
-  width: 4px;
-  min-width: 4px;
+  width: 1px;
+  min-width: 1px;
 }
 
 .header {
@@ -113,16 +113,26 @@
 }
 
 .popover {
-  position: absolute;
+  position: fixed;
   inset: unset;
   margin: 0;
-  bottom: 64px;
-  left: 8px;
   width: calc(var(--aside-width, 260px) - 16px);
   background: var(--background);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px;
+  position-anchor: --popover;
+  position-area: top left;
+  margin: 0 0 6px 8px;
+
+  &:popover-open {
+    display: grid;
+    gap: 6px;
+  }
+
+  + :global(.button) {
+    anchor-name: --popover;
+  }
 
   :global(.button) {
     width: 100%;

@@ -16,6 +16,7 @@ const ReturnButton = () => {
       text='Back'
       onClick={() => {
         router.back();
+        router.refresh();
       }}
     />
   );

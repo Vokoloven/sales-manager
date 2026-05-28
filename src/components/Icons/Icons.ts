@@ -12,6 +12,7 @@ import Feeds from './Feeds';
 import FilterClear from './FilterClear';
 import First from './First';
 import Google from './Google';
+import Chat from './Google copy';
 import HidePassword from './HidePassword';
 import Home from './Home';
 import LogOut from './LogOut';
@@ -38,7 +39,8 @@ const Icons = {
   Collapse: memo(Collapse),
   ThreeDots: memo(ThreeDots),
   Edit: memo(Edit),
-  Delete: memo(Delete)
+  Delete: memo(Delete),
+  Chat: memo(Chat)
 } as const;
 
 export { Icons };
