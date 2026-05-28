@@ -1,11 +1,8 @@
-const TOKEN = {
-  accessToken: 'accessToken',
-  refreshToken: 'refreshToken'
-} as const;
+import { COOKIES } from './cookies.constant';
 
 const TOKENS_INITIAL_STATE = {
-  [TOKEN.accessToken]: null,
-  [TOKEN.refreshToken]: null
+  [COOKIES.accessToken]: null,
+  [COOKIES.refreshToken]: null
 } as const;
 
-export { TOKEN, TOKENS_INITIAL_STATE };
+export { TOKENS_INITIAL_STATE };

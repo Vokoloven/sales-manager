@@ -1,40 +1,41 @@
-import { cookies } from 'next/headers';
-import { TOKEN } from '../constants/token.constant';
+import { COOKIES } from '../constants/cookies.constant';
+import { cookiesService } from './Cookies.service';
 import { envServerService } from './EnvServer.service';
 import type { TToken } from '../models/token.model';
+import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 class TokenService {
+  private readonly cookiesOption: Partial<ResponseCookie> = {
+    httpOnly: true,
+    secure: envServerService.isProdEnv,
+    sameSite: 'strict'
+  };
+
   public getTokens = async () => {
-    const accessToken = (await cookies()).get(TOKEN.accessToken)?.value ?? null;
-    const refreshToken = (await cookies()).get(TOKEN.refreshToken)?.value ?? null;
+    const accessToken = await cookiesService.get(COOKIES.accessToken);
+    const refreshToken = await cookiesService.get(COOKIES.refreshToken);
+
     return { accessToken, refreshToken };
   };
 
   public setTokens = async ({ accessToken, refreshToken }: TToken) => {
-    if (accessToken) {
-      (await cookies()).set(TOKEN.accessToken, accessToken, {
-        httpOnly: true,
-        secure: envServerService.isProdEnv,
-        sameSite: 'strict',
-        maxAge: 60 * 5
-      });
-    } else {
-      (await cookies()).delete(TOKEN.accessToken);
-    }
-
-    if (refreshToken) {
-      (await cookies()).set(TOKEN.refreshToken, refreshToken, {
-        httpOnly: true,
-        secure: envServerService.isProdEnv,
-        sameSite: 'strict',
-        maxAge: 60 * 15
-      });
-    } else {
-      (await cookies()).delete(TOKEN.refreshToken);
-    }
+    await Promise.all([
+      accessToken
+        ? cookiesService.set(COOKIES.accessToken, accessToken, {
+            ...this.cookiesOption,
+            maxAge: 60 * 5
+          })
+        : cookiesService.delete(COOKIES.accessToken),
+      refreshToken
+        ? cookiesService.set(COOKIES.refreshToken, refreshToken, {
+            ...this.cookiesOption,
+            maxAge: 60 * 15
+          })
+        : cookiesService.delete(COOKIES.refreshToken)
+    ]);
   };
 }
 
-const tokenService = () => new TokenService();
+const tokenService = new TokenService();
 
 export { tokenService };

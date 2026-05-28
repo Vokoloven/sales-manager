@@ -1,5 +1,5 @@
 import z from 'zod';
-import { TOKEN } from '@/core/constants/token.constant';
+import { COOKIES } from '@/core/constants/cookies.constant';
 import { responseSchema } from '@/core/schemas/response.schema';
 import { recoverUserDataSchema } from '@/shared/recoverUser/schemas/recoverUser.schema';
 import { LOGIN_FORM_FIELD } from '../constants/login.constant';
@@ -12,8 +12,8 @@ const loginSchema = z.object({
 const loginDataSchema = z
   .object({
     access: z.object({
-      [TOKEN.accessToken]: z.string(),
-      [TOKEN.refreshToken]: z.string()
+      [COOKIES.accessToken]: z.string(),
+      [COOKIES.refreshToken]: z.string()
     })
   })
   .and(recoverUserDataSchema);

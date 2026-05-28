@@ -2,10 +2,7 @@ const ASIDE = {
   asideMinWidth: 180,
   asideMaxWidth: 480,
   asideWidthName: '--aside-width',
-  dataAside: 'data-aside-collapsed',
-  cookieAsideName: 'aside-collapsed',
-  cookieWidthName: 'aside-width',
-  cookieMaxAge: '31536000'
+  dataAside: 'data-aside-collapsed'
 } as const;
 
 export { ASIDE };

@@ -1,6 +1,7 @@
-import { cookies } from 'next/headers';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { COOKIES } from '@/core/constants/cookies.constant';
+import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
 import LogOutButton from './components/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
@@ -11,9 +12,8 @@ import type { CSSProperties } from 'react';
 import styles from './default.module.css';
 
 const AsideDefault = async () => {
-  const cookieStore = await cookies();
-  const width = cookieStore.get(ASIDE.cookieWidthName)?.value;
-  const collapsed = cookieStore.has(ASIDE.cookieAsideName);
+  const width = await cookiesService.get(COOKIES.asideWidth);
+  const collapsed = await cookiesService.has(COOKIES.asideCollapsed);
 
   const recoverUser = await recoverUserService.recoverUser();
   const _chats = await chatService.getChats();

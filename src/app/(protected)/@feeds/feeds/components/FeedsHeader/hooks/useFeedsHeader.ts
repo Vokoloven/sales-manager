@@ -1,5 +1,7 @@
 import { startTransition, useEffect, useState } from 'react';
 import { ASIDE } from '@/app/(protected)/@aside/components/ResizeHandle/constants/resizeHandle.constant';
+import { COOKIES } from '@/core/constants/cookies.constant';
+import { resizeCookiesAction } from '../actions/feedsHeader.action';
 import type { ComponentRef } from 'react';
 
 const useFeedsHeader = () => {
@@ -30,10 +32,14 @@ const useFeedsHeader = () => {
 
     if (aside.hasAttribute(ASIDE.dataAside)) {
       aside.removeAttribute(ASIDE.dataAside);
-      document.cookie = `aside-collapsed=;path=/;max-age=0;samesite=strict`;
+      startTransition(async () => {
+        await resizeCookiesAction(COOKIES.asideCollapsed);
+      });
     } else {
       aside.setAttribute(ASIDE.dataAside, '');
-      document.cookie = `aside-collapsed=1;path=/;max-age=${ASIDE.cookieMaxAge};samesite=strict`;
+      startTransition(async () => {
+        await resizeCookiesAction(COOKIES.asideCollapsed, 'true');
+      });
     }
   };
   return { toggle, isCollapsed } as const;
