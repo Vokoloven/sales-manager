@@ -53,7 +53,7 @@
   align-items: center;
 
   :global(.button) {
-    :nth-child(1) {
+    > :nth-child(1) {
       span {
         width: 16px;
         height: 16px;

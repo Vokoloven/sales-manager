@@ -41,9 +41,51 @@
   padding: 8px;
   min-height: 0;
 
+  .buttons {
+    display: flex;
+
+    > :nth-child(1):global(.button) {
+      flex: 1;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0.5px solid var(--border-focus);
+    }
+
+    > :nth-child(2):global(.button) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: 0.5px solid var(--border-focus);
+      anchor-name: --options-button;
+    }
+
+    .popoverOptions {
+      width: max-content;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-top: 8px;
+      padding: 8px;
+      background: var(--background);
+      position: fixed;
+      position-anchor: --options-button;
+      top: anchor(bottom);
+      left: anchor(left);
+      position-try-fallbacks: --below-right, --below-left, --above-right, --above-left;
+
+      &::backdrop {
+        background: transparent;
+      }
+
+      &:popover-open {
+        display: grid;
+        gap: 8px;
+      }
+    }
+  }
+
   &::-webkit-scrollbar {
     width: 3px;
   }
+
   &::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 4px;
@@ -73,33 +115,34 @@
 .popover {
   position: absolute;
   inset: unset;
+  margin: 0;
   bottom: 64px;
   left: 8px;
   width: calc(var(--aside-width, 260px) - 16px);
   background: var(--background);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 8px;
-  margin: 0;
 
   :global(.button) {
     width: 100%;
     justify-content: flex-start;
     border: none;
 
-    :nth-child(1) {
+    > :nth-child(1) {
       width: 24px;
       height: 24px;
-      span {
+
+      > [class$='-icon'] {
         width: 24px;
         height: 24px;
       }
     }
   }
-}
 
-.popover::backdrop {
-  background: transparent;
+  &::backdrop {
+    background-color: transparent;
+  }
 }
 
 .popoverItem {
@@ -201,4 +244,32 @@
   color: var(--text-secondary);
   font-size: 16px;
   flex-shrink: 0;
+}
+
+@position-try --below-right {
+  inset: unset;
+  top: anchor(bottom);
+  left: anchor(left);
+  margin-top: 8px;
+}
+
+@position-try --below-left {
+  inset: unset;
+  top: anchor(bottom);
+  right: anchor(right);
+  margin-top: 8px;
+}
+
+@position-try --above-right {
+  inset: unset;
+  bottom: anchor(top);
+  left: anchor(left);
+  margin-bottom: 8px;
+}
+
+@position-try --above-left {
+  inset: unset;
+  bottom: anchor(top);
+  right: anchor(right);
+  margin-bottom: 8px;
 }

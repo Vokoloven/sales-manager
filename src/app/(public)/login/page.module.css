@@ -100,11 +100,9 @@
       }
 
       + button {
-        span {
-          &:nth-child(1) {
-            width: 20px;
-            height: 20px;
-          }
+        span:nth-child(1) {
+          width: 20px;
+          height: 20px;
         }
       }
     }
@@ -120,7 +118,7 @@
   align-items: center;
 
   :global(.button) {
-    &:nth-child(1) {
+    > :nth-child(1) {
       span {
         width: 16px;
         height: 16px;

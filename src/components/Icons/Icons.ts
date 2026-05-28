@@ -5,6 +5,8 @@ import ArrowUp from './ArrowUp';
 import CalendarDate from './CalendarDate';
 import ChevronLeft from './ChevronLeft';
 import Collapse from './Collapse';
+import Delete from './Delete';
+import Edit from './Edit';
 import Expand from './Expand';
 import Feeds from './Feeds';
 import FilterClear from './FilterClear';
@@ -15,6 +17,7 @@ import Home from './Home';
 import LogOut from './LogOut';
 import ShowPassword from './ShowPassword';
 import Sortable from './Sortable';
+import ThreeDots from './ThreeDots';
 
 const Icons = {
   ArrowLeft: memo(ArrowLeft),
@@ -32,7 +35,10 @@ const Icons = {
   First: memo(First),
   ChevronLeft: memo(ChevronLeft),
   Expand: memo(Expand),
-  Collapse: memo(Collapse)
+  Collapse: memo(Collapse),
+  ThreeDots: memo(ThreeDots),
+  Edit: memo(Edit),
+  Delete: memo(Delete)
 } as const;
 
 export { Icons };
