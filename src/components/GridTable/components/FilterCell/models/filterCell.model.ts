@@ -1,6 +1,8 @@
 import type { TOption } from '@/core/models/option.model';
-import type { Updater } from '@tanstack/react-table';
+import type { Column, Table, Updater } from '@tanstack/react-table';
 import type { Options } from 'react-select';
+
+type TFilterCellProps<C, T> = { column: Column<C>; table: Table<T> };
 
 type TInputFilter = {
   setFilterValue: (updater: Updater<string>) => void;
@@ -16,4 +18,4 @@ type TSelectFilter = {
   label?: string;
 };
 
-export type { TInputFilter, TSelectFilter };
+export type { TInputFilter, TSelectFilter, TFilterCellProps };

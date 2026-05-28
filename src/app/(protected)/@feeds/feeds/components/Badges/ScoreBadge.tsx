@@ -1,17 +1,13 @@
+import { useMemo } from 'react';
+import { getScoreVariant } from './utils/scoreBadge.util';
+import type { TScoreBadgeProps } from './models/badges.model';
 import styles from './Badge.module.css';
 
-const getScoreVariant = (score: number) => {
-  if (score < 20) return styles.red;
-  if (score < 40) return styles.orange;
-  if (score < 60) return styles.amber;
-  if (score < 80) return styles.lime;
-  return styles.green;
-};
+const ScoreBadge = ({ score }: TScoreBadgeProps) => {
+  const memoGetScoreVarian = useMemo(() => getScoreVariant({ score, styles }), [score]);
 
-const ScoreBadge = ({ score }: { score?: number }) => {
-  if (score === undefined) return null;
   return (
-    <span className={`${styles.badge} ${getScoreVariant(score)}`}>
+    <span className={`${styles.badge} ${memoGetScoreVarian}`}>
       {!Number.isInteger(score) ? Math.round(score * 10) / 10 : score}
     </span>
   );

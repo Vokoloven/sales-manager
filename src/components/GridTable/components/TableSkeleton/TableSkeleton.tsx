@@ -1,10 +1,13 @@
+'use client';
+
 import PaginationSkeleton from '../PaginationSkeleton/PaginationSkeleton';
-import { BODY_WIDTHS, HEADER_WIDTHS } from './constants/tableSkeleton.constant';
+import { TABLE_SKELETON } from './constants/tableSkeleton.constant';
+import { useTableSkeleton } from './hooks/useTableSkeletion';
 import type { TTableSkeletonProps } from './models/TableSkeleton.model';
 import styles from './TableSkeleton.module.css';
 
-const TableSkeleton = ({ columns = 4, rows = 10, showPagination = false }: TTableSkeletonProps) => {
-  const colCount = Math.min(columns, HEADER_WIDTHS.length);
+const TableSkeleton = ({ showPagination = false, ...rest }: TTableSkeletonProps) => {
+  const { colCount, rowCount } = useTableSkeleton(rest);
 
   return (
     <div className={styles.root}>
@@ -13,20 +16,22 @@ const TableSkeleton = ({ columns = 4, rows = 10, showPagination = false }: TTabl
           <div key={colIdx} className={styles.headerCell}>
             <div
               className={styles.headerTitle}
-              style={{ width: `${String(HEADER_WIDTHS[colIdx])}%` }}
+              style={{ width: `${String(TABLE_SKELETON.headerWidth[colIdx])}%` }}
             />
             <div className={styles.headerFilter} />
           </div>
         ))}
       </div>
 
-      {Array.from({ length: rows }).map((_, rowIdx) => (
+      {Array.from({ length: rowCount }).map((_, rowIdx) => (
         <div key={rowIdx} className={styles.row}>
           {Array.from({ length: colCount }).map((_, colIdx) => (
             <div key={colIdx} className={styles.cell}>
               <div
                 className={styles.cellBone}
-                style={{ width: `${String(BODY_WIDTHS[rowIdx % BODY_WIDTHS.length][colIdx])}%` }}
+                style={{
+                  width: `${String(TABLE_SKELETON.bodyWidth[rowIdx % TABLE_SKELETON.bodyWidth.length][colIdx])}%`
+                }}
               />
             </div>
           ))}

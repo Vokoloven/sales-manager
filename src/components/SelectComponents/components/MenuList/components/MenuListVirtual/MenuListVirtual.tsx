@@ -1,32 +1,27 @@
 import classnames from 'classnames';
-import { useRef } from 'react';
 import { components } from 'react-select';
 import { typedMemo } from '@/core/utils/typedMemo.util';
 import { useSelectVirtualizer } from '../../hooks/useSelectVirtualizer';
+import { useMenuListVirtual } from './hooks/useMenuListVirtual';
 import type { TMenuListProps } from './../../models/menuList.model';
-import type { TNullable } from '@/core/models/utility.model';
-import type { ComponentRef } from 'react';
 
 const MenuListVirtual = <T,>(props: TMenuListProps<T>) => {
-  const { children, innerProps, menuClassname, ...rest } = props;
+  const { innerRef, menuRef } = useMenuListVirtual();
 
-  const menuRef = useRef<TNullable<ComponentRef<'div'>>>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-
-  const { height, virtualItems, rows, measureRef } = useSelectVirtualizer(children, menuRef);
+  const { height, virtualItems, rows, measureRef } = useSelectVirtualizer(props.children, menuRef);
 
   return (
     <components.MenuList
-      {...rest}
+      {...props}
       innerRef={innerRef}
       innerProps={{
-        ...innerProps,
+        ...props.innerProps,
         style: {
-          ...innerProps.style,
+          ...props.innerProps.style,
           maxHeight: props.maxHeight
         }
       }}
-      className={classnames(menuClassname, 'menu-list-virtual')}
+      className={classnames(props.menuClassname, 'menu-list-virtual')}
     >
       {rows.length ? (
         <div ref={menuRef} style={{ minHeight: height }}>

@@ -2,16 +2,10 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { FILTER_TYPE } from '@/components/GridTable/components/FilterCell/constnts/filterCell.constant';
 import { KeywordBadges } from '../../Badges/KeywordBadge';
 import { ScoreBadge } from '../../Badges/ScoreBadge';
-import type { TFeedItem, TFeedsPageProps } from '@/app/(protected)/@feeds/feeds/models/feeds.model';
+import type { TGenerateColumns } from '../models/columns.model';
+import type { TFeedItem } from '@/app/(protected)/@feeds/feeds/models/feeds.model';
 
-const generateColumns = ({
-  data,
-  keywordsParsedValue,
-  scoreParsedValue
-}: Pick<TFeedsPageProps, 'data'> & {
-  scoreParsedValue: string[];
-  keywordsParsedValue: string[];
-}) => {
+const generateColumns = ({ data, keywordsParsedValue, scoreParsedValue }: TGenerateColumns) => {
   const columnHelper = createColumnHelper<TFeedItem>();
 
   return [
@@ -48,7 +42,11 @@ const generateColumns = ({
     columnHelper.accessor('keywords', {
       id: 'keywords',
       header: 'Keywords',
-      cell: (info) => <KeywordBadges keywords={info.getValue()} />,
+      cell: (info) => {
+        const keywords = info.getValue();
+
+        return keywords?.length ? <KeywordBadges keywords={keywords} /> : null;
+      },
       minSize: 175,
       size: 175,
       meta: {
@@ -62,7 +60,11 @@ const generateColumns = ({
     columnHelper.accessor('score', {
       id: 'score',
       header: 'Score',
-      cell: (info) => <ScoreBadge score={info.getValue()} />,
+      cell: (info) => {
+        const score = info.getValue();
+
+        return score ? <ScoreBadge score={score} /> : null;
+      },
       minSize: 175,
       size: 175,
       meta: {

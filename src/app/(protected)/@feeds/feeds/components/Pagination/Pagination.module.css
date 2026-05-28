@@ -57,6 +57,14 @@
   gap: 4px;
 }
 
+.prevButtons,
+.nextButtons,
+.pageButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .flipped {
   display: inline-flex;
   transform: scaleX(-1);
@@ -71,6 +79,14 @@
 
   .controls {
     align-self: stretch;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .pageButtons {
+    order: 1;
+    flex-basis: 100%;
     justify-content: center;
   }
 }

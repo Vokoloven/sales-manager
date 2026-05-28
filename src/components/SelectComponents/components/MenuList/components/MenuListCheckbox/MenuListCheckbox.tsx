@@ -1,50 +1,40 @@
 import classnames from 'classnames';
-import { Children, useRef } from 'react';
 import { components } from 'react-select';
 import { typedMemo } from '@/core/utils/typedMemo.util';
 import { useSelectVirtualizer } from '../../hooks/useSelectVirtualizer';
 import { isOptionElement } from '../../utils/isOptionElement';
 import CheckboxOption from './components/CheckboxOption/CheckboxOption';
 import SelectAllCheckbox from './components/SelectAllCheckbox/SelectAllCheckbox';
+import { useMenuListCheckbox } from './hooks/useMenuListCheckbox';
 import type { TMenuListProps } from '../../models/menuList.model';
-import type { TNullable } from '@/core/models/utility.model';
 
 const MenuListCheckbox = <T, IsMulti extends boolean = false>(
   props: TMenuListProps<T, IsMulti>
 ) => {
-  const { children, innerProps, getValue, menuClassname, selectProps, ...rest } = props;
-
-  const menuRef = useRef<TNullable<HTMLDivElement>>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const { innerRef, menuRef, allOptions, shouldShowAllCheckbox } = useMenuListCheckbox(props);
 
   const { height, virtualItems, rows, measureRef, paddingTop, paddingBottom } =
-    useSelectVirtualizer(children, menuRef);
-
-  const optionChildren = Children.toArray(children).filter(isOptionElement<T>);
-  const allOptions = optionChildren.map((child) => child.props.data);
-  const shouldShowAllCheckbox = !selectProps.inputValue;
+    useSelectVirtualizer(props.children, menuRef);
 
   return (
     <components.MenuList
-      {...rest}
+      {...props}
       innerRef={innerRef}
-      getValue={getValue}
-      selectProps={selectProps}
       innerProps={{
-        ...innerProps,
+        ...props.innerProps,
         style: {
-          ...innerProps.style,
+          ...props.innerProps.style,
           maxHeight: props.maxHeight
         }
       }}
-      className={classnames(menuClassname, 'menu-list-checkbox')}
+      className={classnames(props.menuClassname, 'menu-list-checkbox')}
     >
       {rows.length ? (
         <div ref={menuRef} style={{ paddingTop, paddingBottom, minHeight: height }}>
           {shouldShowAllCheckbox && (
             <SelectAllCheckbox<T>
-              selectProps={selectProps}
-              getValue={getValue}
+              selectProps={props.selectProps}
+              getValue={props.getValue}
               allOptions={allOptions}
             />
           )}

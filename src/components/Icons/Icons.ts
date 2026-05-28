@@ -4,6 +4,8 @@ import ArrowLeft from './ArrowLeft';
 import ArrowUp from './ArrowUp';
 import CalendarDate from './CalendarDate';
 import ChevronLeft from './ChevronLeft';
+import Collapse from './Collapse';
+import Expand from './Expand';
 import Feeds from './Feeds';
 import FilterClear from './FilterClear';
 import First from './First';
@@ -28,7 +30,9 @@ const Icons = {
   FilterClear: memo(FilterClear),
   CalendarDate: memo(CalendarDate),
   First: memo(First),
-  ChevronLeft: memo(ChevronLeft)
+  ChevronLeft: memo(ChevronLeft),
+  Expand: memo(Expand),
+  Collapse: memo(Collapse)
 } as const;
 
 export { Icons };

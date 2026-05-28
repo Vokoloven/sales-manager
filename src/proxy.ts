@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { APP_PATH, APP_PROTECTED_PATH, APP_PUBLIC_PATH } from './core/constants/appPath.constant';
-import { TOKEN } from './core/constants/token.constant';
+import { COOKIES } from './core/constants/cookies.constant';
 import { apiService } from './core/services/ApiService.service';
 import { envServerService } from './core/services/EnvServer.service';
 
@@ -12,8 +12,8 @@ const proxy = async (req: NextRequest) => {
   const isProtectedRoute = protectedRoutes.some((route) => path.startsWith(route));
   const isPublicRoute = publicRoutes.includes(path);
 
-  const accessToken = req.cookies.get(TOKEN.accessToken)?.value ?? null;
-  const refreshToken = req.cookies.get(TOKEN.refreshToken)?.value ?? null;
+  const accessToken = req.cookies.get(COOKIES.accessToken)?.value ?? null;
+  const refreshToken = req.cookies.get(COOKIES.refreshToken)?.value ?? null;
 
   const isAuth = Boolean(accessToken);
   const isRefresh = Boolean(refreshToken);
@@ -30,7 +30,7 @@ const proxy = async (req: NextRequest) => {
       if (result.success) {
         response = NextResponse.next();
 
-        response.cookies.set(TOKEN.accessToken, result.data.access.accessToken, {
+        response.cookies.set(COOKIES.accessToken, result.data.access.accessToken, {
           httpOnly: true,
           secure: envServerService.isProdEnv,
           sameSite: 'strict',
@@ -43,8 +43,8 @@ const proxy = async (req: NextRequest) => {
       const loginUrlOnFailure = new URL(APP_PATH.login, req.nextUrl);
       loginUrlOnFailure.searchParams.set('callbackUrl', req.nextUrl.pathname + req.nextUrl.search);
       response = NextResponse.redirect(loginUrlOnFailure);
-      response.cookies.delete(TOKEN.accessToken);
-      response.cookies.delete(TOKEN.refreshToken);
+      response.cookies.delete(COOKIES.accessToken);
+      response.cookies.delete(COOKIES.refreshToken);
       return response;
     }
 

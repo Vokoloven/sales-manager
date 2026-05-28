@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { useCallback } from 'react';
-import Checkbox from '@/components/Checkbox';
+import Checkbox from '@/components/Checkbox/Checkbox';
 import { typedMemo } from '@/core/utils/typedMemo.util';
 import type { TSelectAllCheckbox } from './models/selectAllCheckbox.model';
 import styles from './SelectAllCheckbox.module.css';

@@ -6,7 +6,7 @@ import { TOKENS_INITIAL_STATE } from '@/core/constants/token.constant';
 import { tokenService } from '@/core/services/Token.service';
 
 const logOutButtonAction = async () => {
-  await tokenService().setTokens(TOKENS_INITIAL_STATE);
+  await tokenService.setTokens(TOKENS_INITIAL_STATE);
   redirect(APP_PATH.base);
 };
 

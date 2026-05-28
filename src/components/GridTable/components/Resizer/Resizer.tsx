@@ -1,14 +1,8 @@
 import classNames from 'classnames';
-import type { FC, MouseEventHandler, TouchEventHandler } from 'react';
+import type { TResizerProps } from './models/resizer.model';
 import styles from './Resizer.module.css';
 
-export type ResizerProps = {
-  onMouseDown: MouseEventHandler<HTMLDivElement>;
-  onTouchStart: TouchEventHandler<HTMLDivElement>;
-  isResizing: boolean;
-};
-
-const Resizer: FC<ResizerProps> = ({ onMouseDown, onTouchStart, isResizing }) => {
+const Resizer = ({ onMouseDown, onTouchStart, isResizing }: TResizerProps) => {
   return (
     <div
       className={classNames('resizer', styles.resizer, { isResizing: isResizing })}

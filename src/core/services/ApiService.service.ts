@@ -2,12 +2,12 @@ import { redirect } from 'next/navigation';
 import { loginResponseSchema } from '@/app/(public)/login/schemas/login.schema';
 import { API_URL } from '../constants/apiURL.constant';
 import { APP_PATH } from '../constants/appPath.constant';
-import { CONTENT_TYPE, HTTP_HEADER, HTTP_METHOD } from '../constants/fetchService.constant';
+import { CONTENT_TYPE, HTTP_HEADER, HTTP_METHOD } from '../constants/fetch.constant';
 import { ApiValidator } from '../decorators/ApiValidator.decorator';
 import { CatchApiError } from '../decorators/CatchApiError.decorator';
 import { envServerService } from './EnvServer.service';
 import { tokenService } from './Token.service';
-import type { TRequestInit } from '../models/fetchService.model';
+import type { TRequestInit } from '../models/fetch.model';
 import type { TToken } from '../models/token.model';
 import type { TZodInfer } from '../models/utility.model';
 
@@ -25,7 +25,7 @@ class ApiService {
   @CatchApiError
   public api = async <T>(url: string, init?: TRequestInit) => {
     if (!this.accessToken) {
-      const { accessToken } = await tokenService().getTokens();
+      const { accessToken } = await tokenService.getTokens();
       this.accessToken = accessToken;
     }
 

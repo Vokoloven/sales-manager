@@ -1,18 +1,19 @@
-import { cookies } from 'next/headers';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { COOKIES } from '@/core/constants/cookies.constant';
+import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
 import LogOutButton from './components/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
+import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
 import ResizeHandle from './components/ResizeHandle/ResizeHandle';
 import { chatService } from './services/Chat.service';
 import type { CSSProperties } from 'react';
 import styles from './default.module.css';
 
 const AsideDefault = async () => {
-  const cookieStore = await cookies();
-  const width = cookieStore.get('aside-width')?.value;
-  const collapsed = cookieStore.has('aside-collapsed');
+  const width = await cookiesService.get(COOKIES.asideWidth);
+  const collapsed = await cookiesService.has(COOKIES.asideCollapsed);
 
   const recoverUser = await recoverUserService.recoverUser();
   const _chats = await chatService.getChats();
@@ -20,7 +21,7 @@ const AsideDefault = async () => {
   return (
     <aside
       className={styles.aside}
-      style={{ '--aside-width': width ? `${width}px` : undefined } as CSSProperties}
+      style={{ [ASIDE.asideWidthName]: width ? `${width}px` : undefined } as CSSProperties}
       data-aside-collapsed={collapsed ? '' : undefined}
       aria-label='Recent'
     >

@@ -1,4 +1,4 @@
-import { envClientSchema } from '../schemas/envService.schema';
+import { envClientSchema } from '../schemas/env.schema';
 
 class EnvClientService {
   public get env() {

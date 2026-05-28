@@ -39,7 +39,7 @@ const ViewFeed = async ({ params }: TParams<'id'>) => {
         <section className={styles.section}>
           <h2>Project info</h2>
           <div className={styles.meta}>
-            <ScoreBadge score={data.data.score} />
+            {data.data.score && <ScoreBadge score={data.data.score} />}
             <a
               href={data.data.url}
               title={data.data.title}
@@ -63,7 +63,7 @@ const ViewFeed = async ({ params }: TParams<'id'>) => {
 
         <section className={styles.section}>
           <h2>Keywords</h2>
-          <KeywordBadges keywords={data.data.keywords} />
+          {data.data.keywords && <KeywordBadges keywords={data.data.keywords} />}
         </section>
 
         {data.data.matchedCasesData.length > 0 && (
