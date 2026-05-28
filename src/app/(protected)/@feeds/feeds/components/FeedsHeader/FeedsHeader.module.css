@@ -10,9 +10,4 @@
   :global(.button) {
     min-width: 32px;
   }
-
-  [class$='-icon'] {
-    width: 16px;
-    height: 16px;
-  }
 }

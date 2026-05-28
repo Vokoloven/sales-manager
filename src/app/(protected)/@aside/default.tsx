@@ -1,5 +1,6 @@
 import Button from '@/components/Button/Button';
-import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { Icons } from '@/components/Icons/Icons';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
@@ -16,7 +17,7 @@ const AsideDefault = async () => {
   const collapsed = await cookiesService.has(COOKIES.asideCollapsed);
 
   const recoverUser = await recoverUserService.recoverUser();
-  const _chats = await chatService.getChats();
+  const chats = await chatService.getChats();
 
   return (
     <aside
@@ -30,11 +31,43 @@ const AsideDefault = async () => {
       </div>
 
       <div className={styles.list} role='list'>
-        {/* {chats.data?.map(({ id, name }) => (
-          <Link className={styles.popoverItem} key={id} href={`/chat/${String(id)}`}>
-            {name}
-          </Link>
-        ))} */}
+        {chats.data?.map(({ id, name }) => (
+          <div className={styles.buttons} key={id}>
+            <Button
+              role='link'
+              title={name}
+              buttonType={BUTTON_TYPE.outline}
+              size={BUTTON_SIZE.sm}
+              text={name}
+            />
+
+            <Button
+              popoverTarget={`options-${String(id)}`}
+              aria-label='options'
+              buttonType={BUTTON_TYPE.outline}
+              size={BUTTON_SIZE.sm}
+              icon={<Icons.ThreeDots />}
+            />
+
+            <div className={styles.popoverOptions} id={`options-${String(id)}`} popover='auto'>
+              <Button
+                popoverTarget={`options-${String(id)}`}
+                popoverTargetAction='hide'
+                size={BUTTON_SIZE.sm}
+                text='Rename'
+                iconRight={<Icons.Edit />}
+              />
+
+              <Button
+                popoverTarget={`options-${String(id)}`}
+                popoverTargetAction='hide'
+                size={BUTTON_SIZE.sm}
+                text='Delete'
+                iconRight={<Icons.Delete />}
+              />
+            </div>
+          </div>
+        ))}
       </div>
 
       <footer className={styles.footer}>
