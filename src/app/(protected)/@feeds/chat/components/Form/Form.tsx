@@ -29,6 +29,7 @@ const Form = () => {
       </ul>
 
       <form
+        id='chat-form'
         className={styles.inputBox}
         onSubmit={(e) => {
           void onSubmit(e);
@@ -44,6 +45,7 @@ const Form = () => {
             <kbd>↵</kbd> send &middot; <kbd>⇧↵</kbd> newline
           </span>
           <Button
+            form='chat-form'
             buttonType={BUTTON_TYPE.iconAccent}
             size={BUTTON_SIZE.sm}
             type='submit'

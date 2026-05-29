@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect, type KeyboardEvent, type ChangeEvent } from 'react';
 import { useForm as useReactHookForm, useWatch } from 'react-hook-form';
+import { createChatAction } from '@/app/(protected)/@feeds/chat/actions/chat.action';
 import type { TFormValue } from './models/useForm.model';
 import type { ComponentRef } from 'react';
 
@@ -50,9 +51,13 @@ const useForm = () => {
     [setValue, resize]
   );
 
-  const handleSuccess = useCallback(() => {
-    reset();
-  }, [reset]);
+  const handleSuccess = useCallback(
+    async (data: TFormValue) => {
+      await createChatAction({ name: data.message });
+      reset();
+    },
+    [reset]
+  );
 
   const onSubmit = handleSubmit(handleSuccess);
 

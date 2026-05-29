@@ -47,9 +47,15 @@ const AsideDefault = async () => {
               buttonType={BUTTON_TYPE.outline}
               size={BUTTON_SIZE.sm}
               icon={<Icons.ThreeDots />}
+              anchorName={`--options-button-${String(id)}`}
             />
 
-            <div className={styles.popoverOptions} id={`options-${String(id)}`} popover='auto'>
+            <div
+              className={styles.popoverOptions}
+              id={`options-${String(id)}`}
+              popover='auto'
+              style={{ positionAnchor: `--options-button-${String(id)}` }}
+            >
               <Button
                 popoverTarget={`options-${String(id)}`}
                 popoverTargetAction='hide'

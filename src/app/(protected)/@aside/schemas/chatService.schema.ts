@@ -9,6 +9,18 @@ const chatsDataSchema = z.array(
   })
 );
 
+const chatDataSchema = z.object({
+  accountId: z.number(),
+  id: z.number(),
+  name: z.string()
+});
+
+const chatRequestSchema = z.object({
+  name: z.string()
+});
+
 const chatsResponseSchema = responseSchema(chatsDataSchema);
 
-export { chatsResponseSchema };
+const chatResponseSchema = responseSchema(chatDataSchema);
+
+export { chatsResponseSchema, chatResponseSchema, chatRequestSchema };

@@ -11,6 +11,7 @@ type TButton = Readonly<
       icon?: ReactNode;
       text?: string;
       iconRight?: ReactNode;
+      anchorName?: string;
     }
 >;
 
