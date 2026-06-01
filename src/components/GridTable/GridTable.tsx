@@ -8,7 +8,6 @@ import { BUTTON_TYPE } from '../Button/constants/button.constant';
 import { Icons } from '../Icons/Icons';
 import FilterCell from './components/FilterCell/FilterCell';
 import Resizer from './components/Resizer/Resizer';
-import TableSkeleton from './components/TableSkeleton/TableSkeleton';
 import { useGridTable } from './hooks/useGridTable';
 import type { Table } from '@tanstack/react-table';
 import styles from './GridTable.module.css';
@@ -23,7 +22,6 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
     paddingBottom,
     rowVirtualizer,
     isFiltered,
-    isPending,
     rows
   } = useGridTable(table);
 
@@ -236,11 +234,6 @@ const GridTable = <T,>({ table }: { table: Table<T> }) => {
           <p className={styles['no-result']}>
             {isFiltered ? 'No results found for your search query' : 'No items'}
           </p>
-        )}
-        {isPending && (
-          <div className={styles['skeleton-overlay']}>
-            <TableSkeleton columns={table.getAllColumns().length} />
-          </div>
         )}
       </div>
     </div>

@@ -1,10 +1,10 @@
 import type { PAGE_SIZE_OPTION } from '../constants/pagination.constant';
-import type { TFeedsPageProps } from '@/app/(protected)/@feeds/feeds/models/feeds.model';
+import type { TFeedsPageParsedSearchParams } from '@/app/(protected)/@feeds/feeds/models/page.model';
 
 type TPaginationProps = {
   options: typeof PAGE_SIZE_OPTION;
-  sp?: string;
   totalPages: number;
-} & Pick<TFeedsPageProps, 'parsedSearchParams'>;
+  parsedSearchParams: TFeedsPageParsedSearchParams;
+};
 
 export type { TPaginationProps };

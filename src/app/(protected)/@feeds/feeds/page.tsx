@@ -1,17 +1,11 @@
 import { redirect } from 'next/navigation';
 import qs from 'qs';
 import { Suspense } from 'react';
-import TableSkeleton from '@/components/GridTable/components/TableSkeleton/TableSkeleton';
+import Loading from '@/components/Loading/Loading';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
-import {
-  INIT_PAGINATION,
-  PAGE_SIZE_OPTION
-} from './components/Pagination/constants/pagination.constant';
-import Pagination from './components/Pagination/Pagination';
-import RawTable from './components/RawTable/RawTable';
-import { FeedsTransitionProvider } from './context/FeedsTransition.context';
+import { INIT_PAGINATION } from './components/Pagination/constants/pagination.constant';
+import RawTableServer from './components/RawTable/RawTableServer';
 import { feedsPageSearchParamsSchema } from './schemas/page.schema';
-import { feedsService } from './service/Feeds.service';
 import { decompressFilters } from './utils/compressFilters.util';
 import type { TParams } from '@/core/models/params.model';
 import type { Metadata } from 'next';
@@ -42,23 +36,12 @@ const FeedsPage = async ({ searchParams }: TParams) => {
 
   const finalParams = { ...urlParams, searchParameters };
 
-  const data = await feedsService.getFeeds(finalParams);
-  const totalPages = data.success ? data.data.items.totalPages : 1;
-
   return (
-    <FeedsTransitionProvider>
-      <div className={styles.root}>
-        <Suspense fallback={<TableSkeleton showPagination />}>
-          <RawTable data={data} parsedSearchParams={finalParams} />
-          <Pagination
-            options={PAGE_SIZE_OPTION}
-            parsedSearchParams={finalParams}
-            sp={sp}
-            totalPages={totalPages}
-          />
-        </Suspense>
-      </div>
-    </FeedsTransitionProvider>
+    <div className={styles.root}>
+      <Suspense key={queryStr} fallback={<Loading />}>
+        <RawTableServer {...finalParams} />
+      </Suspense>
+    </div>
   );
 };
 

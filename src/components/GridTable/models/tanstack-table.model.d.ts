@@ -14,7 +14,6 @@ declare module '@tanstack/react-table' {
   }
 
   interface TableMeta<TData extends RowData> {
-    isPending?: boolean;
     onRowClick?: (
       rowData: TData,
       virtualIndex: number,

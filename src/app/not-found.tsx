@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { startTransition } from 'react';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
@@ -33,9 +32,7 @@ const RootNotFound = () => {
             text='Home'
             icon={<Icons.Home />}
             onClick={() => {
-              startTransition(() => {
-                router.push(APP_PATH.base);
-              });
+              router.push(APP_PATH.base);
             }}
           />
         </div>
