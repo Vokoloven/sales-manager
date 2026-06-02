@@ -32,7 +32,7 @@ const AsideDefault = async () => {
 
       <div className={styles.list} role='list'>
         {chats.data?.map(({ id, name }) => (
-          <div className={styles.buttons} key={id}>
+          <div className={styles.buttons} key={id} role='listitem'>
             <Button
               role='link'
               title={name}

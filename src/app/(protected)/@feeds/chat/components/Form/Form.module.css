@@ -51,7 +51,7 @@
 
 .hint {
   font-size: 11px;
-  color: var(--text-disabled);
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   gap: 3px;

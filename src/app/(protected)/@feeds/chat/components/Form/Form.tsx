@@ -49,6 +49,7 @@ const Form = () => {
             buttonType={BUTTON_TYPE.iconAccent}
             size={BUTTON_SIZE.sm}
             type='submit'
+            aria-label='Send message'
             disabled={!canSubmit}
             icon={<Icons.ArrowUp />}
           />

@@ -20,6 +20,7 @@
   --text-placeholder: light-dark(#a3a3a3, #525252);
 
   --accent: light-dark(#a855f7, #c084fc);
+  --accent-btn: light-dark(#9333ea, #7c3aed);
   --accent-soft: light-dark(#f3e8ff, #2d1f3d);
 
   --error: light-dark(#ef4444, #ef4444);
