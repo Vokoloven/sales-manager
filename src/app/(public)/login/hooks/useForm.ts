@@ -44,7 +44,7 @@ const useForm = () => {
 
     if (result.success) {
       const callbackUrl = searchParams.get('callbackUrl');
-      router.push(callbackUrl ?? APP_PATH.feeds);
+      router.replace(callbackUrl ?? APP_PATH.feeds);
       return null;
     }
 

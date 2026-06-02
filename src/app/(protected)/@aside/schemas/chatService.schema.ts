@@ -23,4 +23,6 @@ const chatsResponseSchema = responseSchema(chatsDataSchema);
 
 const chatResponseSchema = responseSchema(chatDataSchema);
 
-export { chatsResponseSchema, chatResponseSchema, chatRequestSchema };
+const chatDeleteResponseSchema = responseSchema(z.boolean());
+
+export { chatsResponseSchema, chatResponseSchema, chatRequestSchema, chatDeleteResponseSchema };

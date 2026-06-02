@@ -3,8 +3,8 @@ import { HTTP_METHOD } from '@/core/constants/fetch.constant';
 import { ApiValidator } from '@/core/decorators/ApiValidator.decorator';
 import { apiService } from '@/core/services/ApiService.service';
 import { tokenService } from '@/core/services/Token.service';
-import { cacheGetChats } from '../caches/chat.cache';
-import { chatsResponseSchema } from '../schemas/chatService.schema';
+import { getChatsAction } from '../actions/chat.action';
+import { chatDeleteResponseSchema, chatsResponseSchema } from '../schemas/chatService.schema';
 import { chatResponseSchema } from '../schemas/chatService.schema';
 import type { chatRequestSchema } from '../schemas/chatService.schema';
 import type { TZodInfer } from '@/core/models/utility.model';
@@ -13,7 +13,7 @@ class ChatService {
   @ApiValidator(chatsResponseSchema)
   public getChats = async () => {
     const { accessToken } = await tokenService.getTokens();
-    return cacheGetChats(accessToken);
+    return getChatsAction(accessToken);
   };
 
   @ApiValidator(chatResponseSchema)
@@ -22,6 +22,20 @@ class ChatService {
       method: HTTP_METHOD.POST,
       body: JSON.stringify(name)
     });
+
+  @ApiValidator(chatResponseSchema)
+  public renameChat = ({ name, id }: TZodInfer<typeof chatRequestSchema> & { id: string }) =>
+    apiService().api<TZodInfer<typeof chatResponseSchema>>(API_URL.chat.replace('{{id}}', id), {
+      method: HTTP_METHOD.PUT,
+      body: JSON.stringify({ name })
+    });
+
+  @ApiValidator(chatDeleteResponseSchema)
+  public deleteChat = (id: string) =>
+    apiService().api<TZodInfer<typeof chatDeleteResponseSchema>>(
+      API_URL.chat.replace('{{id}}', id),
+      { method: HTTP_METHOD.DELETE }
+    );
 }
 
 const chatService = new ChatService();

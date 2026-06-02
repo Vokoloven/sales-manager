@@ -32,7 +32,7 @@ const RootNotFound = () => {
             text='Home'
             icon={<Icons.Home />}
             onClick={() => {
-              router.push(APP_PATH.base);
+              router.replace(APP_PATH.base);
             }}
           />
         </div>

@@ -72,7 +72,7 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
     const newSortBy = sort[0]?.id;
     const newSortDirection = sort[0] ? (sort[0].desc ? 'desc' : 'asc') : undefined;
 
-    router.push(
+    router.replace(
       `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
         {
           ...INIT_PAGINATION,
