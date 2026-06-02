@@ -9,7 +9,6 @@ const Button = ({
   icon,
   iconRight,
   text,
-  anchorName,
   isActive = false,
   buttonType = BUTTON_TYPE.primary,
   size = BUTTON_SIZE.md,
@@ -21,7 +20,6 @@ const Button = ({
       className={classNames('button', styles.btn, styles[buttonType], styles[size], {
         [styles.active]: isActive
       })}
-      style={anchorName ? { anchorName } : undefined}
       {...{ type, ...rest }}
     >
       <Activity mode={icon ? 'visible' : 'hidden'}>

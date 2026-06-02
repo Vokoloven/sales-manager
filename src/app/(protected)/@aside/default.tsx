@@ -47,7 +47,7 @@ const AsideDefault = async () => {
               buttonType={BUTTON_TYPE.outline}
               size={BUTTON_SIZE.sm}
               icon={<Icons.ThreeDots />}
-              anchorName={`--options-button-${String(id)}`}
+              style={{ anchorName: `--options-button-${String(id)}` }}
             />
 
             <div
