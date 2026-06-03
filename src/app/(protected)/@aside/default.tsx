@@ -1,19 +1,15 @@
-import Link from 'next/link';
+import { Suspense, type CSSProperties } from 'react';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
-import { Icons } from '@/components/Icons/Icons';
+import Loading from '@/components/Loading/Loading';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
-import ChatButton from './components/ChatButton/ChatButton';
-import DeleteButton from './components/DeleteButton/DeleteButton';
+import ChatList from './components/ChatList/ChatList';
 import LogOutButton from './components/LogOutButton/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
-import RenameButton from './components/RenameButton/RenameButton';
 import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
 import ResizeHandle from './components/ResizeHandle/ResizeHandle';
-import { chatService } from './services/Chat.service';
-import type { CSSProperties } from 'react';
 import styles from './default.module.css';
 
 const AsideDefault = async () => {
@@ -21,9 +17,6 @@ const AsideDefault = async () => {
   const collapsed = await cookiesService.has(COOKIES.asideCollapsed);
 
   const recoverUser = await recoverUserService.recoverUser();
-  const chats = await chatService.getChats();
-
-  const hasChats = Boolean(chats.data?.length);
 
   return (
     <aside
@@ -36,36 +29,9 @@ const AsideDefault = async () => {
         <span className={styles.headerTitle}>Recent</span>
       </div>
 
-      <div className={styles.list} role='list'>
-        {hasChats ? (
-          chats.data?.map(({ id, name }) => (
-            <div className={styles.buttons} key={id} role='listitem'>
-              <ChatButton id={String(id)} name={name} />
-
-              <div
-                className={styles.popoverOptions}
-                id={`options-${String(id)}`}
-                popover='auto'
-                style={{ positionAnchor: `--options-button-${String(id)}` }}
-              >
-                <RenameButton id={String(id)} name={name} />
-
-                <DeleteButton id={String(id)} name={name} />
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className={styles.empty}>
-            <div className={styles.emptyIcon}>
-              <Icons.Chat />
-            </div>
-            <p className={styles.emptyText}>No chats yet</p>
-            <Link href='/chat' className={styles.emptyLink}>
-              Start a chat
-            </Link>
-          </div>
-        )}
-      </div>
+      <Suspense key={crypto.randomUUID()} fallback={<Loading />}>
+        <ChatList />
+      </Suspense>
 
       <footer className={styles.footer}>
         <nav id='user-popover' popover='auto' className={styles.popover}>
