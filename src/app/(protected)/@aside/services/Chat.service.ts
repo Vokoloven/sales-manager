@@ -17,6 +17,10 @@ class ChatService {
   };
 
   @ApiValidator(chatResponseSchema)
+  public getChat = (id: string) =>
+    apiService().api<TZodInfer<typeof chatResponseSchema>>(API_URL.chat.replace('{{id}}', id));
+
+  @ApiValidator(chatResponseSchema)
   public createChat = (name: TZodInfer<typeof chatRequestSchema>) =>
     apiService().api<TZodInfer<typeof chatResponseSchema>>(API_URL.chats, {
       method: HTTP_METHOD.POST,
