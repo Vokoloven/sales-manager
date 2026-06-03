@@ -11,10 +11,6 @@ const useFeedsHeader = () => {
     const aside = document.querySelector<ComponentRef<'aside'>>('aside[aria-label="Recent"]');
     if (!aside) return undefined;
 
-    startTransition(() => {
-      setIsCollapsed(aside.hasAttribute(ASIDE.dataAside));
-    });
-
     const observer = new MutationObserver(() => {
       setIsCollapsed(aside.hasAttribute(ASIDE.dataAside));
     });
