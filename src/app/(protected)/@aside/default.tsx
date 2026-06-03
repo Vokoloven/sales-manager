@@ -1,11 +1,13 @@
+import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { Icons } from '@/components/Icons/Icons';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
 import ChatButton from './components/ChatButton/ChatButton';
 import DeleteButton from './components/DeleteButton/DeleteButton';
-import LogOutButton from './components/LogOutButton';
+import LogOutButton from './components/LogOutButton/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
 import RenameButton from './components/RenameButton/RenameButton';
 import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
@@ -21,6 +23,8 @@ const AsideDefault = async () => {
   const recoverUser = await recoverUserService.recoverUser();
   const chats = await chatService.getChats();
 
+  const hasChats = Boolean(chats.data?.length);
+
   return (
     <aside
       className={styles.aside}
@@ -33,22 +37,34 @@ const AsideDefault = async () => {
       </div>
 
       <div className={styles.list} role='list'>
-        {chats.data?.map(({ id, name }) => (
-          <div className={styles.buttons} key={id} role='listitem'>
-            <ChatButton id={String(id)} name={name} />
+        {hasChats ? (
+          chats.data?.map(({ id, name }) => (
+            <div className={styles.buttons} key={id} role='listitem'>
+              <ChatButton id={String(id)} name={name} />
 
-            <div
-              className={styles.popoverOptions}
-              id={`options-${String(id)}`}
-              popover='auto'
-              style={{ positionAnchor: `--options-button-${String(id)}` }}
-            >
-              <RenameButton id={String(id)} name={name} />
+              <div
+                className={styles.popoverOptions}
+                id={`options-${String(id)}`}
+                popover='auto'
+                style={{ positionAnchor: `--options-button-${String(id)}` }}
+              >
+                <RenameButton id={String(id)} name={name} />
 
-              <DeleteButton id={String(id)} name={name} />
+                <DeleteButton id={String(id)} name={name} />
+              </div>
             </div>
+          ))
+        ) : (
+          <div className={styles.empty}>
+            <div className={styles.emptyIcon}>
+              <Icons.Chat />
+            </div>
+            <p className={styles.emptyText}>No chats yet</p>
+            <Link href='/chat' className={styles.emptyLink}>
+              Start a chat
+            </Link>
           </div>
-        ))}
+        )}
       </div>
 
       <footer className={styles.footer}>
