@@ -18,7 +18,7 @@
 }
 
 .header {
-  padding: 16px 12px 10px;
+  padding: 17px 12px 17px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -64,7 +64,7 @@
       width: max-content;
       border: 1px solid var(--border);
       border-radius: 6px;
-      margin-left: 8px;
+      margin-left: 4px;
       padding: 8px;
       background: var(--background);
       position: fixed;

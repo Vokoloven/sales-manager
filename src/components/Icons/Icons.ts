@@ -4,6 +4,7 @@ import ArrowLeft from './ArrowLeft';
 import ArrowUp from './ArrowUp';
 import CalendarDate from './CalendarDate';
 import ChevronLeft from './ChevronLeft';
+import Close from './Close';
 import Collapse from './Collapse';
 import Delete from './Delete';
 import Edit from './Edit';
@@ -40,7 +41,8 @@ const Icons = {
   ThreeDots: memo(ThreeDots),
   Edit: memo(Edit),
   Delete: memo(Delete),
-  Chat: memo(Chat)
+  Chat: memo(Chat),
+  Close: memo(Close)
 } as const;
 
 export { Icons };

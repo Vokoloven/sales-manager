@@ -4,9 +4,9 @@ import { ApiValidator } from '@/core/decorators/ApiValidator.decorator';
 import { apiService } from '@/core/services/ApiService.service';
 import { tokenService } from '@/core/services/Token.service';
 import { getChatsAction } from '../actions/chat.action';
-import { chatDeleteResponseSchema, chatsResponseSchema } from '../schemas/chatService.schema';
-import { chatResponseSchema } from '../schemas/chatService.schema';
-import type { chatRequestSchema } from '../schemas/chatService.schema';
+import { chatDeleteResponseSchema, chatsResponseSchema } from '../schemas/chat.schema';
+import { chatResponseSchema } from '../schemas/chat.schema';
+import type { chatRequestSchema } from '../schemas/chat.schema';
 import type { TZodInfer } from '@/core/models/utility.model';
 
 class ChatService {

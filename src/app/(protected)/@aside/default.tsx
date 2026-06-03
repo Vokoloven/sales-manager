@@ -1,11 +1,13 @@
 import Button from '@/components/Button/Button';
-import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
-import { Icons } from '@/components/Icons/Icons';
+import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
+import ChatButton from './components/ChatButton/ChatButton';
+import DeleteButton from './components/DeleteButton/DeleteButton';
 import LogOutButton from './components/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
+import RenameButton from './components/RenameButton/RenameButton';
 import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
 import ResizeHandle from './components/ResizeHandle/ResizeHandle';
 import { chatService } from './services/Chat.service';
@@ -33,22 +35,7 @@ const AsideDefault = async () => {
       <div className={styles.list} role='list'>
         {chats.data?.map(({ id, name }) => (
           <div className={styles.buttons} key={id} role='listitem'>
-            <Button
-              role='link'
-              title={name}
-              buttonType={BUTTON_TYPE.outline}
-              size={BUTTON_SIZE.sm}
-              text={name}
-            />
-
-            <Button
-              popoverTarget={`options-${String(id)}`}
-              aria-label='options'
-              buttonType={BUTTON_TYPE.outline}
-              size={BUTTON_SIZE.sm}
-              icon={<Icons.ThreeDots />}
-              style={{ anchorName: `--options-button-${String(id)}` }}
-            />
+            <ChatButton id={String(id)} name={name} />
 
             <div
               className={styles.popoverOptions}
@@ -56,21 +43,9 @@ const AsideDefault = async () => {
               popover='auto'
               style={{ positionAnchor: `--options-button-${String(id)}` }}
             >
-              <Button
-                popoverTarget={`options-${String(id)}`}
-                popoverTargetAction='hide'
-                size={BUTTON_SIZE.sm}
-                text='Rename'
-                iconRight={<Icons.Edit />}
-              />
+              <RenameButton id={String(id)} name={name} />
 
-              <Button
-                popoverTarget={`options-${String(id)}`}
-                popoverTargetAction='hide'
-                size={BUTTON_SIZE.sm}
-                text='Delete'
-                iconRight={<Icons.Delete />}
-              />
+              <DeleteButton id={String(id)} name={name} />
             </div>
           </div>
         ))}

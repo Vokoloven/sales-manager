@@ -16,7 +16,7 @@ const chatDataSchema = z.object({
 });
 
 const chatRequestSchema = z.object({
-  name: z.string()
+  name: z.string().trim().min(3).max(50)
 });
 
 const chatsResponseSchema = responseSchema(chatsDataSchema);
