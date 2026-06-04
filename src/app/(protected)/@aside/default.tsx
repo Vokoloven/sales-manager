@@ -38,7 +38,7 @@ const AsideDefault = async () => {
           text='New Chat'
           buttonType={BUTTON_TYPE.outline}
           size={BUTTON_SIZE.sm}
-          iconRight={<Icons.Chat />}
+          icon={<Icons.Plus />}
         />
       </nav>
 

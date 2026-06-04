@@ -17,6 +17,7 @@ import Chat from './Google copy';
 import HidePassword from './HidePassword';
 import Home from './Home';
 import LogOut from './LogOut';
+import Plus from './Plus';
 import ShowPassword from './ShowPassword';
 import Sortable from './Sortable';
 import ThreeDots from './ThreeDots';
@@ -42,7 +43,8 @@ const Icons = {
   Edit: memo(Edit),
   Delete: memo(Delete),
   Chat: memo(Chat),
-  Close: memo(Close)
+  Close: memo(Close),
+  Plus: memo(Plus)
 } as const;
 
 export { Icons };
