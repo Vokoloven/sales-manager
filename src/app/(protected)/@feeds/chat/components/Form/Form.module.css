@@ -51,7 +51,7 @@
 
 .hint {
   font-size: 11px;
-  color: var(--text-secondary);
+  color: light-dark(#6b6b6b, #8f8f8f);
   display: flex;
   align-items: center;
   gap: 3px;
@@ -63,6 +63,6 @@
     border-radius: 4px;
     background: var(--surface-disabled);
     border: 1px solid var(--border);
-    color: var(--text-secondary);
+    color: light-dark(#6b6b6b, #8f8f8f);
   }
 }
