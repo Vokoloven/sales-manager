@@ -2,8 +2,9 @@
 
 import { cacheTag, revalidateTag } from 'next/cache';
 import { API_URL } from '@/core/constants/apiURL.constant';
+import { SORT_DIRECTION } from '@/core/constants/request.constant';
 import { apiService } from '@/core/services/ApiService.service';
-import { CHAT_TAG } from '../constants/chat.constant';
+import { CHAT_PAGE_SIZE, CHAT_TAG } from '../constants/chat.constant';
 import { chatService } from '../services/Chat.service';
 import type { chatRequestSchema, chatsResponseSchema } from '../schemas/chat.schema';
 import type { TToken } from '@/core/models/token.model';
@@ -25,4 +26,14 @@ const deleteChatAction = async (id: string) => {
   revalidateTag(CHAT_TAG.chats, { expire: 0 });
 };
 
-export { getChatsAction, renameChatAction, deleteChatAction };
+const getPaginatedChatsAction = async (pageNumber: number) => {
+  'use cache';
+  cacheTag(CHAT_TAG.chats);
+  return chatService.getPaginatedChats({
+    pageNumber,
+    pageSize: CHAT_PAGE_SIZE,
+    sortDirection: SORT_DIRECTION.desc
+  });
+};
+
+export { getChatsAction, getPaginatedChatsAction, renameChatAction, deleteChatAction };

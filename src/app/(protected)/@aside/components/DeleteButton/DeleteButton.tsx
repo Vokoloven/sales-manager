@@ -51,8 +51,10 @@ const DeleteButton = ({ id, name }: TDeleteButtonProps) => {
             onClick={() => {
               startTransition(async () => {
                 await deleteChatAction(id);
+                router.refresh();
                 router.replace(APP_PATH.chat);
               });
+              dialogRef.current?.close();
             }}
           />
         ]}

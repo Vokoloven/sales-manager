@@ -1,8 +1,7 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { type ComponentRef, type RefObject, useCallback } from 'react';
+import { ITEM_GAP } from '../constants/chatListVirtual.constant';
 import type { TNullable } from '@/core/models/utility.model';
-
-const ITEM_GAP = 6;
 
 const useChatListVirtualizer = <T>(
   items: readonly T[],
@@ -39,7 +38,10 @@ const useChatListVirtualizer = <T>(
         ]
       : [0, 0];
 
-  return { virtualItems, paddingTop, paddingBottom, measureRef };
+  const [lastItem] = [...virtualItems].reverse();
+  const isLastItem = lastItem ? lastItem.index >= items.length - 1 : false;
+
+  return { virtualItems, paddingTop, paddingBottom, measureRef, isLastItem };
 };
 
 export { useChatListVirtualizer };

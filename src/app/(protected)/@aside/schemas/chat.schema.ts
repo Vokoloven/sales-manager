@@ -1,5 +1,5 @@
 import z from 'zod';
-import { responseSchema } from '@/core/schemas/response.schema';
+import { paginationSchema, responseSchema } from '@/core/schemas/response.schema';
 
 const chatsDataSchema = z.array(
   z.object({
@@ -9,6 +9,10 @@ const chatsDataSchema = z.array(
   })
 );
 
+const chatsPaginatedDataSchema = paginationSchema.extend({
+  items: chatsDataSchema
+});
+
 const chatDataSchema = z.object({
   accountId: z.number(),
   id: z.number(),
@@ -16,13 +20,22 @@ const chatDataSchema = z.object({
 });
 
 const chatRequestSchema = z.object({
-  name: z.string().trim().min(3).max(50)
+  name: z.string().trim().min(1).max(50)
 });
 
 const chatsResponseSchema = responseSchema(chatsDataSchema);
+
+const chatsPaginatedResponseSchema = responseSchema(chatsPaginatedDataSchema);
 
 const chatResponseSchema = responseSchema(chatDataSchema);
 
 const chatDeleteResponseSchema = responseSchema(z.boolean());
 
-export { chatsResponseSchema, chatResponseSchema, chatRequestSchema, chatDeleteResponseSchema };
+export {
+  chatsResponseSchema,
+  chatResponseSchema,
+  chatRequestSchema,
+  chatDeleteResponseSchema,
+  chatsPaginatedResponseSchema,
+  chatDataSchema
+};

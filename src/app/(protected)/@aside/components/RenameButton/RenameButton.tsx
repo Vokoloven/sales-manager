@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { startTransition } from 'react';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
@@ -11,6 +12,7 @@ import { useRenameButton } from './hooks/useRenameButton';
 import type { TRenameButtonProps } from './models/renameButton.model';
 
 const RenameButton = ({ id, name }: TRenameButtonProps) => {
+  const router = useRouter();
   const {
     dialogRef,
     form: {
@@ -66,9 +68,9 @@ const RenameButton = ({ id, name }: TRenameButtonProps) => {
             void handleSubmit(({ name }) => {
               startTransition(async () => {
                 await renameChatAction({ id, name });
-
-                dialogRef.current?.close();
+                router.refresh();
               });
+              dialogRef.current?.close();
             })();
           }}
         >

@@ -4,6 +4,7 @@ const API_URL = {
   recoverUser: '/api/v1/auth/recover-user',
   about: '/api/v1/about/version',
   chats: '/api/v1/chats',
+  chatsPaginated: '/api/v1/chats/get-chats',
   chat: '/api/v1/chats/{{id}}',
   feeds: '/api/v1/upwork-feeds/get-feeds',
   feed: '/api/v1/upwork-feeds/{{id}}'

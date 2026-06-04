@@ -1,4 +1,5 @@
 import z from 'zod';
+import { SORT_DIRECTION } from '../constants/request.constant';
 
 const requestSchema = z.object({
   pageSize: z.number(),
@@ -11,7 +12,7 @@ const requestSchema = z.object({
       })
     )
     .optional(),
-  sortDirection: z.enum(['asc', 'desc']).optional(),
+  sortDirection: z.enum(SORT_DIRECTION).optional(),
   sortBy: z.string().optional()
 });
 

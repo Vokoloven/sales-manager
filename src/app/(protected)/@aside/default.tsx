@@ -29,7 +29,7 @@ const AsideDefault = async () => {
         <span className={styles.headerTitle}>Recent</span>
       </div>
 
-      <Suspense key={crypto.randomUUID()} fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <ChatList />
       </Suspense>
 
