@@ -2,19 +2,34 @@
 
 import { cacheTag, revalidateTag } from 'next/cache';
 import { API_URL } from '@/core/constants/apiURL.constant';
+import { HTTP_METHOD } from '@/core/constants/fetch.constant';
 import { SORT_DIRECTION } from '@/core/constants/request.constant';
 import { apiService } from '@/core/services/ApiService.service';
 import { CHAT_PAGE_SIZE, CHAT_TAG } from '../constants/chat.constant';
 import { chatService } from '../services/Chat.service';
-import type { chatRequestSchema, chatsResponseSchema } from '../schemas/chat.schema';
+import type { chatsPaginatedResponseSchema } from '../schemas/chat.schema';
+import type { chatRequestSchema } from '../schemas/chat.schema';
 import type { TToken } from '@/core/models/token.model';
 import type { TZodInfer } from '@/core/models/utility.model';
 
-const getChatsAction = async (accessToken: TToken['accessToken']) => {
+const getCachedPaginatedChats = async (accessToken: TToken['accessToken'], pageNumber: number) => {
   'use cache';
   cacheTag(CHAT_TAG.chats);
-  return apiService(accessToken).api<TZodInfer<typeof chatsResponseSchema>>(API_URL.chats);
+  return apiService(accessToken).api<TZodInfer<typeof chatsPaginatedResponseSchema>>(
+    API_URL.chatsPaginated,
+    {
+      method: HTTP_METHOD.POST,
+      body: JSON.stringify({
+        pageNumber,
+        pageSize: CHAT_PAGE_SIZE,
+        sortDirection: SORT_DIRECTION.desc
+      })
+    }
+  );
 };
+
+const getPaginatedChatsAction = async (pageNumber: number) =>
+  chatService.getPaginatedChats(pageNumber);
 
 const renameChatAction = async (params: TZodInfer<typeof chatRequestSchema> & { id: string }) => {
   await chatService.renameChat(params);
@@ -26,14 +41,4 @@ const deleteChatAction = async (id: string) => {
   revalidateTag(CHAT_TAG.chats, { expire: 0 });
 };
 
-const getPaginatedChatsAction = async (pageNumber: number) => {
-  'use cache';
-  cacheTag(CHAT_TAG.chats);
-  return chatService.getPaginatedChats({
-    pageNumber,
-    pageSize: CHAT_PAGE_SIZE,
-    sortDirection: SORT_DIRECTION.desc
-  });
-};
-
-export { getChatsAction, getPaginatedChatsAction, renameChatAction, deleteChatAction };
+export { getCachedPaginatedChats, getPaginatedChatsAction, renameChatAction, deleteChatAction };

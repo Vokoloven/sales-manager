@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { getPaginatedChatsAction } from '@/app/(protected)/@aside/actions/chat.action';
+import { getPaginatedChatsAction } from '../../../actions/chat.action';
 import { ACTION } from '../constants/chatListVirtual.constant';
 import { useChatListVirtualizer } from './useChatListVirtualizer';
 import { reducer } from './utils/reducer.util';
@@ -28,7 +28,7 @@ const useChatListInfinite = ({ items, hasMore }: TChatListInitialData) => {
       payload: { items: [...items], hasMore: hasMore }
     });
     pageRef.current = 1;
-  }, [dispatch, items]);
+  }, [items, dispatch]);
 
   const { virtualItems, paddingTop, paddingBottom, measureRef, isLastItem } =
     useChatListVirtualizer(state.items, scrollRef);
@@ -36,18 +36,21 @@ const useChatListInfinite = ({ items, hasMore }: TChatListInitialData) => {
   const loadMore = useCallback(async () => {
     dispatch({ type: ACTION.setLoading, payload: true });
     const nextPage = pageRef.current + 1;
-    const result = await getPaginatedChatsAction(nextPage);
-
-    if (result.success) {
-      pageRef.current = nextPage;
-      dispatch({
-        type: ACTION.appendData,
-        payload: {
-          items: result.data.items,
-          hasMore: result.data.pageNumber < result.data.totalPages
-        }
-      });
-    } else {
+    try {
+      const result = await getPaginatedChatsAction(nextPage);
+      if (result.success) {
+        pageRef.current = nextPage;
+        dispatch({
+          type: ACTION.appendData,
+          payload: {
+            items: result.data.items,
+            hasMore: result.data.pageNumber < result.data.totalPages
+          }
+        });
+      } else {
+        dispatch({ type: ACTION.setLoading, payload: false });
+      }
+    } catch {
       dispatch({ type: ACTION.setLoading, payload: false });
     }
   }, [dispatch]);

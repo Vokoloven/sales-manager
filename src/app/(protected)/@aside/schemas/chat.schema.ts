@@ -23,8 +23,6 @@ const chatRequestSchema = z.object({
   name: z.string().trim().min(1).max(50)
 });
 
-const chatsResponseSchema = responseSchema(chatsDataSchema);
-
 const chatsPaginatedResponseSchema = responseSchema(chatsPaginatedDataSchema);
 
 const chatResponseSchema = responseSchema(chatDataSchema);
@@ -32,7 +30,6 @@ const chatResponseSchema = responseSchema(chatDataSchema);
 const chatDeleteResponseSchema = responseSchema(z.boolean());
 
 export {
-  chatsResponseSchema,
   chatResponseSchema,
   chatRequestSchema,
   chatDeleteResponseSchema,

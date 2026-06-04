@@ -1,7 +1,10 @@
 import { Suspense, type CSSProperties } from 'react';
 import Button from '@/components/Button/Button';
-import { BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
+import { Icons } from '@/components/Icons/Icons';
 import Loading from '@/components/Loading/Loading';
+import NavLink from '@/components/NavLink/NavLink';
+import { APP_PATH } from '@/core/constants/appPath.constant';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
@@ -28,6 +31,16 @@ const AsideDefault = async () => {
       <div className={styles.header}>
         <span className={styles.headerTitle}>Recent</span>
       </div>
+
+      <nav className={styles.nav}>
+        <NavLink
+          href={APP_PATH.chat}
+          text='New Chat'
+          buttonType={BUTTON_TYPE.outline}
+          size={BUTTON_SIZE.sm}
+          iconRight={<Icons.Chat />}
+        />
+      </nav>
 
       <Suspense fallback={<Loading />}>
         <ChatList />

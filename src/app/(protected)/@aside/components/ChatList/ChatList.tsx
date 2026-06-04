@@ -1,17 +1,11 @@
 import Link from 'next/link';
 import { Icons } from '@/components/Icons/Icons';
-import { SORT_DIRECTION } from '@/core/constants/request.constant';
-import { CHAT_PAGE_SIZE } from '../../constants/chat.constant';
 import { chatService } from '../../services/Chat.service';
 import ChatListVirtual from './ChatListVirtual';
 import styles from './ChatList.module.css';
 
 const ChatList = async () => {
-  const result = await chatService.getPaginatedChats({
-    pageNumber: 1,
-    pageSize: CHAT_PAGE_SIZE,
-    sortDirection: SORT_DIRECTION.desc
-  });
+  const result = await chatService.getPaginatedChats(1);
 
   if (!result.success || !result.data.items.length) {
     return (

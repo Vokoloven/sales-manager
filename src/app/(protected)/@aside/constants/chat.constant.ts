@@ -3,6 +3,6 @@ const CHAT_TAG = {
   chats: 'chats'
 } as const;
 
-const CHAT_PAGE_SIZE = 20;
+const CHAT_PAGE_SIZE = 50;
 
 export { CHAT_TAG, CHAT_PAGE_SIZE };

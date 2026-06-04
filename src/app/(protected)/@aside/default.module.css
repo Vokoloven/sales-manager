@@ -10,6 +10,13 @@
   border-right: 1px solid var(--border);
   overflow: hidden;
   transition: width 0.1s ease;
+
+  .nav {
+    padding: 8px;
+    :global(.button) {
+      width: 100%;
+    }
+  }
 }
 
 .aside[data-aside-collapsed] {
@@ -19,7 +26,7 @@
 
 .header {
   padding: 17px 12px 17px;
-  border-bottom: 1px solid var(--border);
+  /* border-bottom: 1px solid var(--border); */
   flex-shrink: 0;
 }
 
@@ -44,7 +51,7 @@
 
 .footer {
   padding: 8px;
-  border-top: 1px solid var(--border);
+  /* border-top: 1px solid var(--border); */
   flex-shrink: 0;
   position: relative;
 
