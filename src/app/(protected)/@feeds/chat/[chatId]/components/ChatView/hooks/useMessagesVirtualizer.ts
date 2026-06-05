@@ -39,7 +39,7 @@ const useMessagesVirtualizer = (
         ]
       : [0, 0];
 
-  return { virtualItems, paddingTop, paddingBottom, measureRef };
+  return { virtualizer, virtualItems, paddingTop, paddingBottom, measureRef };
 };
 
 export { useMessagesVirtualizer };

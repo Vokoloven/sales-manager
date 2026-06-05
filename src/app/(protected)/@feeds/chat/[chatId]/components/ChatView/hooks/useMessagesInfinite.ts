@@ -36,17 +36,15 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  const { virtualItems, paddingTop, paddingBottom, measureRef } = useMessagesVirtualizer(
-    state.items,
-    scrollRef
-  );
+  const { virtualizer, virtualItems, paddingTop, paddingBottom, measureRef } =
+    useMessagesVirtualizer(state.items, scrollRef);
 
   useLayoutEffect(() => {
-    if (!isInitialScrollDone.current && scrollRef.current && state.items.length > 0) {
+    if (!isInitialScrollDone.current && state.items.length > 0) {
       isInitialScrollDone.current = true;
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      virtualizer.scrollToIndex(state.items.length - 1, { align: 'end' });
     }
-  }, [state.items.length]);
+  }, [state.items.length, virtualizer]);
 
   useLayoutEffect(() => {
     const el = scrollRef.current;
@@ -104,11 +102,9 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
   }, []);
 
   const scrollToBottom = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTop = el.scrollHeight;
+    virtualizer.scrollToIndex(state.items.length - 1, { align: 'end' });
     setShowScrollButton(false);
-  }, []);
+  }, [virtualizer, state.items.length]);
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -126,9 +122,7 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
               hasMore: messagesResult.data.pageNumber < messagesResult.data.totalPages
             }
           });
-          requestAnimationFrame(() => {
-            scrollToBottom();
-          });
+          scrollToBottom();
         }
       }
 
