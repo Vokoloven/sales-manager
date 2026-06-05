@@ -1,9 +1,8 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import qs from 'qs';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { generateColumns } from '@/app/(protected)/@feeds/feeds/components/RawTable/utils/columns.util';
-import { useFeedsTransition } from '@/app/(protected)/@feeds/feeds/context/hooks/useFeedsTransitions';
 import { compressFilters } from '@/app/(protected)/@feeds/feeds/utils/compressFilters.util';
 import { APP_PROTECTED_PATH } from '@/core/constants/appPath.constant';
 import { INIT_PAGINATION } from '../../Pagination/constants/pagination.constant';
@@ -15,8 +14,6 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
   const { searchParameters = [], sortBy, sortDirection, pageSize } = parsedSearchParams;
 
   const router = useRouter();
-  const { isPending, startTransition } = useFeedsTransition();
-  const isFirstRender = useRef(true);
 
   const scoreParsedValue = useMemo(
     () =>
@@ -60,44 +57,34 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
     }));
   });
 
-  useEffect(
-    function handleSortAndFilters() {
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        return;
-      }
+  const navigateWithState = (filters: ColumnFiltersState, sort: SortingState) => {
+    const filterParams = filters
+      .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
+      .flatMap(({ id, value }) =>
+        Array.isArray(value)
+          ? (value as string[]).map((v) => ({
+              searchBy: id as TSearchFilter['searchBy'],
+              searchQuery: v
+            }))
+          : [{ searchBy: id as TSearchFilter['searchBy'], searchQuery: value as string }]
+      );
 
-      const filters = columnFilters
-        .filter(({ value }) => (Array.isArray(value) ? value.length > 0 : Boolean(value)))
-        .flatMap(({ id, value }) =>
-          Array.isArray(value)
-            ? (value as string[]).map((v) => ({
-                searchBy: id as TSearchFilter['searchBy'],
-                searchQuery: v
-              }))
-            : [{ searchBy: id as TSearchFilter['searchBy'], searchQuery: value as string }]
-        );
+    const newSortBy = sort[0]?.id;
+    const newSortDirection = sort[0] ? (sort[0].desc ? 'desc' : 'asc') : undefined;
 
-      const newSortBy = sorting[0]?.id;
-      const newSortDirection = sorting[0] ? (sorting[0].desc ? 'desc' : 'asc') : undefined;
-
-      startTransition(() => {
-        router.push(
-          `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
-            {
-              ...INIT_PAGINATION,
-              pageSize,
-              sortBy: newSortBy,
-              sortDirection: newSortDirection,
-              sp: compressFilters(filters)
-            },
-            { skipNulls: true }
-          )}`
-        );
-      });
-    },
-    [columnFilters, sorting, router, startTransition, pageSize]
-  );
+    router.replace(
+      `${APP_PROTECTED_PATH.feeds}?${qs.stringify(
+        {
+          ...INIT_PAGINATION,
+          pageSize,
+          sortBy: newSortBy,
+          sortDirection: newSortDirection,
+          sp: compressFilters(filterParams)
+        },
+        { skipNulls: true }
+      )}`
+    );
+  };
 
   const table = useReactTable({
     columns: memoColumns,
@@ -107,14 +94,19 @@ const useRawTable = ({ data, parsedSearchParams }: TFeedsPageProps) => {
       columnFilters,
       sorting
     },
-    onColumnFiltersChange: setColumnFilters,
-    onSortingChange: setSorting,
+    onColumnFiltersChange: (updater) => {
+      const newFilters = typeof updater === 'function' ? updater(columnFilters) : updater;
+      setColumnFilters(newFilters);
+      navigateWithState(newFilters, sorting);
+    },
+    onSortingChange: (updater) => {
+      const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
+      setSorting(newSorting);
+      navigateWithState(columnFilters, newSorting);
+    },
     meta: {
-      isPending,
       onRowClick: (rowData) => {
-        startTransition(() => {
-          router.push(`${APP_PROTECTED_PATH.feeds}/${rowData.id}`);
-        });
+        router.push(`${APP_PROTECTED_PATH.feeds}/${rowData.id}`);
       }
     }
   });

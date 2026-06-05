@@ -13,6 +13,14 @@ import type { TZodInfer } from '../models/utility.model';
 
 class ApiService {
   private accessToken: TToken['accessToken'] = null;
+  private readonly preloadedToken?: TToken['accessToken'];
+
+  public constructor(accessToken?: TToken['accessToken']) {
+    this.preloadedToken = accessToken;
+    if (accessToken) {
+      this.accessToken = accessToken;
+    }
+  }
 
   @ApiValidator(loginResponseSchema)
   public refreshAccessToken = async (refreshToken: TToken['refreshToken']) => {
@@ -24,7 +32,7 @@ class ApiService {
 
   @CatchApiError
   public api = async <T>(url: string, init?: TRequestInit) => {
-    if (!this.accessToken) {
+    if (!this.preloadedToken && !this.accessToken) {
       const { accessToken } = await tokenService.getTokens();
       this.accessToken = accessToken;
     }
@@ -55,8 +63,8 @@ class ApiService {
   };
 }
 
-const apiService = () => {
-  return new ApiService();
+const apiService = (accessToken?: TToken['accessToken']) => {
+  return new ApiService(accessToken);
 };
 
 export { apiService };

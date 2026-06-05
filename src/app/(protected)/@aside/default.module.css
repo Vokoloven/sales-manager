@@ -10,16 +10,23 @@
   border-right: 1px solid var(--border);
   overflow: hidden;
   transition: width 0.1s ease;
+
+  .nav {
+    padding: 8px;
+    :global(.button) {
+      width: 100%;
+    }
+  }
 }
 
 .aside[data-aside-collapsed] {
-  width: 4px;
-  min-width: 4px;
+  width: 1px;
+  min-width: 1px;
 }
 
 .header {
-  padding: 16px 12px 10px;
-  border-bottom: 1px solid var(--border);
+  padding: 17px 12px 17px;
+  /* border-bottom: 1px solid var(--border); */
   flex-shrink: 0;
 }
 
@@ -35,63 +42,6 @@
   white-space: nowrap;
 }
 
-.list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-  min-height: 0;
-
-  .buttons {
-    display: flex;
-
-    > :nth-child(1):global(.button) {
-      flex: 1;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: 0.5px solid var(--border-focus);
-    }
-
-    > :nth-child(2):global(.button) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      border-left: 0.5px solid var(--border-focus);
-      anchor-name: --options-button;
-    }
-
-    .popoverOptions {
-      width: max-content;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      margin-top: 8px;
-      padding: 8px;
-      background: var(--background);
-      position: fixed;
-      position-anchor: --options-button;
-      top: anchor(bottom);
-      left: anchor(left);
-      position-try-fallbacks: --below-right, --below-left, --above-right, --above-left;
-
-      &::backdrop {
-        background: transparent;
-      }
-
-      &:popover-open {
-        display: grid;
-        gap: 8px;
-      }
-    }
-  }
-
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 4px;
-  }
-}
-
 .sectionLabel {
   font-size: 11px;
   font-weight: 500;
@@ -101,7 +51,7 @@
 
 .footer {
   padding: 8px;
-  border-top: 1px solid var(--border);
+  /* border-top: 1px solid var(--border); */
   flex-shrink: 0;
   position: relative;
 
@@ -113,16 +63,26 @@
 }
 
 .popover {
-  position: absolute;
+  position: fixed;
   inset: unset;
   margin: 0;
-  bottom: 64px;
-  left: 8px;
   width: calc(var(--aside-width, 260px) - 16px);
   background: var(--background);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px;
+  position-anchor: --popover;
+  position-area: top left;
+  margin: 0 0 6px 8px;
+
+  &:popover-open {
+    display: grid;
+    gap: 6px;
+  }
+
+  + :global(.button) {
+    anchor-name: --popover;
+  }
 
   :global(.button) {
     width: 100%;

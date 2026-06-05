@@ -16,7 +16,12 @@ const MatchedItem = ({ link, title, content, score, selected, infoBlock }: TMatc
       >
         {title ?? link}
       </a>
-      <span className={styles.checkbox} aria-checked={selected} role='checkbox' />
+      <span
+        className={styles.checkbox}
+        aria-checked={selected}
+        aria-label={`Select ${title ?? link}`}
+        role='checkbox'
+      />
     </div>
 
     <MarkdownRenderer content={content} />

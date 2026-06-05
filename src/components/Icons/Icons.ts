@@ -4,6 +4,7 @@ import ArrowLeft from './ArrowLeft';
 import ArrowUp from './ArrowUp';
 import CalendarDate from './CalendarDate';
 import ChevronLeft from './ChevronLeft';
+import Close from './Close';
 import Collapse from './Collapse';
 import Delete from './Delete';
 import Edit from './Edit';
@@ -12,9 +13,11 @@ import Feeds from './Feeds';
 import FilterClear from './FilterClear';
 import First from './First';
 import Google from './Google';
+import Chat from './Google copy';
 import HidePassword from './HidePassword';
 import Home from './Home';
 import LogOut from './LogOut';
+import Plus from './Plus';
 import ShowPassword from './ShowPassword';
 import Sortable from './Sortable';
 import ThreeDots from './ThreeDots';
@@ -38,7 +41,10 @@ const Icons = {
   Collapse: memo(Collapse),
   ThreeDots: memo(ThreeDots),
   Edit: memo(Edit),
-  Delete: memo(Delete)
+  Delete: memo(Delete),
+  Chat: memo(Chat),
+  Close: memo(Close),
+  Plus: memo(Plus)
 } as const;
 
 export { Icons };

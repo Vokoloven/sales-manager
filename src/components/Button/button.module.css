@@ -54,8 +54,12 @@
 }
 
 .primary {
-  background: var(--accent);
+  background: var(--accent-btn);
   color: #fff;
+
+  &:visited {
+    color: #fff;
+  }
 
   &:hover:not(:disabled) {
     opacity: 0.88;
@@ -76,6 +80,10 @@
   color: var(--accent);
   border: 1px solid var(--accent);
 
+  &:visited {
+    color: var(--accent);
+  }
+
   &:hover:not(:disabled) {
     background: var(--accent-soft);
   }
@@ -94,6 +102,10 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border);
+
+  &:visited {
+    color: var(--text-primary);
+  }
 
   &:hover:not(:disabled) {
     background: var(--surface-hover);
@@ -118,6 +130,10 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border);
+
+  &:visited {
+    color: var(--text-primary);
+  }
 
   &:hover:not(:disabled) {
     background: var(--surface-hover);
@@ -151,6 +167,10 @@
   color: var(--text-primary);
   border: none;
 
+  &:visited {
+    color: var(--text-primary);
+  }
+
   &:hover:not(:disabled) {
     background: var(--surface-hover);
   }
@@ -179,9 +199,13 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  background: var(--accent);
+  background: var(--accent-btn);
   color: #fff;
   border: none;
+
+  &:visited {
+    color: #fff;
+  }
 
   &:hover:not(:disabled) {
     opacity: 0.88;

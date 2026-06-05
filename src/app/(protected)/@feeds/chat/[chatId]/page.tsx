@@ -1,16 +1,36 @@
+import { notFound } from 'next/navigation';
+import { chatService } from '@/app/(protected)/@aside/services/Chat.service';
+import { chatPageParamsSchema } from './schemas/page.schema';
 import type { TParams } from '@/core/models/params.model';
+import type { Metadata } from 'next';
 
-const generateMetadata = async ({ params }: TParams<'chatId'>) => {
-  const { chatId } = await params;
+const generateMetadata = async ({ params }: TParams): Promise<Metadata> => {
+  const rawParams = await params;
+
+  const safeParse = chatPageParamsSchema.safeParse(rawParams);
+
+  if (!safeParse.success) {
+    return { title: 'Chat', description: 'View and manage your chat' };
+  }
+
+  const result = await chatService.getChat(safeParse.data.chatId);
+
   return {
-    title: `${chatId} | Chat`,
-    description: 'Chat name'
+    title: `${result.data?.name ?? safeParse.data.chatId} | Chat`,
+    description: `View and manage your chat${result.data?.name ? `: ${result.data.name}` : ''}`
   };
 };
 
-const ChatPage = async ({ params }: TParams<'chatId'>) => {
-  const { chatId } = await params;
-  return <h1>ChatPage {chatId} is created</h1>;
+const ChatPage = async ({ params }: TParams) => {
+  const rawParams = await params;
+
+  const safeParse = chatPageParamsSchema.safeParse(rawParams);
+
+  if (!safeParse.success) {
+    return notFound();
+  }
+
+  return <h1>ChatPage {safeParse.data.chatId} is created</h1>;
 };
 
 export { generateMetadata };

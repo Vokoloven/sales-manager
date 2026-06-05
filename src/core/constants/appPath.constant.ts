@@ -3,7 +3,8 @@ const APP_PUBLIC_PATH = {
 } as const;
 
 const APP_PROTECTED_PATH = {
-  feeds: '/feeds'
+  feeds: '/feeds',
+  chat: '/chat'
 } as const;
 
 const APP_PATH = {

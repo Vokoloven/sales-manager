@@ -1,15 +1,18 @@
+import { Suspense, type CSSProperties } from 'react';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { Icons } from '@/components/Icons/Icons';
+import Loading from '@/components/Loading/Loading';
+import NavLink from '@/components/NavLink/NavLink';
+import { APP_PATH } from '@/core/constants/appPath.constant';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
-import LogOutButton from './components/LogOutButton';
+import ChatList from './components/ChatList/ChatList';
+import LogOutButton from './components/LogOutButton/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
 import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
 import ResizeHandle from './components/ResizeHandle/ResizeHandle';
-import { chatService } from './services/Chat.service';
-import type { CSSProperties } from 'react';
 import styles from './default.module.css';
 
 const AsideDefault = async () => {
@@ -17,7 +20,6 @@ const AsideDefault = async () => {
   const collapsed = await cookiesService.has(COOKIES.asideCollapsed);
 
   const recoverUser = await recoverUserService.recoverUser();
-  const chats = await chatService.getChats();
 
   return (
     <aside
@@ -30,45 +32,19 @@ const AsideDefault = async () => {
         <span className={styles.headerTitle}>Recent</span>
       </div>
 
-      <div className={styles.list} role='list'>
-        {chats.data?.map(({ id, name }) => (
-          <div className={styles.buttons} key={id}>
-            <Button
-              role='link'
-              title={name}
-              buttonType={BUTTON_TYPE.outline}
-              size={BUTTON_SIZE.sm}
-              text={name}
-            />
+      <nav className={styles.nav}>
+        <NavLink
+          href={APP_PATH.chat}
+          text='New Chat'
+          buttonType={BUTTON_TYPE.outline}
+          size={BUTTON_SIZE.sm}
+          icon={<Icons.Plus />}
+        />
+      </nav>
 
-            <Button
-              popoverTarget={`options-${String(id)}`}
-              aria-label='options'
-              buttonType={BUTTON_TYPE.outline}
-              size={BUTTON_SIZE.sm}
-              icon={<Icons.ThreeDots />}
-            />
-
-            <div className={styles.popoverOptions} id={`options-${String(id)}`} popover='auto'>
-              <Button
-                popoverTarget={`options-${String(id)}`}
-                popoverTargetAction='hide'
-                size={BUTTON_SIZE.sm}
-                text='Rename'
-                iconRight={<Icons.Edit />}
-              />
-
-              <Button
-                popoverTarget={`options-${String(id)}`}
-                popoverTargetAction='hide'
-                size={BUTTON_SIZE.sm}
-                text='Delete'
-                iconRight={<Icons.Delete />}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+      <Suspense fallback={<Loading />}>
+        <ChatList />
+      </Suspense>
 
       <footer className={styles.footer}>
         <nav id='user-popover' popover='auto' className={styles.popover}>

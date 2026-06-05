@@ -1,0 +1,68 @@
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.inputBox {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:focus-within {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  /* Strip the Textarea component's own border/shadow so the form box owns it */
+  :global(.textarea) {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    min-height: 52px;
+    padding: 14px 16px 52px;
+    resize: none;
+    font-size: 15px;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.inputFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 10px 16px;
+}
+
+.hint {
+  font-size: 11px;
+  color: light-dark(#6b6b6b, #8f8f8f);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  kbd {
+    font-family: var(--font-inter);
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-disabled);
+    border: 1px solid var(--border);
+    color: light-dark(#6b6b6b, #8f8f8f);
+  }
+}

@@ -4,7 +4,6 @@ import Select from 'react-select';
 import Button from '@/components/Button/Button';
 import { BUTTON_SIZE, BUTTON_TYPE } from '@/components/Button/constants/button.constant';
 import { selectStyles } from '@/components/GridTable/components/FilterCell/components/SelectFilter/constants/selectFilter.constant';
-import PaginationSkeleton from '@/components/GridTable/components/PaginationSkeleton/PaginationSkeleton';
 import { Icons } from '@/components/Icons/Icons';
 import { SELECT_COMPONENT_MAP } from '@/components/SelectComponents/selectComponentMap';
 import { usePagination } from './hooks/usePagination';
@@ -12,17 +11,11 @@ import type { TPaginationProps } from './models/pagination.model';
 import type { TOption } from '@/core/models/option.model';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ options, parsedSearchParams, sp, totalPages }: TPaginationProps) => {
-  const { isFirst, isLast, isPending, mounted, pages, currentPage, navigate, selectNavigate } =
-    usePagination({
-      parsedSearchParams,
-      totalPages,
-      sp
-    });
-
-  if (isPending) {
-    return <PaginationSkeleton />;
-  }
+const Pagination = ({ options, parsedSearchParams, totalPages }: TPaginationProps) => {
+  const { isFirst, isLast, mounted, pages, currentPage, navigate, selectNavigate } = usePagination({
+    parsedSearchParams,
+    totalPages
+  });
 
   return (
     <nav className={styles.pagination}>

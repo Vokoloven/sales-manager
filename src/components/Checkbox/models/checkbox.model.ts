@@ -5,5 +5,5 @@ export type CheckboxProps = Omit<
     error?: boolean;
     indeterminate?: boolean;
   },
-  'className' | 'styles'
+  'className'
 >;
