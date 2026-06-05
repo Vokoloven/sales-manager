@@ -16,28 +16,46 @@ import {
   LOAD_MORE_THRESHOLD,
   SCROLL_BOTTOM_THRESHOLD
 } from '../constants/chatView.constant';
+import { useMessages } from './useMessages';
 import { useMessagesVirtualizer } from './useMessagesVirtualizer';
 import { reducer } from './utils/reducer.util';
-import type { TMessagesInitialData } from '../models/chatView.model';
+import type { TMessagesInitialData, TMessage } from '../models/chatView.model';
 import type { TNullable } from '@/core/models/utility.model';
 import type { ComponentRef } from 'react';
 
-const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: string) => {
+const useMessagesInfinite = (
+  { items, hasMore }: TMessagesInitialData,
+  chatId: string,
+  socketUrl: string,
+  accessToken: TNullable<string>
+) => {
   const [state, dispatch] = useReducer(reducer, {
     items: [...items],
     hasMore,
-    isLoading: false
+    isLoading: false,
+    isSending: false
   });
 
   const pageRef = useRef(1);
   const scrollRef = useRef<TNullable<ComponentRef<'div'>>>(null);
   const scrollMetricsRef = useRef<TNullable<{ scrollTop: number; scrollHeight: number }>>(null);
+  const shouldScrollToBottomRef = useRef(false);
   const isInitialScrollDone = useRef(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
-  const [isSending, setIsSending] = useState(false);
 
   const { virtualizer, virtualItems, paddingTop, paddingBottom, measureRef } =
     useMessagesVirtualizer(state.items, scrollRef);
+
+  const { state: socketState } = useMessages(Number(chatId), socketUrl, accessToken);
+
+  useEffect(() => {
+    if (!socketState.length) return;
+
+    const message = socketState[0];
+    shouldScrollToBottomRef.current = true;
+    dispatch({ type: ACTION.appendItem, payload: message });
+    dispatch({ type: ACTION.setSending, payload: false });
+  }, [socketState]);
 
   useLayoutEffect(() => {
     if (!isInitialScrollDone.current && state.items.length > 0) {
@@ -47,13 +65,19 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
   }, [state.items.length, virtualizer]);
 
   useLayoutEffect(() => {
+    if (shouldScrollToBottomRef.current) {
+      shouldScrollToBottomRef.current = false;
+      virtualizer.scrollToIndex(state.items.length - 1, { align: 'end' });
+      return;
+    }
+
     const el = scrollRef.current;
     const metrics = scrollMetricsRef.current;
     if (!el || !metrics) return;
 
     el.scrollTop = metrics.scrollTop + (el.scrollHeight - metrics.scrollHeight);
     scrollMetricsRef.current = null;
-  }, [state.items]);
+  }, [state.items, virtualizer]);
 
   const loadMore = useCallback(async () => {
     const el = scrollRef.current;
@@ -78,7 +102,6 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
     }
   }, [chatId]);
 
-  // useEffectEvent reads fresh state/loadMore on every call without needing deps
   const handleScroll = useEffectEvent(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -107,34 +130,28 @@ const useMessagesInfinite = ({ items, hasMore }: TMessagesInitialData, chatId: s
   }, [virtualizer, state.items.length]);
 
   const sendMessage = useCallback(
-    async (text: string) => {
-      setIsSending(true);
-      const sendResult = await sendMessageAction({ chatId: Number(chatId), content: text });
+    (text: string) => {
+      const optimisticMessage: TMessage = {
+        id: String(Date.now()),
+        content: text,
+        isBot: false,
+        created: new Date().toISOString(),
+        chatId: Number(chatId),
+        accountId: 0
+      };
 
-      if (sendResult.success) {
-        const messagesResult = await getPaginatedMessagesAction(chatId, 1);
-        if (messagesResult.success) {
-          pageRef.current = messagesResult.data.pageNumber;
-          dispatch({
-            type: ACTION.replaceData,
-            payload: {
-              items: [...messagesResult.data.items].reverse(),
-              hasMore: messagesResult.data.pageNumber < messagesResult.data.totalPages
-            }
-          });
-          scrollToBottom();
-        }
-      }
-
-      setIsSending(false);
+      shouldScrollToBottomRef.current = true;
+      dispatch({ type: ACTION.setSending, payload: true });
+      dispatch({ type: ACTION.appendItem, payload: optimisticMessage });
+      void sendMessageAction({ chatId: Number(chatId), content: text });
     },
-    [chatId, scrollToBottom]
+    [chatId]
   );
 
   return {
     items: state.items,
     isLoading: state.isLoading,
-    isSending,
+    isSending: state.isSending,
     scrollRef,
     virtualItems,
     paddingTop,

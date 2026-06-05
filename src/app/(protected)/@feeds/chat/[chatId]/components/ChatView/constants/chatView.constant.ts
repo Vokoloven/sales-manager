@@ -3,7 +3,9 @@ const ITEM_GAP = 12;
 const ACTION = {
   setLoading: 'setLoading',
   prependData: 'prependData',
-  replaceData: 'replaceData'
+  replaceData: 'replaceData',
+  appendItem: 'appendItem',
+  setSending: 'setSending'
 } as const;
 
 const SCROLL_BOTTOM_THRESHOLD = 150;

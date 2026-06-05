@@ -13,7 +13,7 @@ import { useMessagesInfinite } from './hooks/useMessagesInfinite';
 import type { TChatViewProps } from './models/chatView.model';
 import styles from './ChatView.module.css';
 
-const ChatView = ({ chatId, initialData }: TChatViewProps) => {
+const ChatView = ({ chatId, initialData, socketUrl, accessToken }: TChatViewProps) => {
   const {
     items,
     isLoading,
@@ -26,7 +26,7 @@ const ChatView = ({ chatId, initialData }: TChatViewProps) => {
     sendMessage,
     showScrollButton,
     scrollToBottom
-  } = useMessagesInfinite(initialData, chatId);
+  } = useMessagesInfinite(initialData, chatId, socketUrl, accessToken);
 
   const { textareaProps, onSubmit, canSubmit } = useMessageForm(sendMessage);
 
@@ -51,6 +51,15 @@ const ChatView = ({ chatId, initialData }: TChatViewProps) => {
               );
             })}
           </div>
+
+          {isSending && (
+            <div className={styles.typingRow}>
+              <div className={styles.typingAvatar}>AI</div>
+              <div className={styles.typingBubble}>
+                <DotsLoader label='AI is typing' />
+              </div>
+            </div>
+          )}
         </div>
 
         <ScrollToBottomButton visible={showScrollButton} onClick={scrollToBottom} />

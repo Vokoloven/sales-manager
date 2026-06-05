@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation';
 import { chatService } from '@/app/(protected)/@aside/services/Chat.service';
+import { envServerService } from '@/core/services/EnvServer.service';
+import { tokenService } from '@/core/services/Token.service';
 import { getPaginatedMessagesAction } from './actions/message.action';
 import ChatView from './components/ChatView/ChatView';
 import { chatPageParamsSchema } from './schemas/page.schema';
@@ -33,7 +35,10 @@ const ChatPage = async ({ params }: TParams) => {
   }
 
   const { chatId } = safeParse.data;
-  const result = await getPaginatedMessagesAction(chatId, 1);
+  const [result, { accessToken }] = await Promise.all([
+    getPaginatedMessagesAction(chatId, 1),
+    tokenService.getTokens()
+  ]);
 
   const initialData = result.success
     ? {
@@ -42,7 +47,14 @@ const ChatPage = async ({ params }: TParams) => {
       }
     : { items: [], hasMore: false };
 
-  return <ChatView chatId={chatId} initialData={initialData} />;
+  return (
+    <ChatView
+      chatId={chatId}
+      initialData={initialData}
+      socketUrl={envServerService.env.API_URL}
+      accessToken={accessToken}
+    />
+  );
 };
 
 export { generateMetadata };

@@ -14,10 +14,15 @@ const reducer = (state: TState, action: TAction): TState => {
       };
     case ACTION.replaceData:
       return {
+        ...state,
         isLoading: false,
         items: action.payload.items,
         hasMore: action.payload.hasMore
       };
+    case ACTION.appendItem:
+      return { ...state, items: [...state.items, action.payload] };
+    case ACTION.setSending:
+      return { ...state, isSending: action.payload };
     default:
       return state;
   }

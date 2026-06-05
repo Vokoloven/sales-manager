@@ -10,8 +10,7 @@ const API_URL = {
   feed: '/api/v1/upwork-feeds/{{id}}',
   messagesPaginated: '/api/v1/messages/get-messages/{{chatId}}',
   sendMessage: '/api/v1/messages/send-message',
-  subMessages: '/api/v1/messages/subscribe',
-  unSubMessages: '/api/v1/messages/unsubscribe'
+  messageNamespace: '/api/v1/messages'
 } as const;
 
 export { API_URL };

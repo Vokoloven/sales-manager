@@ -3,7 +3,7 @@ import { useForm as useReactHookForm, useWatch } from 'react-hook-form';
 import type { TFormValue } from './models/useMessageForm.model';
 import type { ComponentRef } from 'react';
 
-const useMessageForm = (onSend: (text: string) => Promise<void>) => {
+const useMessageForm = (onSend: (text: string) => void) => {
   const { setValue, handleSubmit, control, reset } = useReactHookForm<TFormValue>({
     defaultValues: { message: '' }
   });
@@ -37,10 +37,10 @@ const useMessageForm = (onSend: (text: string) => Promise<void>) => {
   }, [message, resize]);
 
   const handleSuccess = useCallback(
-    async (data: TFormValue) => {
+    (data: TFormValue) => {
       const text = data.message.trim();
       if (!text) return;
-      await onSend(text);
+      onSend(text);
       reset();
     },
     [onSend, reset]
