@@ -1,4 +1,4 @@
-import { ScoreBadge } from '../../../components/Badges/ScoreBadge';
+import { ScoreBadge } from '@/app/(protected)/@feeds/feeds/components/Badges/ScoreBadge';
 import { MarkdownRenderer } from '../MarkdownRenderer/MarkdownRenderer';
 import type { TMatchedItemProps } from './models/matchedItem.model';
 import styles from './MatchedItem.module.css';

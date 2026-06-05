@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { chatRequestSchema } from '../../../schemas/chat.schema';
+import { chatRequestSchema } from '@/app/(protected)/@aside/schemas/chat.schema';
 import type { ComponentRef } from 'react';
 
 const useRenameButton = (name: string) => {

@@ -1,21 +1,15 @@
-import { useRouter } from 'next/navigation';
-import { useRef, useCallback, useEffect, type KeyboardEvent, type ChangeEvent } from 'react';
+import { useCallback, useEffect, useRef, type ChangeEvent, type KeyboardEvent } from 'react';
 import { useForm as useReactHookForm, useWatch } from 'react-hook-form';
-import { sendMessageAction } from '@/app/(protected)/@feeds/chat/[chatId]/actions/message.action';
-import { createChatAction } from '@/app/(protected)/@feeds/chat/actions/chat.action';
-import { APP_PATH } from '@/core/constants/appPath.constant';
-import type { TFormValue } from './models/useForm.model';
+import type { TFormValue } from './models/useMessageForm.model';
 import type { ComponentRef } from 'react';
 
-const useForm = () => {
-  const router = useRouter();
+const useMessageForm = (onSend: (text: string) => Promise<void>) => {
   const { setValue, handleSubmit, control, reset } = useReactHookForm<TFormValue>({
     defaultValues: { message: '' }
   });
 
   const textareaRef = useRef<ComponentRef<'textarea'>>(null);
   const isMounted = useRef(false);
-
   const message = useWatch({ control, name: 'message' });
 
   const resize = useCallback((el: ComponentRef<'textarea'>) => {
@@ -42,29 +36,14 @@ const useForm = () => {
     }
   }, [message, resize]);
 
-  const handleSuggestion = useCallback(
-    (suggestion: string) => {
-      setValue('message', suggestion);
-      requestAnimationFrame(() => {
-        if (textareaRef.current) {
-          resize(textareaRef.current);
-          textareaRef.current.focus();
-        }
-      });
-    },
-    [setValue, resize]
-  );
-
   const handleSuccess = useCallback(
     async (data: TFormValue) => {
-      const result = await createChatAction({ name: data.message });
+      const text = data.message.trim();
+      if (!text) return;
+      await onSend(text);
       reset();
-      if (result.success) {
-        await sendMessageAction({ chatId: result.data.id, content: result.data.name });
-        router.replace(`${APP_PATH.chat}/${String(result.data.id)}`);
-      }
     },
-    [reset, router]
+    [onSend, reset]
   );
 
   const onSubmit = handleSubmit(handleSuccess);
@@ -89,9 +68,8 @@ const useForm = () => {
       onKeyDown: handleKeyDown
     },
     onSubmit,
-    canSubmit,
-    handleSuggestion
+    canSubmit
   } as const;
 };
 
-export { useForm };
+export { useMessageForm };
