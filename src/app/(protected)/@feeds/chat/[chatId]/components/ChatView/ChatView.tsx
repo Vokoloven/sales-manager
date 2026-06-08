@@ -67,13 +67,14 @@ const ChatView = ({ chatId, initialData, socketUrl, accessToken }: TChatViewProp
 
       <div className={styles.inputArea}>
         <form
-          id='chat-message-form'
+          id='chat-form'
           className={styles.inputBox}
           onSubmit={(e) => {
             void onSubmit(e);
           }}
         >
           <Textarea
+            id='chat-form-textarea'
             {...textareaProps}
             placeholder='Ask about your sales data, leads, or deals…'
             rows={1}
