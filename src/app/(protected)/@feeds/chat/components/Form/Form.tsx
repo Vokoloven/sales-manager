@@ -36,6 +36,7 @@ const Form = () => {
         }}
       >
         <Textarea
+          id='chat-form-textarea'
           {...textareaProps}
           placeholder='Ask about your sales data, leads, or deals…'
           rows={1}

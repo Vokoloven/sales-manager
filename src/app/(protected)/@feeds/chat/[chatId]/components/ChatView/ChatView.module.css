@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.messagesWrapper {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 20px 8px;
+  scrollbar-width: thin;
+}
+
+.inputArea {
+  flex-shrink: 0;
+  padding: 8px 20px 20px;
+  align-self: center;
+  width: 100%;
+  max-width: 680px;
+}
+
+.inputBox {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:focus-within {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  :global(.textareaWrapper) {
+    :global(.textarea) {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      min-height: 52px;
+      padding: 14px 16px 52px;
+      resize: none;
+      font-size: 15px;
+
+      &:focus {
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.inputFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 10px 16px;
+}
+
+.typingRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.typingAvatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.typingBubble {
+  padding: 2px 14px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.hint {
+  font-size: 11px;
+  color: light-dark(#6b6b6b, #8f8f8f);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  kbd {
+    font-family: var(--font-inter);
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-disabled);
+    border: 1px solid var(--border);
+    color: light-dark(#6b6b6b, #8f8f8f);
+  }
+}

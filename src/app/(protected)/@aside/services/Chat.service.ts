@@ -3,7 +3,7 @@ import { HTTP_METHOD } from '@/core/constants/fetch.constant';
 import { ApiValidator } from '@/core/decorators/ApiValidator.decorator';
 import { apiService } from '@/core/services/ApiService.service';
 import { tokenService } from '@/core/services/Token.service';
-import { getCachedPaginatedChats } from '../actions/chat.action';
+import { getCachedPaginatedChats } from '../cache/chat.cache';
 import { chatDeleteResponseSchema, chatsPaginatedResponseSchema } from '../schemas/chat.schema';
 import { chatResponseSchema } from '../schemas/chat.schema';
 import type { chatRequestSchema } from '../schemas/chat.schema';

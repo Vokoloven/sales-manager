@@ -17,9 +17,11 @@ import Chat from './Google copy';
 import HidePassword from './HidePassword';
 import Home from './Home';
 import LogOut from './LogOut';
+import Moon from './Moon';
 import Plus from './Plus';
 import ShowPassword from './ShowPassword';
 import Sortable from './Sortable';
+import Sun from './Sun';
 import ThreeDots from './ThreeDots';
 
 const Icons = {
@@ -44,7 +46,9 @@ const Icons = {
   Delete: memo(Delete),
   Chat: memo(Chat),
   Close: memo(Close),
-  Plus: memo(Plus)
+  Plus: memo(Plus),
+  Moon: memo(Moon),
+  Sun: memo(Sun)
 } as const;
 
 export { Icons };

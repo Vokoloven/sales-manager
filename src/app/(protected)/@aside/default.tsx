@@ -7,11 +7,11 @@ import NavLink from '@/components/NavLink/NavLink';
 import { APP_PATH } from '@/core/constants/appPath.constant';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { cookiesService } from '@/core/services/Cookies.service';
+import { ASIDE } from '@/shared/constants/resizeHandle.constant';
 import { recoverUserService } from '@/shared/recoverUser/services/RecoverUser.service';
 import ChatList from './components/ChatList/ChatList';
 import LogOutButton from './components/LogOutButton/LogOutButton';
 import NavButtons from './components/NavButtons/NavButtons';
-import { ASIDE } from './components/ResizeHandle/constants/resizeHandle.constant';
 import ResizeHandle from './components/ResizeHandle/ResizeHandle';
 import styles from './default.module.css';
 

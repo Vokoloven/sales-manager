@@ -7,7 +7,10 @@ const API_URL = {
   chatsPaginated: '/api/v1/chats/get-chats',
   chat: '/api/v1/chats/{{id}}',
   feeds: '/api/v1/upwork-feeds/get-feeds',
-  feed: '/api/v1/upwork-feeds/{{id}}'
+  feed: '/api/v1/upwork-feeds/{{id}}',
+  messagesPaginated: '/api/v1/messages/get-messages/{{chatId}}',
+  sendMessage: '/api/v1/messages/send-message',
+  messageNamespace: '/api/v1/messages'
 } as const;
 
 export { API_URL };

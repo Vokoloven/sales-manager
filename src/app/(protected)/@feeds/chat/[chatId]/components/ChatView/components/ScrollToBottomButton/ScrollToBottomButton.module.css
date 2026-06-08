@@ -1,0 +1,49 @@
+.button {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  z-index: 10;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.12);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text-secondary);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &[data-visible='true'] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}

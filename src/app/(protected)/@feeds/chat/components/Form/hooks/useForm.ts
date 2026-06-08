@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useCallback, useEffect, type KeyboardEvent, type ChangeEvent } from 'react';
 import { useForm as useReactHookForm, useWatch } from 'react-hook-form';
+import { sendMessageAction } from '@/app/(protected)/@feeds/chat/[chatId]/actions/message.action';
 import { createChatAction } from '@/app/(protected)/@feeds/chat/actions/chat.action';
 import { APP_PATH } from '@/core/constants/appPath.constant';
 import type { TFormValue } from './models/useForm.model';
@@ -58,7 +59,10 @@ const useForm = () => {
     async (data: TFormValue) => {
       const result = await createChatAction({ name: data.message });
       reset();
-      if (result.success) router.replace(`${APP_PATH.chat}/${String(result.data.id)}`);
+      if (result.success) {
+        await sendMessageAction({ chatId: result.data.id, content: result.data.name });
+        router.replace(`${APP_PATH.chat}/${String(result.data.id)}`);
+      }
     },
     [reset, router]
   );

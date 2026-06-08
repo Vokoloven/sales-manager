@@ -21,19 +21,20 @@
     box-shadow: 0 0 0 3px var(--accent-soft);
   }
 
-  /* Strip the Textarea component's own border/shadow so the form box owns it */
-  :global(.textarea) {
-    border: none;
-    border-radius: 0;
-    background: transparent;
-    min-height: 52px;
-    padding: 14px 16px 52px;
-    resize: none;
-    font-size: 15px;
-
-    &:focus {
+  :global(.textareaWrapper) {
+    :global(.textarea) {
       border: none;
-      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+      min-height: 52px;
+      padding: 14px 16px 52px;
+      resize: none;
+      font-size: 15px;
+
+      &:focus {
+        border: none;
+        box-shadow: none;
+      }
     }
   }
 }

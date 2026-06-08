@@ -1,7 +1,7 @@
 import { startTransition, type ComponentRef } from 'react';
-import { resizeCookiesAction } from '@/app/(protected)/@feeds/feeds/components/FeedsHeader/actions/feedsHeader.action';
 import { COOKIES } from '@/core/constants/cookies.constant';
-import { ASIDE } from '../constants/resizeHandle.constant';
+import { resizeCookiesAction } from '@/shared/actions/actions/feedsHeader.action';
+import { ASIDE } from '@/shared/constants/resizeHandle.constant';
 import { clamp } from '../utils/resizeHandle.util';
 
 const useResizeHandle = () => {

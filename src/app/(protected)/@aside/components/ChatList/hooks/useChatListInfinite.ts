@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { getPaginatedChatsAction } from '../../../actions/chat.action';
+import { getPaginatedChatsAction } from '@/app/(protected)/@aside/actions/chat.action';
 import { ACTION } from '../constants/chatListVirtual.constant';
 import { useChatListVirtualizer } from './useChatListVirtualizer';
 import { reducer } from './utils/reducer.util';
