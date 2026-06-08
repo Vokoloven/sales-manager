@@ -2,8 +2,7 @@ const COOKIES = {
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
   asideCollapsed: 'aside-collapsed',
-  asideWidth: 'aside-width',
-  theme: 'theme'
+  asideWidth: 'aside-width'
 } as const;
 
 export { COOKIES };

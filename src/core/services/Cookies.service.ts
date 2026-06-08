@@ -5,11 +5,10 @@ import type {
   TSetCookies,
   THasCookies
 } from '../models/cookies.model';
-import type { TOptional } from '../models/utility.model';
 
 class CookiesService {
-  public get = async <T extends string>(...args: TGetCookies) => {
-    const value = (await cookies()).get(...args)?.value as TOptional<T>;
+  public get = async (...args: TGetCookies) => {
+    const value = (await cookies()).get(...args)?.value;
 
     return value ?? null;
   };
