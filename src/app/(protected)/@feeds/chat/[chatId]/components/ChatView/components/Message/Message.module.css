@@ -40,7 +40,7 @@
 }
 
 .bubbleUser {
-  background: var(--accent);
+  background: var(--accent-btn);
   border-bottom-right-radius: 4px;
 }
 
@@ -64,10 +64,10 @@
 
 .time {
   font-size: 10px;
-  color: var(--text-disabled);
+  color: light-dark(#595959, #8c8c8c);
   align-self: flex-end;
 }
 
 .bubbleUser .time {
-  color: rgb(255 255 255 / 0.6);
+  color: rgb(255 255 255 / 0.9);
 }
