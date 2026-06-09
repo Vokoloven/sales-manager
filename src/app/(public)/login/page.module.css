@@ -54,7 +54,7 @@
 
 .sub {
   font-size: 14px;
-  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  color: var(--text-secondary);
   margin: 0 0 1.75rem;
 }
 

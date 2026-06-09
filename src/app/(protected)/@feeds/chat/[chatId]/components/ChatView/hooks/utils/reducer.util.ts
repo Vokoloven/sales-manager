@@ -20,6 +20,9 @@ const reducer = (state: TState, action: TAction): TState => {
         hasMore: action.payload.hasMore
       };
     case ACTION.appendItem:
+      if (state.items.some((item) => item.id === action.payload.id)) {
+        return { ...state, isSending: false };
+      }
       return { ...state, items: [...state.items, action.payload] };
     case ACTION.setSending:
       return { ...state, isSending: action.payload };

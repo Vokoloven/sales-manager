@@ -85,7 +85,7 @@ const ChatView = ({ chatId, initialData, socketUrl, accessToken }: TChatViewProp
               <kbd>↵</kbd> send &middot; <kbd>⇧↵</kbd> newline
             </span>
             <Button
-              form='chat-message-form'
+              form='chat-form'
               buttonType={BUTTON_TYPE.iconAccent}
               size={BUTTON_SIZE.sm}
               type='submit'
