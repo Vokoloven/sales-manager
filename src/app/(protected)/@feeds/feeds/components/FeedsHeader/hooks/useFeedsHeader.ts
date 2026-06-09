@@ -1,7 +1,7 @@
 import { startTransition, useCallback, useEffect, useState } from 'react';
 import { COOKIES } from '@/core/constants/cookies.constant';
-import { resizeCookiesAction } from '@/shared/actions/actions/feedsHeader.action';
-import { themeCookiesAction } from '@/shared/actions/actions/theme.action';
+import { resizeCookiesAction } from '@/shared/actions/feedsHeader.action';
+import { themeCookiesAction } from '@/shared/actions/theme.action';
 import { THEME, THEME_ATTRIBUTE } from '@/shared/components/Theme/constants/theme.constant';
 import { ASIDE } from '@/shared/constants/resizeHandle.constant';
 import type { TTheme } from '@/shared/components/Theme/models/theme.model';

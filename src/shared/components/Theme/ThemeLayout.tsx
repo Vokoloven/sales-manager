@@ -1,4 +1,4 @@
-import { themeCookiesAction } from '@/shared/actions/actions/theme.action';
+import { themeCookiesAction } from '@/shared/actions/theme.action';
 import Theme from './Theme';
 
 const ThemeLayout = async () => {
