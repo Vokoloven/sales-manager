@@ -24,6 +24,7 @@
 
     .popoverOptions {
       width: max-content;
+      max-width: 120px;
       border: 1px solid var(--border);
       border-radius: 6px;
       margin-left: 4px;
