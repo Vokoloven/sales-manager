@@ -17,27 +17,27 @@
 
 .red {
   background: light-dark(#fef2f2, #2a0a0a);
-  color: light-dark(#dc2626, #f87171);
+  color: light-dark(#b91c1c, #f87171);
 }
 
 .orange {
   background: light-dark(#fff7ed, #251205);
-  color: light-dark(#ea580c, #fb923c);
+  color: light-dark(#c2410c, #fb923c);
 }
 
 .amber {
   background: light-dark(#fffbeb, #221a04);
-  color: light-dark(#d97706, #fbbf24);
+  color: light-dark(#b45309, #fbbf24);
 }
 
 .lime {
   background: light-dark(#f7fee7, #111a05);
-  color: light-dark(#65a30d, #a3e635);
+  color: light-dark(#4d7c0f, #a3e635);
 }
 
 .green {
   background: light-dark(#f0fdf4, #061510);
-  color: light-dark(#16a34a, #4ade80);
+  color: light-dark(#15803d, #4ade80);
 }
 
 .keywords {
