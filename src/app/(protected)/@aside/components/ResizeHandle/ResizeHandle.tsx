@@ -4,7 +4,7 @@ import { useResizeHandle } from './hooks/useResizeHandle';
 import styles from './ResizeHandle.module.css';
 
 const ResizeHandle = () => {
-  const { onDoubleClick, onPointerDown, onPointerMove, onPointerUp } = useResizeHandle();
+  const { onPointerDown, onPointerMove, onPointerUp } = useResizeHandle();
 
   return (
     <div
@@ -12,7 +12,6 @@ const ResizeHandle = () => {
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onDoubleClick={onDoubleClick}
       aria-hidden='true'
     />
   );

@@ -37,22 +37,7 @@ const useResizeHandle = () => {
     });
   };
 
-  const onDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const aside = e.currentTarget.closest('aside') as ComponentRef<'aside'>;
-    if (aside.hasAttribute(ASIDE.dataAside)) {
-      aside.removeAttribute(ASIDE.dataAside);
-      startTransition(async () => {
-        await resizeCookiesAction(COOKIES.asideCollapsed);
-      });
-    } else {
-      aside.setAttribute(ASIDE.dataAside, '');
-      startTransition(async () => {
-        await resizeCookiesAction(COOKIES.asideCollapsed, 'true');
-      });
-    }
-  };
-
-  return { onPointerDown, onPointerMove, onPointerUp, onDoubleClick } as const;
+  return { onPointerDown, onPointerMove, onPointerUp } as const;
 };
 
 export { useResizeHandle };
