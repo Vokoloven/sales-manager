@@ -1,5 +1,5 @@
 import { startTransition, useEffectEvent, useLayoutEffect, useSyncExternalStore } from 'react';
-import { themeCookiesAction } from '@/shared/actions/actions/theme.action';
+import { themeCookiesAction } from '@/shared/actions/theme.action';
 import { THEME, THEME_ATTRIBUTE } from '@/shared/components/Theme/constants/theme.constant';
 import type { TTheme, TThemeProps } from '../models/theme.model';
 
