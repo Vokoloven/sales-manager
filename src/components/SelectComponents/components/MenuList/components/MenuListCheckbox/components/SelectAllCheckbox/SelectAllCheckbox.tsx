@@ -31,9 +31,14 @@ const SelectAllCheckbox = <T,>({ selectProps, getValue, allOptions }: TSelectAll
     <div
       className={classnames(styles.selectAllCheckbox, 'react-select_all_option')}
       data-selected={isAllSelected}
+      role='option'
+      aria-selected={isAllSelected}
+      aria-label='Select all'
       onClick={handleSelectAllToggle}
     >
       <Checkbox
+        aria-hidden
+        tabIndex={-1}
         checked={isAllSelected}
         indeterminate={isIndeterminate}
         onChange={(e) => {
