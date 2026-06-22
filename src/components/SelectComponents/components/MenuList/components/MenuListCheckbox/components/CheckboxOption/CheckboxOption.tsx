@@ -20,6 +20,7 @@ const CheckboxOption = <T,>(props: TCheckboxOption<T>) => {
       }}
     >
       <Checkbox
+        aria-label={label || data.label}
         checked={isSelected}
         onChange={(e) => {
           e.stopPropagation();

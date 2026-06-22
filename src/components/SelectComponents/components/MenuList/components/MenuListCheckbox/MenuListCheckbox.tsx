@@ -22,6 +22,7 @@ const MenuListCheckbox = <T, IsMulti extends boolean = false>(
       innerRef={innerRef}
       innerProps={{
         ...props.innerProps,
+        'aria-label': props.selectProps['aria-label'],
         style: {
           ...props.innerProps.style,
           maxHeight: props.maxHeight
