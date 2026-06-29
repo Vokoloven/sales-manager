@@ -1,4 +1,4 @@
-import { startTransition, useCallback, useEffect, useState } from 'react';
+import { startTransition, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { COOKIES } from '@/core/constants/cookies.constant';
 import { resizeCookiesAction } from '@/shared/actions/feedsHeader.action';
 import { themeCookiesAction } from '@/shared/actions/theme.action';
@@ -8,16 +8,24 @@ import type { TTheme } from '@/shared/components/Theme/models/theme.model';
 import type { ComponentRef } from 'react';
 
 const useFeedsHeader = () => {
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    const aside = document.querySelector<ComponentRef<'aside'>>('aside[aria-label="Recent"]');
-    return aside?.hasAttribute(ASIDE.dataAside) ?? false;
-  });
+  const isCollapsedOnInit = useSyncExternalStore(
+    () => () => undefined,
+    () =>
+      document
+        .querySelector<ComponentRef<'aside'>>('aside[aria-label="Recent"]')
+        ?.hasAttribute(ASIDE.dataAside) ?? false,
+    () => false
+  );
 
-  const [theme, setTheme] = useState<NonNullable<TTheme>>(() => {
-    if (typeof document === 'undefined') return THEME.light;
-    return (document.documentElement.getAttribute(THEME_ATTRIBUTE) as TTheme) ?? THEME.light;
-  });
+  const themeOnInit = useSyncExternalStore(
+    () => () => undefined,
+    () => (document.documentElement.getAttribute(THEME_ATTRIBUTE) as TTheme) ?? THEME.light,
+    () => THEME.light
+  );
+
+  const [isCollapsed, setIsCollapsed] = useState(isCollapsedOnInit);
+
+  const [theme, setTheme] = useState<NonNullable<TTheme>>(themeOnInit);
 
   useEffect(() => {
     const html = document.querySelector<ComponentRef<'html'>>('html');
